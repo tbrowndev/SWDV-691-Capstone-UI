@@ -24,3 +24,18 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+.login-title-text{
+    text-align: center;
+    font-size: 39pt;
+    font-weight: bold;
+}
+
+.login-credentials{
+    margin-top: 30pt;
+    margin-bottom: 30pt;
+}
+
+// .header-section{
+//     background-color: rgb(41, 41, 255);
+// }
