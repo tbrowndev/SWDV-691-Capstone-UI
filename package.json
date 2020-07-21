@@ -35,7 +35,7 @@
     "@angular/cli": "~9.1.5",
     "@angular/compiler-cli": "~9.1.6",
     "@angular/compiler": "~9.1.6",
-    "ionic": "5.4.16"
+    "@ionic/cli": "~5.4.16"
   },
   "devDependencies": {
     "@angular/compiler": "~9.1.6",
