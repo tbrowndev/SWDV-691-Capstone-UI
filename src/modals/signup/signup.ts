@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { ModalController, ViewController} from 'ionic-angular';
-import { FormGroup, FormBuilder, Validators, ValidationErrors } from "@angular/forms";
+import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { UsernameValidator } from '../../validators/username'
 
 @Component({
@@ -27,33 +27,24 @@ export class SignupModal {
 
     registerUser(){
 
-        if(!this.formData.valid){
-
-            this.inputErrors = []
-
-            Object.keys(this.formData.controls).forEach(key => {
-
-                const controlErrors: ValidationErrors = this.formData.get(key).errors;
-                if (controlErrors) {
-                  Object.keys(controlErrors).forEach(keyError => {
-                    this.inputErrors.push({
-                      'control': key,
-                      'error': keyError
-                    });
-                  });
-                }
-              });
-
-              console.log(this.inputErrors);
-        } //stay on page as there are issues with user input
-        else{
+        if(this.formData.valid){
             //console.log("User Registered!")
             //console.log(this.formData.value)
-            this.close()
+            // sends this data to the database to be stored
+            this.passRegisteredUser();
         }
     }
 
-    close(){
-        this.vwCtrl.dismiss();
+    passRegisteredUser(){
+        //passes valid username and password to login page
+        let registeredData = {
+            "username": this.formData.controls.username.value,
+            "password": this.formData.controls.password.value
+        }
+        this.vwCtrl.dismiss(registeredData);
+    }
+
+    backToLogin(){
+        this.vwCtrl.dismiss()
     }
 }

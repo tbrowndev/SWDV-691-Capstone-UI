@@ -16,7 +16,25 @@ export class HomePage {
   }
 
   loginCommand(){
-    let login = this.mdlCtrl.create(LoginModal);
+    
+    let login = this.mdlCtrl.create(LoginModal, null, {showBackdrop: false, enableBackdropDismiss: false});
+    
+    login.onDidDismiss(userId => {
+      this.getUserData(userId);
+    });
+    
     login.present();
+
+  }
+
+  getUserData(userId:number){
+    //Goes to server again and gets the user information that has been stored
+    this.user = {
+      "firstname": "John",
+      "lastname": "Smith",
+      "email": "jsmith@me.com",
+      "phone": 3145550153,
+      "username": "admin123"
+    }
   }
 }
