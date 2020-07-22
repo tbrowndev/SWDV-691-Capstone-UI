@@ -36,6 +36,8 @@ export class LoginModal {
         //send username and password to database and get the user ID of who is trying to login
         if (this.username) {
             if (this.username == "admin123" && this.key == "admin123") {
+                this.username = null;
+                this.key = null;
                 this.passValidId();
             }
         }

@@ -30585,6 +30585,10 @@ h1 {
   align-items: center;
 }
 
+.searchbar {
+  background-color: #488aff;
+}
+
 page-login ion-content {
   --ion-background-color: color($colors, primary)
     ;
