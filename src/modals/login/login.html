@@ -1,0 +1,22 @@
+<ion-content class="bg-primary-style">
+    <h1 padding text-center class="std-text-color">Anchr</h1>
+
+    <ion-item no-padding>
+        <ion-input type="text" [(ngModel)]="username" placeholder="Username or Email"></ion-input>
+    </ion-item>
+
+    <ion-item no-padding>
+        <ion-input type="password" [(ngModel)]="key" placeholder="Password"></ion-input>
+    </ion-item>
+
+    <div padding>
+        <button ion-button block class="bg-secondary-style std-text-color" (click)="login()">Login</button>
+    </div>
+
+    <ion-grid>
+        <ion-row>
+            <ion-col class="align-text-middle std-text-color">Don't have an account?<button ion-button clear no-padding color="secondary" (click)="startSignup()">Create one</button></ion-col>
+        </ion-row>
+    </ion-grid>
+
+</ion-content>

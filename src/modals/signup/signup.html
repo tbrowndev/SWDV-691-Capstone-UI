@@ -1,0 +1,59 @@
+<ion-content class="bg-primary-style">
+    <h1 padding text-center class="std-text-color">Anchr</h1>
+    <h3 class="std-text-color">Sign Up</h3>
+
+    <p *ng class="error-text">Account registration failed. See below for details</p>
+
+    <form [formGroup]="formData">
+
+        <ion-item no-padding>
+            <ion-input formControlName="firstname" type="text" placeholder="First Name" [class.invalid-input]="formData.controls.firstname.invalid && formData.controls.firstname.dirty"></ion-input>
+        </ion-item>
+
+        <ion-item no-padding>
+            <ion-input formControlName="lastname" type="text" placeholder="Last Name" [class.invalid-input]="formData.controls.lastname.invalid && formData.controls.lastname.dirty"></ion-input>
+        </ion-item>
+
+        <ion-item no-padding>
+            <ion-input formControlName="email" type="email" placeholder="Email" [class.invalid-input]="formData.controls.email.invalid && formData.controls.email.dirty"></ion-input>
+        </ion-item>
+
+        <ion-item no-padding>
+            <ion-input formControlName="phone" type="tel" placeholder="Phone" [class.invalid-input]="formData.controls.phone.invalid && formData.controls.phone.dirty"></ion-input>
+        </ion-item>
+
+        <div padding-top>
+
+            <ion-item no-padding>
+                <ion-input formControlName="username" type="text" placeholder="Username" [class.invalid-input]="formData.controls.username.invalid && formData.controls.username.dirty"></ion-input>
+            </ion-item>
+
+            <ion-item no-padding>
+                <ion-input formControlName="password" type="password" placeholder="Password" [class.invalid-input]="formData.controls.password.invalid && formData.controls.password.dirty"></ion-input>
+            </ion-item>
+
+        </div>
+
+    </form>
+
+    <p *ngIf="formData.controls.firstname.invalid && formData.controls.firstname.dirty" class="error-text">*First name must be letters only or length of name is too long</p>
+    <p *ngIf="formData.controls.lastname.invalid && formData.controls.lastname.dirty" class="error-text">*Last name must be letters only or length of name is too long</p>
+    <p *ngIf="formData.controls.email.invalid && formData.controls.email.dirty" class="error-text">*Email is not valid</p>
+    <p *ngIf="formData.controls.phone.invalid && formData.controls.phone.dirty" class="error-text">*Phone invalid. Must be 10 digits long</p>
+    <p *ngIf="formData.controls.username.invalid && formData.controls.username.dirty" class="error-text">*Username is already taken :-(</p>
+    <p *ngIf="formData.controls.password.invalid && formData.controls.password.dirty" class="error-text">*Password must be at least 8 characters</p>
+    
+
+
+    <div padding>
+        <button ion-button block class="bg-secondary-style std-text-color" (click)="registerUser()">Create Account</button>
+    </div>
+
+    <ion-grid>
+        <ion-row>
+            <ion-col class="align-text-middle std-text-color">Already have an account?<button ion-button clear
+                    no-padding color="secondary" (click)="close()">Login</button></ion-col>
+        </ion-row>
+    </ion-grid>
+
+</ion-content>

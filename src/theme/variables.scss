@@ -35,10 +35,12 @@ $app-direction: ltr;
 
 $colors: (
   primary:    #488aff,
-  secondary:  #32db64,
+  secondary:  #e6b03d,
+  success:    rgb(34, 196, 74),
+  warning:    rgb(202, 133, 43),
   danger:     #f53d3d,
   light:      #f4f4f4,
-  dark:       #222
+  dark:       #222,
 );
 
 

@@ -14,3 +14,36 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+
+
+.bg-primary-style{
+    background-color: color($colors, primary);
+}
+
+.bg-secondary-style{
+    background-color: color($colors, secondary);
+}
+
+.std-text-color{
+    color: white;
+    font-weight: bold;
+}
+
+.error-text{
+    color: color($colors, danger);
+}
+
+.invalid-input{
+    border-bottom: 2px solid color($colors, danger);
+}
+
+  
+h1{
+    font-size: 39pt;
+    font-weight: bold;
+}
+  
+.align-text-middle {
+    display: flex;
+    align-items: center;
+}
