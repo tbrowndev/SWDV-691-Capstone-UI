@@ -173,7 +173,8 @@ var HomePage = /** @class */ (function () {
         this.navCtrl = navCtrl;
         this.mdlCtrl = mdlCtrl;
         this.menuCtrl = menuCtrl;
-        this.user = new __WEBPACK_IMPORTED_MODULE_3__objects_objectFactory__["a" /* User */]();
+        this.user = new __WEBPACK_IMPORTED_MODULE_3__objects_objectFactory__["b" /* User */]();
+        this.recentPosts = [];
         //console.log(typeof(this.user));
         this.loginCommand();
     }
@@ -184,24 +185,58 @@ var HomePage = /** @class */ (function () {
         var _this = this;
         var login = this.mdlCtrl.create(__WEBPACK_IMPORTED_MODULE_2__modals_login_login__["a" /* LoginModal */], null, { showBackdrop: false, enableBackdropDismiss: false });
         login.onDidDismiss(function (userId) {
-            _this.getUserData(userId);
+            _this.setUserData(userId);
         });
         login.present();
     };
-    HomePage.prototype.getUserData = function (userId) {
+    HomePage.prototype.getRecentPosts = function (userId) {
+        //Go to server and retrieve all recent posts all groups user is associated with
+        for (var i = 0; i < 15; i++) {
+            var p = new __WEBPACK_IMPORTED_MODULE_3__objects_objectFactory__["a" /* Post */]();
+            p.setId(i);
+            p.setGroupId(i);
+            p.setMemberId(i);
+            p.groupName = "Group Number: " + i;
+            p.memberName = "Member " + i;
+            p.postData = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ut felis neque. Cras nec erat euismod, ultricies neque sagittis, gravida magna. Proin nec dignissim ipsum, quis sollicitudin neque. Vestibulum mattis justo turpis, sit amet tristique neque condimentum id. Curabitur ultrices dignissim gravida. Duis id ligula faucibus, blandit risus suscipit, semper sem.";
+            p.timestamp = new Date();
+            this.recentPosts.push(p);
+        }
+    };
+    HomePage.prototype.continueRecentPosts = function (infiniteScroll) {
+        var _this = this;
+        setTimeout(function () {
+            for (var i = 0; i < 15; i++) {
+                var p = new __WEBPACK_IMPORTED_MODULE_3__objects_objectFactory__["a" /* Post */]();
+                p.setId(i);
+                p.setGroupId(i);
+                p.setMemberId(i);
+                p.groupName = "Group Number: " + i;
+                p.memberName = "Member " + i;
+                p.postData = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ut felis neque. Cras nec erat euismod, ultricies neque sagittis, gravida magna. Proin nec dignissim ipsum, quis sollicitudin neque. Vestibulum mattis justo turpis, sit amet tristique neque condimentum id. Curabitur ultrices dignissim gravida. Duis id ligula faucibus, blandit risus suscipit, semper sem.";
+                p.timestamp = new Date();
+                _this.recentPosts.push(p);
+            }
+            infiniteScroll.complete();
+        }, 500);
+    };
+    HomePage.prototype.setUserData = function (userId) {
         //Goes to server again and gets the user information that has been stored
         this.user.name = "John Smith";
         this.user.email = "jsmith@gmail.com";
         this.user.phone = 3148675309;
         this.user.username = "jsmith229";
+        //calls the next function to get posts for user
+        this.getRecentPosts(userId);
     };
     HomePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-home',template:/*ion-inline-start:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/pages/home/home.html"*/'<ion-header>\n  <ion-toolbar color="primary">\n    <button ion-button (click)="showUser()">\n      <ion-icon name="person" class="ion-icon-large"></ion-icon>\n    </button>\n    <ion-title> {{user.username}}</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content padding>\n</ion-content>\n\n<ion-menu side="left" [content]="userMenu" type="overlay" color="primary">\n  <ion-content class="bg-primary-style">\n    <ion-card no-padding class="card-strd-style">\n      <ion-card-content no-padding>\n        <ion-item padding-left>\n          <ion-avatar item-start>\n            <ion-icon name="person" class="ion-icon-large"></ion-icon>\n          </ion-avatar>\n          <h2>Name</h2>\n          <h3>{{user.name}}</h3>\n        </ion-item>\n      </ion-card-content>\n    </ion-card>\n    <ion-card no-padding class="card-strd-style">\n      <ion-card-content no-padding>\n        <ion-item padding-left>\n          <ion-avatar item-start>\n            <ion-icon name="mail" class="ion-icon-large"></ion-icon>\n          </ion-avatar>\n          <h2>Email Address</h2>\n          <h3>{{user.email}}</h3>\n        </ion-item>\n      </ion-card-content>\n    </ion-card>\n    <ion-card no-padding class="card-strd-style">\n      <ion-card-content no-padding>\n        <ion-item padding-left>\n          <ion-avatar item-start>\n            <ion-icon name="call" class="ion-icon-large"></ion-icon>\n          </ion-avatar>\n          <h2>Phone Number</h2>\n          <h3>{{user.phone}}</h3>\n        </ion-item>\n      </ion-card-content>\n    </ion-card>\n    <button ion-item details-push>\n      <h3>Chat (Coming Soon!)</h3>\n    </button>\n    <button ion-item details-push>\n      <h3>Profile</h3>\n    </button>\n    <button ion-item details-push>\n      <h3>Settings (Coming Soon!)</h3>\n    </button>\n  </ion-content>\n</ion-menu>\n\n<ion-nav #userMenu [root]="rootPage"></ion-nav>'/*ion-inline-end:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/pages/home/home.html"*/
+            selector: 'page-home',template:/*ion-inline-start:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/pages/home/home.html"*/'<ion-header>\n  <ion-toolbar color="primary">\n    <button ion-button (click)="showUser()">\n      <ion-icon name="person" class="ion-icon-large"></ion-icon>\n    </button>\n    <ion-title> {{user.username}}</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content padding>\n  <ion-card *ngFor="let post of recentPosts">\n\n    <ion-item>\n      <ion-avatar item-start>\n        <ion-icon name="person" class="ion-icon-medium"></ion-icon>\n      </ion-avatar>\n      <p class="post-title-style" readonly>{{post.memberName}} in {{post.groupName}}</p>\n    </ion-item>\n  \n    <ion-card-content>\n      <p readonly>{{post.postData}}</p>\n    </ion-card-content>\n  \n    <ion-row>\n      <ion-col>\n        <button ion-button icon-start clear small>\n          <ion-icon name="heart" class="ion-icon-heart-like"></ion-icon>\n          <div>12 Likes</div>\n        </button>\n      </ion-col>\n      <ion-col>\n        <button ion-button icon-start clear small>\n          <ion-icon name="text"></ion-icon>\n          <div>4 Comments</div>\n        </button>\n      </ion-col>\n      <ion-col align-self-center text-center>\n        <ion-note>\n          11h ago\n        </ion-note>\n      </ion-col>\n    </ion-row>\n  \n  </ion-card>\n  <ion-infinite-scroll (ionInfinite)="continueRecentPosts($event)">\n    <ion-infinite-scroll-content>\n\n    </ion-infinite-scroll-content>\n  </ion-infinite-scroll>\n</ion-content>\n\n<!--Side Menu to display user information-->\n<ion-menu side="left" [content]="userMenu" type="overlay" color="primary">\n  <ion-content class="bg-primary-style">\n    <ion-card no-padding class="card-strd-style">\n      <ion-card-content no-padding>\n        <ion-item padding-left>\n          <ion-avatar item-start>\n            <ion-icon name="person" class="ion-icon-large"></ion-icon>\n          </ion-avatar>\n          <h2>Name</h2>\n          <h3>{{user.name}}</h3>\n        </ion-item>\n      </ion-card-content>\n    </ion-card>\n    <ion-card no-padding class="card-strd-style">\n      <ion-card-content no-padding>\n        <ion-item padding-left>\n          <ion-avatar item-start>\n            <ion-icon name="mail" class="ion-icon-large"></ion-icon>\n          </ion-avatar>\n          <h2>Email Address</h2>\n          <h3>{{user.email}}</h3>\n        </ion-item>\n      </ion-card-content>\n    </ion-card>\n    <ion-card no-padding class="card-strd-style">\n      <ion-card-content no-padding>\n        <ion-item padding-left>\n          <ion-avatar item-start>\n            <ion-icon name="call" class="ion-icon-large"></ion-icon>\n          </ion-avatar>\n          <h2>Phone Number</h2>\n          <h3>{{user.phone}}</h3>\n        </ion-item>\n      </ion-card-content>\n    </ion-card>\n    <button ion-item details-push>\n      <h3>Chat (Coming Soon!)</h3>\n    </button>\n    <button ion-item details-push>\n      <h3>Profile</h3>\n    </button>\n    <button ion-item details-push>\n      <h3>Settings (Coming Soon!)</h3>\n    </button>\n  </ion-content>\n</ion-menu>\n\n<ion-nav #userMenu [root]="rootPage"></ion-nav>'/*ion-inline-end:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/pages/home/home.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* ModalController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* MenuController */]])
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* ModalController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* ModalController */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* MenuController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* MenuController */]) === "function" && _c || Object])
     ], HomePage);
     return HomePage;
+    var _a, _b, _c;
 }());
 
 //# sourceMappingURL=home.js.map
@@ -510,15 +545,44 @@ var UsernameValidator = /** @class */ (function () {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return User; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return User; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Post; });
 var User = /** @class */ (function () {
-    function User(name, email, phone, username) {
-        this.name = name;
-        this.email = email;
-        this.phone = phone;
-        this.username = username;
+    function User() {
     }
+    ;
+    User.prototype.setId = function (id) {
+        this.id = id;
+    };
+    User.prototype.getId = function () {
+        return this.id;
+    };
     return User;
+}());
+
+var Post = /** @class */ (function () {
+    function Post() {
+    }
+    ;
+    Post.prototype.setId = function (id) {
+        this.id = id;
+    };
+    Post.prototype.setGroupId = function (id) {
+        this.groupId = id;
+    };
+    Post.prototype.setMemberId = function (id) {
+        this.memberId = id;
+    };
+    Post.prototype.getId = function () {
+        return this.id;
+    };
+    Post.prototype.getGroupId = function () {
+        return this.groupId;
+    };
+    Post.prototype.getMemberId = function () {
+        return this.memberId;
+    };
+    return Post;
 }());
 
 //# sourceMappingURL=objectFactory.js.map

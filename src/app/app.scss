@@ -43,7 +43,7 @@ h1{
     font-weight: bold;
 }
 h2{
-    font-size: 24pt;
+    font-size: 20pt;
 }
 
 h3{
@@ -53,6 +53,16 @@ h3{
 
 p{
     font-size: 12pt;
+}
+
+.post-title-style{
+    font-size: 12pt;
+    color: black;
+}
+
+.footer-style{
+    font-size: 6pt;
+    color: gray;
 }
   
 .align-text-middle {
@@ -75,4 +85,13 @@ p{
 .ion-icon-large{
     font-size: 50px;
     color: color($colors, secondary);
+}
+
+.ion-icon-medium{
+    font-size: 50px;
+    color: color($colors, secondary)
+}
+
+.ion-icon-heart-like{
+    color: red;
 }
