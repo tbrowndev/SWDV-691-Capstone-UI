@@ -30574,6 +30574,19 @@ h1 {
   font-weight: bold;
 }
 
+h2 {
+  font-size: 24pt;
+}
+
+h3 {
+  font-size: 14pt;
+  color: gray;
+}
+
+p {
+  font-size: 12pt;
+}
+
 .align-text-middle {
   display: -webkit-box;
   display: -webkit-flex;
@@ -30587,6 +30600,19 @@ h1 {
 
 .searchbar {
   background-color: #488aff;
+}
+
+.card-strd-style {
+  border-radius: 10px;
+}
+
+.card-cont-style {
+  background-color: #488aff;
+}
+
+.ion-icon-large {
+  font-size: 50px;
+  color: #e6b03d;
 }
 
 page-login ion-content {

@@ -23,6 +23,7 @@ export class LoginModal {
             if (creds !== undefined) {
                 this.username = creds["username"];
                 this.key = creds["password"];
+                creds = undefined;
                 this.login();
             }
 
