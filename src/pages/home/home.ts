@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, DateTime, InfiniteScroll } from 'ionic-angular';
+import { NavController } from 'ionic-angular';
 import { ModalController } from 'ionic-angular';
 import { LoginModal } from '../../modals/login/login'
 import { MenuController } from 'ionic-angular'

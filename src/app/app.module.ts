@@ -4,6 +4,7 @@ import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 
 import { SearchPage } from '../pages/search/search';
+import { GroupPage } from '../pages/groups/groups'
 import { NotificationPage } from '../pages/notifications/notifications';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
@@ -20,6 +21,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     SearchPage,
     NotificationPage,
     HomePage,
+    GroupPage,
     TabsPage,
     LoginModal,
     SignupModal
@@ -34,6 +36,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     SearchPage,
     NotificationPage,
     HomePage,
+    GroupPage,
     TabsPage,
     LoginModal,
     SignupModal

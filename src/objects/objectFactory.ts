@@ -1,5 +1,3 @@
-import { DateTime } from "ionic-angular";
-
 export class User {
 
     private id: number;

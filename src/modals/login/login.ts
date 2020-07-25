@@ -1,6 +1,7 @@
 import { Component } from "@angular/core";
 import { ModalController, ViewController } from 'ionic-angular';
-import { SignupModal } from '../signup/signup'
+import { SignupModal } from '../signup/signup';
+var anchr_encrypt = require("anchr_encrypt");
 
 @Component({
     selector: 'page-login',
@@ -8,8 +9,7 @@ import { SignupModal } from '../signup/signup'
 })
 export class LoginModal {
 
-    username: string;
-    key: string;
+    isValid: boolean;
 
     constructor(public mdlCtrl: ModalController, public vwCtrl: ViewController) {
     }
@@ -18,36 +18,53 @@ export class LoginModal {
 
         //console.log("starting Signup")
         let signup = this.mdlCtrl.create(SignupModal, null, { showBackdrop: false, enableBackdropDismiss: false });
-        signup.onDidDismiss(creds => {
 
-            if (creds !== undefined) {
-                this.username = creds["username"];
-                this.key = creds["password"];
-                creds = undefined;
-                this.login();
+        signup.onDidDismiss(registeredUser => {
+
+            if (registeredUser !== undefined) {
+                this.signUpLogin(registeredUser);
             }
 
-        })
+        });
+
         signup.present();
+
+    }
+
+    signUpLogin(registeredUser) {
+
+        this.vwCtrl.dismiss(registeredUser);
 
     }
 
     login() {
 
-        //send username and password to database and get the user ID of who is trying to login
-        if (this.username) {
-            if (this.username == "admin123" && this.key == "admin123") {
-                this.username = null;
-                this.key = null;
-                this.passValidId();
+        //get userId based on username
+        let user = document.getElementById("user");
+        let key = document.getElementById("key");
+        let encrypted = anchr_encrypt.encrypt(key);
+        console.log(user);
+        console.log(encrypted);
+
+        //match password
+        try{
+
+            switch (anchr_encrypt.verifyKey(encrypted, key)) {
+                case true:
+                    //login successfully
+                    let valid_id = 999;
+                    this.vwCtrl.dismiss(valid_id);
+                    break;
+                case false:
+                    this.isValid = false;
+                    break;
+                default:
+                    this.isValid = false;
+                    break;
             }
+        }catch (err){
+
         }
 
-    }
-
-    passValidId() {
-        //passes valid id to home page to retrieve user data
-        let validId = 9999
-        this.vwCtrl.dismiss(validId)
     }
 }

@@ -2,12 +2,14 @@
     <h1 padding text-center class="std-text-color">Anchr</h1>
 
     <ion-item no-padding>
-        <ion-input type="text" [(ngModel)]="username" placeholder="Username or Email"></ion-input>
+        <ion-input type="text" id="user" placeholder="Username or Email"></ion-input>
     </ion-item>
 
     <ion-item no-padding>
-        <ion-input type="password" [(ngModel)]="key" placeholder="Password"></ion-input>
+        <ion-input type="password" id="key" placeholder="Password"></ion-input>
     </ion-item>
+
+    <p *ngIf="isValid" class="error-text">Authentication Failed!</p>
 
     <div padding>
         <button ion-button block class="bg-secondary-style std-text-color" (click)="login()">Login</button>

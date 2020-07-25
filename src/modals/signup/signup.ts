@@ -11,7 +11,7 @@ export class SignupModal {
 
     public formData: FormGroup;
 
-    inputErrors = [];
+    fieldsRequired: boolean = false;
 
     constructor(public mdlCtrl: ModalController, public vwCtrl: ViewController, public frmBuilder: FormBuilder){
 
@@ -30,18 +30,18 @@ export class SignupModal {
         if(this.formData.valid){
             //console.log("User Registered!")
             //console.log(this.formData.value)
-            // sends this data to the database to be stored
-            this.passRegisteredUser();
+            // sends this data to the database to be stored and retrieves user id
+            let registered_user_id = 999; // this is the field that is pulled from the database
+            this.startRegisteredUser(registered_user_id);
+        }
+        else{
+            this.fieldsRequired = true;
         }
     }
 
-    passRegisteredUser(){
+    startRegisteredUser(id:number){
         //passes valid username and password to login page
-        let registeredData = {
-            "username": this.formData.controls.username.value,
-            "password": this.formData.controls.password.value
-        }
-        this.vwCtrl.dismiss(registeredData);
+        this.vwCtrl.dismiss(id);
     }
 
     backToLogin(){

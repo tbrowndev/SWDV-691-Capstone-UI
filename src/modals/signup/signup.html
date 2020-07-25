@@ -2,7 +2,7 @@
     <h1 padding text-center class="std-text-color">Anchr</h1>
     <h3 class="std-text-color">Sign Up</h3>
 
-    <p *ng class="error-text">Account registration failed. See below for details</p>
+    <p *ngIf="fieldsRequired" class="error-text">Please complete all fields</p>
 
     <form [formGroup]="formData">
 
