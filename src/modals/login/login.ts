@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 import { ModalController, ViewController } from 'ionic-angular';
 import { SignupModal } from '../signup/signup';
-var anchr_encrypt = require("anchr_encrypt");
+//import { anchrEncrypt } from '../../security/anchrSecurity.js'
 
 @Component({
     selector: 'page-login',
@@ -10,6 +10,10 @@ var anchr_encrypt = require("anchr_encrypt");
 export class LoginModal {
 
     isValid: boolean;
+    user: string;
+    key: string;
+
+    //security = new anchrEncrypt();
 
     constructor(public mdlCtrl: ModalController, public vwCtrl: ViewController) {
     }
@@ -40,30 +44,32 @@ export class LoginModal {
     login() {
 
         //get userId based on username
-        let user = document.getElementById("user");
-        let key = document.getElementById("key");
-        let encrypted = anchr_encrypt.encrypt(key);
-        console.log(user);
-        console.log(encrypted);
+        //let encrypted = this.security.encrypt(key);
 
         //match password
-        try{
+        // try {
 
-            switch (anchr_encrypt.verifyKey(encrypted, key)) {
-                case true:
-                    //login successfully
-                    let valid_id = 999;
-                    this.vwCtrl.dismiss(valid_id);
-                    break;
-                case false:
-                    this.isValid = false;
-                    break;
-                default:
-                    this.isValid = false;
-                    break;
-            }
-        }catch (err){
+        //     switch (this.security.check(encrypted, key)) {
+        //         case true:
+        //             //login successfully
+        //             // let valid_id = 999;
+        //             // this.vwCtrl.dismiss(valid_id);
+        //             break;
+        //         case false:
+        //             this.isValid = true;
+        //             break;
+        //         default:
+        //             this.isValid = true;
+        //             break;
+        //     }
+        // } catch (err) {
 
+        // }
+        if (this.user == "admin" && this.key == "123") {
+            let valid_id = 999;
+            this.vwCtrl.dismiss(valid_id);
+        }else{
+            this.isValid = true;
         }
 
     }

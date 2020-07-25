@@ -30587,6 +30587,11 @@ p {
   font-size: 12pt;
 }
 
+.subcomment {
+  margin-left: 30px;
+  color: grey;
+}
+
 .post-title-style {
   font-size: 12pt;
   color: black;
@@ -30626,7 +30631,12 @@ p {
 }
 
 .ion-icon-medium {
-  font-size: 50px;
+  font-size: 30px;
+  color: #e6b03d;
+}
+
+.ion-icon-small {
+  font-size: 20px;
   color: #e6b03d;
 }
 

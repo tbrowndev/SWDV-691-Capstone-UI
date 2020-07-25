@@ -1,0 +1,67 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>
+      {{post.memberName}}
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content no-padding>
+  <!-- Post-->
+  <ion-card>
+
+    <ion-item>
+      <ion-avatar item-start>
+        <ion-icon name="person" class="ion-icon-large"></ion-icon>
+      </ion-avatar>
+      <p readonly>{{post.groupName}}</p>
+    </ion-item>
+
+    <ion-card-content>
+      <p readonly>{{post.postData}}</p>
+    </ion-card-content>
+
+    <ion-row>
+      <ion-col>
+        <button ion-button icon-start clear small>
+          <ion-icon name="heart" class="ion-icon-heart-like"></ion-icon>
+          <div>12 Likes</div>
+        </button>
+      </ion-col>
+      <ion-col>
+        <button ion-button icon-start clear small>
+          <ion-icon name="text"></ion-icon>
+          <div>4 Comments</div>
+        </button>
+      </ion-col>
+      <ion-col align-self-center text-center>
+        <ion-note>
+          11h ago
+        </ion-note>
+      </ion-col>
+    </ion-row>
+
+  </ion-card>
+  <!-- Comments -->
+  <ion-card *ngFor="let comment of comments">
+
+    <ion-card-content>
+      <p>
+        <ion-icon name="person" class="ion-icon-medium"></ion-icon> {{comment.memberName}} {{comment.commentData}}
+      </p>
+      <!-- Sub Comments-->
+      <div *ngFor="let sc of getSubComments(comment.getId())" class="subcomment">
+        <ion-icon name="person" class="ion-icon-small"></ion-icon> {{sc.memberName}} {{sc.commentData}}
+      </div>
+    </ion-card-content>
+
+
+
+  </ion-card>
+
+  <ion-infinite-scroll (ionInfinite)="continueComments($event)">
+    <ion-infinite-scroll-content>
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
+</ion-content>

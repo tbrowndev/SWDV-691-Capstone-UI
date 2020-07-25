@@ -4,6 +4,7 @@ import { ModalController } from 'ionic-angular';
 import { LoginModal } from '../../modals/login/login'
 import { MenuController } from 'ionic-angular'
 import { User, Post } from '../../objects/objectFactory'
+import { PostPage } from '../post/post'
 
 @Component({
   selector: 'page-home',
@@ -44,7 +45,7 @@ export class HomePage {
       p.setId(i);
       p.setGroupId(i);
       p.setMemberId(i);
-      p.groupName = "Group Number: " + i;
+      p.groupName = "Group " + i;
       p.memberName = "Member " + i;
       p.postData = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ut felis neque. Cras nec erat euismod, ultricies neque sagittis, gravida magna. Proin nec dignissim ipsum, quis sollicitudin neque. Vestibulum mattis justo turpis, sit amet tristique neque condimentum id. Curabitur ultrices dignissim gravida. Duis id ligula faucibus, blandit risus suscipit, semper sem."
       p.timestamp = new Date();
@@ -60,7 +61,7 @@ export class HomePage {
       p.setId(i);
       p.setGroupId(i);
       p.setMemberId(i);
-      p.groupName = "Group Number: " + i;
+      p.groupName = "Group " + i;
       p.memberName = "Member " + i;
       p.postData = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ut felis neque. Cras nec erat euismod, ultricies neque sagittis, gravida magna. Proin nec dignissim ipsum, quis sollicitudin neque. Vestibulum mattis justo turpis, sit amet tristique neque condimentum id. Curabitur ultrices dignissim gravida. Duis id ligula faucibus, blandit risus suscipit, semper sem."
       p.timestamp = new Date();
@@ -80,6 +81,12 @@ export class HomePage {
     //calls the next function to get posts for user
     this.getRecentPosts(userId);
 
+  }
+
+  postSelected(post){
+    this.navCtrl.push(PostPage, {
+      selectedPost: post,
+    })
   }
 
 }
