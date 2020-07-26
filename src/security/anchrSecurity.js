@@ -1,5 +1,5 @@
 'use strict'
-const argon2 = require('argon2');
+require('argon2');
 
 export class anchrEncrypt {
 

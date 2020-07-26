@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 import { ModalController, ViewController } from 'ionic-angular';
 import { SignupModal } from '../signup/signup';
-//import { anchrEncrypt } from '../../security/anchrSecurity.js'
+//import { anchrEncrypt } from 'anchrSecurity'
 
 @Component({
     selector: 'page-login',

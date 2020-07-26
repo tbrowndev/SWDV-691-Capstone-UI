@@ -15,7 +15,6 @@ import { SignupModal } from '../modals/signup/signup'
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { formArrayNameProvider } from '@angular/forms/src/directives/reactive_directives/form_group_name';
 
 @NgModule({
   declarations: [

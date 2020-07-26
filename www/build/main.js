@@ -53,7 +53,7 @@ var core_1 = __webpack_require__(0);
 var search_1 = __webpack_require__(194);
 var notifications_1 = __webpack_require__(195);
 var home_1 = __webpack_require__(196);
-var groups_1 = __webpack_require__(277);
+var groups_1 = __webpack_require__(201);
 var TabsPage = /** @class */ (function () {
     function TabsPage() {
         this.tab1Root = home_1.HomePage;
@@ -89,7 +89,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
-var ionic_angular_1 = __webpack_require__(16);
+var ionic_angular_1 = __webpack_require__(13);
 var SearchPage = /** @class */ (function () {
     function SearchPage(navCtrl) {
         this.navCtrl = navCtrl;
@@ -123,7 +123,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
-var ionic_angular_1 = __webpack_require__(16);
+var ionic_angular_1 = __webpack_require__(13);
 var NotificationPage = /** @class */ (function () {
     function NotificationPage(navCtrl) {
         this.navCtrl = navCtrl;
@@ -157,12 +157,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
-var ionic_angular_1 = __webpack_require__(16);
-var ionic_angular_2 = __webpack_require__(16);
+var ionic_angular_1 = __webpack_require__(13);
+var ionic_angular_2 = __webpack_require__(13);
 var login_1 = __webpack_require__(197);
-var ionic_angular_3 = __webpack_require__(16);
-var objectFactory_1 = __webpack_require__(275);
-var post_1 = __webpack_require__(278);
+var ionic_angular_3 = __webpack_require__(13);
+var objectFactory_1 = __webpack_require__(199);
+var post_1 = __webpack_require__(200);
 var HomePage = /** @class */ (function () {
     function HomePage(navCtrl, mdlCtrl, menuCtrl) {
         this.navCtrl = navCtrl;
@@ -258,9 +258,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
-var ionic_angular_1 = __webpack_require__(16);
+var ionic_angular_1 = __webpack_require__(13);
 var signup_1 = __webpack_require__(198);
-//import { anchrEncrypt } from '../../security/anchrSecurity.js'
+//import { anchrEncrypt } from 'anchrSecurity'
 var LoginModal = /** @class */ (function () {
     //security = new anchrEncrypt();
     function LoginModal(mdlCtrl, vwCtrl) {
@@ -338,9 +338,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
-var ionic_angular_1 = __webpack_require__(16);
-var forms_1 = __webpack_require__(15);
-var username_1 = __webpack_require__(274);
+var ionic_angular_1 = __webpack_require__(13);
+var forms_1 = __webpack_require__(16);
+var username_1 = __webpack_require__(276);
 var SignupModal = /** @class */ (function () {
     function SignupModal(mdlCtrl, vwCtrl, frmBuilder) {
         this.mdlCtrl = mdlCtrl;
@@ -388,160 +388,7 @@ exports.SignupModal = SignupModal;
 
 /***/ }),
 
-/***/ 200:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var platform_browser_dynamic_1 = __webpack_require__(201);
-var app_module_1 = __webpack_require__(223);
-platform_browser_dynamic_1.platformBrowserDynamic().bootstrapModule(app_module_1.AppModule);
-//# sourceMappingURL=main.js.map
-
-/***/ }),
-
-/***/ 223:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = __webpack_require__(0);
-var platform_browser_1 = __webpack_require__(31);
-var ionic_angular_1 = __webpack_require__(16);
-var app_component_1 = __webpack_require__(266);
-var search_1 = __webpack_require__(194);
-var groups_1 = __webpack_require__(277);
-var notifications_1 = __webpack_require__(195);
-var home_1 = __webpack_require__(196);
-var tabs_1 = __webpack_require__(193);
-var post_1 = __webpack_require__(278);
-var login_1 = __webpack_require__(197);
-var signup_1 = __webpack_require__(198);
-var status_bar_1 = __webpack_require__(189);
-var splash_screen_1 = __webpack_require__(192);
-var AppModule = /** @class */ (function () {
-    function AppModule() {
-    }
-    AppModule = __decorate([
-        core_1.NgModule({
-            declarations: [
-                app_component_1.MyApp,
-                search_1.SearchPage,
-                notifications_1.NotificationPage,
-                home_1.HomePage,
-                groups_1.GroupsPage,
-                post_1.PostPage,
-                tabs_1.TabsPage,
-                login_1.LoginModal,
-                signup_1.SignupModal
-            ],
-            imports: [
-                platform_browser_1.BrowserModule,
-                ionic_angular_1.IonicModule.forRoot(app_component_1.MyApp, {}, {
-                    links: []
-                })
-            ],
-            bootstrap: [ionic_angular_1.IonicApp],
-            entryComponents: [
-                app_component_1.MyApp,
-                search_1.SearchPage,
-                notifications_1.NotificationPage,
-                home_1.HomePage,
-                groups_1.GroupsPage,
-                post_1.PostPage,
-                tabs_1.TabsPage,
-                login_1.LoginModal,
-                signup_1.SignupModal
-            ],
-            providers: [
-                status_bar_1.StatusBar,
-                splash_screen_1.SplashScreen,
-                { provide: core_1.ErrorHandler, useClass: ionic_angular_1.IonicErrorHandler }
-            ]
-        })
-    ], AppModule);
-    return AppModule;
-}());
-exports.AppModule = AppModule;
-//# sourceMappingURL=app.module.js.map
-
-/***/ }),
-
-/***/ 266:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = __webpack_require__(0);
-var ionic_angular_1 = __webpack_require__(16);
-var status_bar_1 = __webpack_require__(189);
-var splash_screen_1 = __webpack_require__(192);
-var tabs_1 = __webpack_require__(193);
-var MyApp = /** @class */ (function () {
-    function MyApp(platform, statusBar, splashScreen) {
-        this.rootPage = tabs_1.TabsPage;
-        platform.ready().then(function () {
-            // Okay, so the platform is ready and our plugins are available.
-            // Here you can do any higher level native things you might need.
-            statusBar.styleDefault();
-            splashScreen.hide();
-        });
-    }
-    MyApp = __decorate([
-        core_1.Component({template:/*ion-inline-start:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/app/app.html"*/'<ion-nav [root]="rootPage"></ion-nav>\n'/*ion-inline-end:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/app/app.html"*/
-        }),
-        __metadata("design:paramtypes", [ionic_angular_1.Platform, status_bar_1.StatusBar, splash_screen_1.SplashScreen])
-    ], MyApp);
-    return MyApp;
-}());
-exports.MyApp = MyApp;
-//# sourceMappingURL=app.component.js.map
-
-/***/ }),
-
-/***/ 274:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var UsernameValidator = /** @class */ (function () {
-    function UsernameValidator() {
-    }
-    UsernameValidator.checkUsername = function (control) {
-        //send to server to check username
-        if (control.value.toLowerCase() == "admin") {
-            return {
-                "username already taken": true
-            };
-        }
-    };
-    return UsernameValidator;
-}());
-exports.UsernameValidator = UsernameValidator;
-//# sourceMappingURL=username.js.map
-
-/***/ }),
-
-/***/ 275:
+/***/ 199:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -658,7 +505,7 @@ exports.Subcomment = Subcomment;
 
 /***/ }),
 
-/***/ 277:
+/***/ 200:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -674,42 +521,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
-var ionic_angular_1 = __webpack_require__(16);
-var GroupsPage = /** @class */ (function () {
-    function GroupsPage(navCtrl) {
-        this.navCtrl = navCtrl;
-    }
-    GroupsPage = __decorate([
-        core_1.Component({
-            selector: 'page-groups',template:/*ion-inline-start:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/pages/mygroups/groups.html"*/'<ion-header>\n  <ion-toolbar color="primary">\n    <ion-title>\n      My Groups\n    </ion-title>\n  </ion-toolbar>\n  <ion-searchbar class="searchbar" placeholder="Search my groups"></ion-searchbar>\n</ion-header>\n\n<ion-content padding>\n\n</ion-content>'/*ion-inline-end:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/pages/mygroups/groups.html"*/
-        }),
-        __metadata("design:paramtypes", [ionic_angular_1.NavController])
-    ], GroupsPage);
-    return GroupsPage;
-}());
-exports.GroupsPage = GroupsPage;
-//# sourceMappingURL=groups.js.map
-
-/***/ }),
-
-/***/ 278:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = __webpack_require__(0);
-var ionic_angular_1 = __webpack_require__(16);
-var objectFactory_1 = __webpack_require__(275);
+var ionic_angular_1 = __webpack_require__(13);
+var objectFactory_1 = __webpack_require__(199);
 var PostPage = /** @class */ (function () {
     function PostPage(navCtrl, navPar) {
         this.navCtrl = navCtrl;
@@ -756,7 +569,194 @@ var PostPage = /** @class */ (function () {
 exports.PostPage = PostPage;
 //# sourceMappingURL=post.js.map
 
+/***/ }),
+
+/***/ 201:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__(0);
+var ionic_angular_1 = __webpack_require__(13);
+var GroupsPage = /** @class */ (function () {
+    function GroupsPage(navCtrl) {
+        this.navCtrl = navCtrl;
+    }
+    GroupsPage = __decorate([
+        core_1.Component({
+            selector: 'page-groups',template:/*ion-inline-start:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/pages/mygroups/groups.html"*/'<ion-header>\n  <ion-toolbar color="primary">\n    <ion-title>\n      My Groups\n    </ion-title>\n  </ion-toolbar>\n  <ion-searchbar class="searchbar" placeholder="Search my groups"></ion-searchbar>\n</ion-header>\n\n<ion-content padding>\n\n</ion-content>'/*ion-inline-end:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/pages/mygroups/groups.html"*/
+        }),
+        __metadata("design:paramtypes", [ionic_angular_1.NavController])
+    ], GroupsPage);
+    return GroupsPage;
+}());
+exports.GroupsPage = GroupsPage;
+//# sourceMappingURL=groups.js.map
+
+/***/ }),
+
+/***/ 202:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var platform_browser_dynamic_1 = __webpack_require__(203);
+var app_module_1 = __webpack_require__(225);
+platform_browser_dynamic_1.platformBrowserDynamic().bootstrapModule(app_module_1.AppModule);
+//# sourceMappingURL=main.js.map
+
+/***/ }),
+
+/***/ 225:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__(0);
+var platform_browser_1 = __webpack_require__(31);
+var ionic_angular_1 = __webpack_require__(13);
+var app_component_1 = __webpack_require__(268);
+var search_1 = __webpack_require__(194);
+var groups_1 = __webpack_require__(201);
+var notifications_1 = __webpack_require__(195);
+var home_1 = __webpack_require__(196);
+var tabs_1 = __webpack_require__(193);
+var post_1 = __webpack_require__(200);
+var login_1 = __webpack_require__(197);
+var signup_1 = __webpack_require__(198);
+var status_bar_1 = __webpack_require__(189);
+var splash_screen_1 = __webpack_require__(192);
+var AppModule = /** @class */ (function () {
+    function AppModule() {
+    }
+    AppModule = __decorate([
+        core_1.NgModule({
+            declarations: [
+                app_component_1.MyApp,
+                search_1.SearchPage,
+                notifications_1.NotificationPage,
+                home_1.HomePage,
+                groups_1.GroupsPage,
+                post_1.PostPage,
+                tabs_1.TabsPage,
+                login_1.LoginModal,
+                signup_1.SignupModal
+            ],
+            imports: [
+                platform_browser_1.BrowserModule,
+                ionic_angular_1.IonicModule.forRoot(app_component_1.MyApp, {}, {
+                    links: []
+                })
+            ],
+            bootstrap: [ionic_angular_1.IonicApp],
+            entryComponents: [
+                app_component_1.MyApp,
+                search_1.SearchPage,
+                notifications_1.NotificationPage,
+                home_1.HomePage,
+                groups_1.GroupsPage,
+                post_1.PostPage,
+                tabs_1.TabsPage,
+                login_1.LoginModal,
+                signup_1.SignupModal
+            ],
+            providers: [
+                status_bar_1.StatusBar,
+                splash_screen_1.SplashScreen,
+                { provide: core_1.ErrorHandler, useClass: ionic_angular_1.IonicErrorHandler }
+            ]
+        })
+    ], AppModule);
+    return AppModule;
+}());
+exports.AppModule = AppModule;
+//# sourceMappingURL=app.module.js.map
+
+/***/ }),
+
+/***/ 268:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__(0);
+var ionic_angular_1 = __webpack_require__(13);
+var status_bar_1 = __webpack_require__(189);
+var splash_screen_1 = __webpack_require__(192);
+var tabs_1 = __webpack_require__(193);
+var MyApp = /** @class */ (function () {
+    function MyApp(platform, statusBar, splashScreen) {
+        this.rootPage = tabs_1.TabsPage;
+        platform.ready().then(function () {
+            // Okay, so the platform is ready and our plugins are available.
+            // Here you can do any higher level native things you might need.
+            statusBar.styleDefault();
+            splashScreen.hide();
+        });
+    }
+    MyApp = __decorate([
+        core_1.Component({template:/*ion-inline-start:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/app/app.html"*/'<ion-nav [root]="rootPage"></ion-nav>\n'/*ion-inline-end:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/app/app.html"*/
+        }),
+        __metadata("design:paramtypes", [ionic_angular_1.Platform, status_bar_1.StatusBar, splash_screen_1.SplashScreen])
+    ], MyApp);
+    return MyApp;
+}());
+exports.MyApp = MyApp;
+//# sourceMappingURL=app.component.js.map
+
+/***/ }),
+
+/***/ 276:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var UsernameValidator = /** @class */ (function () {
+    function UsernameValidator() {
+    }
+    UsernameValidator.checkUsername = function (control) {
+        //send to server to check username
+        if (control.value.toLowerCase() == "admin") {
+            return {
+                "username already taken": true
+            };
+        }
+    };
+    return UsernameValidator;
+}());
+exports.UsernameValidator = UsernameValidator;
+//# sourceMappingURL=username.js.map
+
 /***/ })
 
-},[200]);
+},[202]);
 //# sourceMappingURL=main.js.map
