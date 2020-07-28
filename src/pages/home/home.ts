@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { ModalController } from 'ionic-angular';
-import { LoginModal } from '../../modals/login/login'
-import { MenuController } from 'ionic-angular'
-import { User, Post } from '../../objects/objectFactory'
-import { PostPage } from '../post/post'
+import { LoginModal } from '../../modals/login/login';
+import { MenuController } from 'ionic-angular';
+import { User, Post } from '../../objects/objectFactory';
+import { PostPage } from '../post/post';
 
 @Component({
   selector: 'page-home',
@@ -62,6 +62,12 @@ export class HomePage {
     this.navCtrl.push(PostPage, {
       selectedPost: post,
     })
+  }
+
+  logout(){
+    this.user = new User();
+    this.navCtrl.popToRoot();
+    location.reload();
   }
 
 }

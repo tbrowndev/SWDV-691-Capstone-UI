@@ -209,13 +209,19 @@ var HomePage = /** @class */ (function () {
             selectedPost: post,
         });
     };
+    HomePage.prototype.logout = function () {
+        this.user = new objectFactory_1.User();
+        this.navCtrl.popToRoot();
+        location.reload();
+    };
     HomePage = __decorate([
         core_1.Component({
-            selector: 'page-home',template:/*ion-inline-start:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/pages/home/home.html"*/'<ion-header>\n  <ion-toolbar color="primary">\n    <button ion-button (click)="showUser()">\n      <ion-icon name="person" class="ion-icon-large"></ion-icon>\n    </button>\n    <ion-title> {{user.username}}</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content padding>\n  <ion-card *ngFor="let post of recentPosts" (click)=postSelected(post)>\n\n    <ion-item>\n      <ion-avatar item-start>\n        <ion-icon name="person" class="ion-icon-large"></ion-icon>\n      </ion-avatar>\n      <p readonly>{{post.memberName}} in {{post.groupName}}</p>\n    </ion-item>\n  \n    <ion-card-content>\n      <p readonly>{{post.postData}}</p> \n    </ion-card-content>\n  \n    <ion-row>\n      <ion-col>\n        <button ion-button icon-start clear small>\n          <ion-icon name="heart" class="ion-icon-heart-like"></ion-icon>\n          <div>12 Likes</div>\n        </button>\n      </ion-col>\n      <ion-col>\n        <button ion-button icon-start clear small>\n          <ion-icon name="text"></ion-icon>\n          <div>4 Comments</div>\n        </button>\n      </ion-col>\n      <ion-col align-self-center text-center>\n        <ion-note>\n          11h ago\n        </ion-note>\n      </ion-col>\n    </ion-row>\n  \n  </ion-card>\n  <ion-infinite-scroll (ionInfinite)="continueRecentPosts($event)">\n    <ion-infinite-scroll-content>\n\n    </ion-infinite-scroll-content>\n  </ion-infinite-scroll>\n</ion-content>\n\n<ion-nav #userMenu [root]="rootPage"></ion-nav>\n\n<!--Side Menu to display user information-->\n<ion-menu side="left" [content]="userMenu" type="overlay" color="primary">\n    <ion-content class="bg-primary-style">\n      <ion-card no-padding class="card-strd-style">\n        <ion-card-content no-padding>\n          <ion-item padding-left>\n            <ion-avatar item-start>\n              <ion-icon name="person" class="ion-icon-large"></ion-icon>\n            </ion-avatar>\n            <h2>Name</h2>\n            <h3>{{user != undefined ? user.name: \'\'}}</h3>\n          </ion-item>\n        </ion-card-content>\n      </ion-card>\n      <ion-card no-padding class="card-strd-style">\n        <ion-card-content no-padding>\n          <ion-item padding-left>\n            <ion-avatar item-start>\n              <ion-icon name="mail" class="ion-icon-large"></ion-icon>\n            </ion-avatar>\n            <h2>Email Address</h2>\n            <h3>{{user != undefined ? user.email: \'\'}}</h3>\n          </ion-item>\n        </ion-card-content>\n      </ion-card>\n      <ion-card no-padding class="card-strd-style">\n        <ion-card-content no-padding>\n          <ion-item padding-left>\n            <ion-avatar item-start>\n              <ion-icon name="call" class="ion-icon-large"></ion-icon>\n            </ion-avatar>\n            <h2>Phone Number</h2>\n            <h3>{{user != undefined ? user.phone: \'\'}}</h3>\n          </ion-item>\n        </ion-card-content>\n      </ion-card>\n      <button ion-item details-push>\n        <h3>Chat</h3>\n      </button>\n      <button ion-item details-push>\n        <h3>Profile</h3>\n      </button>\n      <button ion-item details-push>\n        <h3>Settings</h3>\n      </button>\n      <button ion-item details-push>\n        <h3 class="error-text">Logout</h3>\n      </button>\n    </ion-content>\n  </ion-menu>\n'/*ion-inline-end:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/pages/home/home.html"*/
+            selector: 'page-home',template:/*ion-inline-start:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/pages/home/home.html"*/'<ion-header>\n  <ion-toolbar color="primary">\n    <button ion-button (click)="showUser()">\n      <ion-icon name="person" class="ion-icon-large"></ion-icon>\n    </button>\n    <ion-title> {{user.username}}</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content padding>\n  <ion-card *ngFor="let post of recentPosts" (click)=postSelected(post)>\n\n    <ion-item>\n      <ion-avatar item-start>\n        <ion-icon name="person" class="ion-icon-large"></ion-icon>\n      </ion-avatar>\n      <p readonly>{{post.memberName}} in {{post.groupName}}</p>\n    </ion-item>\n  \n    <ion-card-content>\n      <p readonly>{{post.postData}}</p> \n    </ion-card-content>\n  \n    <ion-row>\n      <ion-col>\n        <button ion-button icon-start clear small>\n          <ion-icon name="heart" class="ion-icon-heart-like"></ion-icon>\n          <div>12 Likes</div>\n        </button>\n      </ion-col>\n      <ion-col>\n        <button ion-button icon-start clear small>\n          <ion-icon name="text"></ion-icon>\n          <div>4 Comments</div>\n        </button>\n      </ion-col>\n      <ion-col align-self-center text-center>\n        <ion-note>\n          11h ago\n        </ion-note>\n      </ion-col>\n    </ion-row>\n  \n  </ion-card>\n  <ion-infinite-scroll (ionInfinite)="continueRecentPosts($event)">\n    <ion-infinite-scroll-content>\n\n    </ion-infinite-scroll-content>\n  </ion-infinite-scroll>\n</ion-content>\n\n<ion-nav #userMenu [root]="rootPage"></ion-nav>\n\n<!--Side Menu to display user information-->\n<ion-menu side="left" [content]="userMenu" type="overlay" color="primary">\n    <ion-content class="bg-primary-style">\n      <ion-card no-padding class="card-strd-style">\n        <ion-card-content no-padding>\n          <ion-item padding-left>\n            <ion-avatar item-start>\n              <ion-icon name="person" class="ion-icon-large"></ion-icon>\n            </ion-avatar>\n            <h2>Name</h2>\n            <h3>{{user != undefined ? user.name: \'\'}}</h3>\n          </ion-item>\n        </ion-card-content>\n      </ion-card>\n      <ion-card no-padding class="card-strd-style">\n        <ion-card-content no-padding>\n          <ion-item padding-left>\n            <ion-avatar item-start>\n              <ion-icon name="mail" class="ion-icon-large"></ion-icon>\n            </ion-avatar>\n            <h2>Email Address</h2>\n            <h3>{{user != undefined ? user.email: \'\'}}</h3>\n          </ion-item>\n        </ion-card-content>\n      </ion-card>\n      <ion-card no-padding class="card-strd-style">\n        <ion-card-content no-padding>\n          <ion-item padding-left>\n            <ion-avatar item-start>\n              <ion-icon name="call" class="ion-icon-large"></ion-icon>\n            </ion-avatar>\n            <h2>Phone Number</h2>\n            <h3>{{user != undefined ? user.phone: \'\'}}</h3>\n          </ion-item>\n        </ion-card-content>\n      </ion-card>\n      <button ion-item details-push>\n        <h3>Chat</h3>\n      </button>\n      <button ion-item details-push>\n        <h3>Profile</h3>\n      </button>\n      <button ion-item details-push>\n        <h3>Settings</h3>\n      </button>\n      <button ion-item details-push (click)="logout()">\n        <h3 class="error-text">Logout</h3>\n      </button>\n    </ion-content>\n  </ion-menu>\n'/*ion-inline-end:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/pages/home/home.html"*/
         }),
-        __metadata("design:paramtypes", [ionic_angular_1.NavController, ionic_angular_2.ModalController, ionic_angular_3.MenuController])
+        __metadata("design:paramtypes", [typeof (_a = typeof ionic_angular_1.NavController !== "undefined" && ionic_angular_1.NavController) === "function" && _a || Object, typeof (_b = typeof ionic_angular_2.ModalController !== "undefined" && ionic_angular_2.ModalController) === "function" && _b || Object, typeof (_c = typeof ionic_angular_3.MenuController !== "undefined" && ionic_angular_3.MenuController) === "function" && _c || Object])
     ], HomePage);
     return HomePage;
+    var _a, _b, _c;
 }());
 exports.HomePage = HomePage;
 //# sourceMappingURL=home.js.map
@@ -240,7 +246,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
 var ionic_angular_1 = __webpack_require__(13);
 var signup_1 = __webpack_require__(198);
-//import { anchrEncrypt } from 'anchrSecurity'
 var LoginModal = /** @class */ (function () {
     //security = new anchrEncrypt();
     function LoginModal(mdlCtrl, vwCtrl) {
@@ -254,34 +259,20 @@ var LoginModal = /** @class */ (function () {
         signup.onDidDismiss(function (registeredUser) {
             if (registeredUser !== undefined) {
                 _this.signUpLogin(registeredUser);
+                registeredUser = null;
             }
         });
         signup.present();
     };
     LoginModal.prototype.signUpLogin = function (registeredUser) {
         this.vwCtrl.dismiss(registeredUser);
+        registeredUser = null;
     };
     LoginModal.prototype.login = function () {
-        //get userId based on username
-        //let encrypted = this.security.encrypt(key);
-        //match password
-        // try {
-        //     switch (this.security.check(encrypted, key)) {
-        //         case true:
-        //             //login successfully
-        //             // let valid_id = 999;
-        //             // this.vwCtrl.dismiss(valid_id);
-        //             break;
-        //         case false:
-        //             this.isValid = true;
-        //             break;
-        //         default:
-        //             this.isValid = true;
-        //             break;
-        //     }
-        // } catch (err) {
-        // }
+        //send to security to check credentials and return if true. 
         if (this.user == "admin" && this.key == "123") {
+            this.user = null;
+            this.key = null;
             var valid_id = 999;
             this.vwCtrl.dismiss(valid_id);
         }
@@ -293,9 +284,10 @@ var LoginModal = /** @class */ (function () {
         core_1.Component({
             selector: 'page-login',template:/*ion-inline-start:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/modals/login/login.html"*/'<ion-content class="bg-primary-style">\n    <h1 padding text-center class="std-text-color">Anchr</h1>\n\n    <ion-item no-padding>\n        <ion-input type="text" [(ngModel)]="user" placeholder="Username or Email"></ion-input>\n    </ion-item>\n\n    <ion-item no-padding>\n        <ion-input type="password" [(ngModel)]="key" placeholder="Password"></ion-input>\n    </ion-item>\n\n    <p *ngIf="isValid" class="error-text">Authentication Failed!</p>\n\n    <div padding>\n        <button ion-button block class="bg-secondary-style std-text-color" (click)="login()">Login</button>\n    </div>\n\n    <ion-grid>\n        <ion-row>\n            <ion-col class="align-text-middle std-text-color">Don\'t have an account?<button ion-button clear no-padding\n                    color="secondary" (click)="startSignup()">Create one</button></ion-col>\n        </ion-row>\n    </ion-grid>\n\n</ion-content>'/*ion-inline-end:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/modals/login/login.html"*/
         }),
-        __metadata("design:paramtypes", [ionic_angular_1.ModalController, ionic_angular_1.ViewController])
+        __metadata("design:paramtypes", [typeof (_a = typeof ionic_angular_1.ModalController !== "undefined" && ionic_angular_1.ModalController) === "function" && _a || Object, typeof (_b = typeof ionic_angular_1.ViewController !== "undefined" && ionic_angular_1.ViewController) === "function" && _b || Object])
     ], LoginModal);
     return LoginModal;
+    var _a, _b;
 }());
 exports.LoginModal = LoginModal;
 //# sourceMappingURL=login.js.map
@@ -597,6 +589,8 @@ exports.GroupsPage = GroupsPage;
 Object.defineProperty(exports, "__esModule", { value: true });
 var platform_browser_dynamic_1 = __webpack_require__(203);
 var app_module_1 = __webpack_require__(225);
+var core_1 = __webpack_require__(0);
+core_1.enableProdMode();
 platform_browser_dynamic_1.platformBrowserDynamic().bootstrapModule(app_module_1.AppModule);
 //# sourceMappingURL=main.js.map
 
@@ -705,16 +699,17 @@ var MyApp = /** @class */ (function () {
         platform.ready().then(function () {
             // Okay, so the platform is ready and our plugins are available.
             // Here you can do any higher level native things you might need.
-            statusBar.styleDefault();
-            splashScreen.hide();
+            //statusBar.styleDefault();
+            //splashScreen.hide();
         });
     }
     MyApp = __decorate([
         core_1.Component({template:/*ion-inline-start:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/app/app.html"*/'<ion-nav [root]="rootPage"></ion-nav>\n'/*ion-inline-end:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/app/app.html"*/
         }),
-        __metadata("design:paramtypes", [ionic_angular_1.Platform, status_bar_1.StatusBar, splash_screen_1.SplashScreen])
+        __metadata("design:paramtypes", [typeof (_a = typeof ionic_angular_1.Platform !== "undefined" && ionic_angular_1.Platform) === "function" && _a || Object, typeof (_b = typeof status_bar_1.StatusBar !== "undefined" && status_bar_1.StatusBar) === "function" && _b || Object, typeof (_c = typeof splash_screen_1.SplashScreen !== "undefined" && splash_screen_1.SplashScreen) === "function" && _c || Object])
     ], MyApp);
     return MyApp;
+    var _a, _b, _c;
 }());
 exports.MyApp = MyApp;
 //# sourceMappingURL=app.component.js.map

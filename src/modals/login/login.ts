@@ -1,7 +1,6 @@
 import { Component } from "@angular/core";
 import { ModalController, ViewController } from 'ionic-angular';
 import { SignupModal } from '../signup/signup';
-//import { anchrEncrypt } from 'anchrSecurity'
 
 @Component({
     selector: 'page-login',
@@ -27,6 +26,7 @@ export class LoginModal {
 
             if (registeredUser !== undefined) {
                 this.signUpLogin(registeredUser);
+                registeredUser = null;
             }
 
         });
@@ -38,34 +38,16 @@ export class LoginModal {
     signUpLogin(registeredUser) {
 
         this.vwCtrl.dismiss(registeredUser);
+        registeredUser = null;
 
     }
 
     login() {
 
-        //get userId based on username
-        //let encrypted = this.security.encrypt(key);
-
-        //match password
-        // try {
-
-        //     switch (this.security.check(encrypted, key)) {
-        //         case true:
-        //             //login successfully
-        //             // let valid_id = 999;
-        //             // this.vwCtrl.dismiss(valid_id);
-        //             break;
-        //         case false:
-        //             this.isValid = true;
-        //             break;
-        //         default:
-        //             this.isValid = true;
-        //             break;
-        //     }
-        // } catch (err) {
-
-        // }
+        //send to security to check credentials and return if true. 
         if (this.user == "admin" && this.key == "123") {
+            this.user = null;
+            this.key = null
             let valid_id = 999;
             this.vwCtrl.dismiss(valid_id);
         }else{
