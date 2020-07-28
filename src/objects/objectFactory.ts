@@ -7,19 +7,20 @@ export class User {
     public phone: number;
     public username: string;
 
-    constructor() {
-    };
-
-    setId(id:number){
+    constructor(id?:number,name?:string, email?:string, phone?:number, username?:string ) {
         this.id = id;
-    }
+        this.name = name;
+        this.email = email;
+        this.phone = phone;
+        this.username = username;
+    };
 
     getId(){
         return this.id;
     }
 }
 
-export class group{
+export class Group{
     private id: number;
     private adminId: number;
     public name: string;
@@ -66,18 +67,15 @@ export class Post {
     public postData: string;
     public timestamp: Date;
 
-    constructor() {
-    };
-
-    setId(id: number) {
+    constructor(id:number, groupId:number, memberId:number, memberName: string, groupName:string, postData:string, timestamp:Date) {
         this.id = id;
-    }
-    setGroupId(id: number) {
-        this.groupId = id;
-    }
-    setMemberId(id: number) {
-        this.memberId = id;
-    }
+        this.groupId = groupId;
+        this.memberId = memberId;
+        this.memberName = memberName;
+        this.groupName = groupName;
+        this.postData = postData;
+        this.timestamp = timestamp;
+    };
 
     getId() {
         return this.id;

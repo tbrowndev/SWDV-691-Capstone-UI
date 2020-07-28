@@ -5,6 +5,7 @@ import { MyApp } from './app.component';
 
 import { SearchPage } from '../pages/search/search';
 import { GroupsPage } from '../pages/mygroups/groups'
+import { GroupPage } from '../pages/group/group'
 import { NotificationPage } from '../pages/notifications/notifications';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
@@ -23,6 +24,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     NotificationPage,
     HomePage,
     GroupsPage,
+    GroupPage,
     PostPage,
     TabsPage,
     LoginModal,
@@ -39,6 +41,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     NotificationPage,
     HomePage,
     GroupsPage,
+    GroupPage,
     PostPage,
     TabsPage,
     LoginModal,

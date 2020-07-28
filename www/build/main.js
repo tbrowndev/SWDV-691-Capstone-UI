@@ -165,36 +165,26 @@ var objectFactory_1 = __webpack_require__(199);
 var post_1 = __webpack_require__(200);
 var HomePage = /** @class */ (function () {
     function HomePage(navCtrl, mdlCtrl, menuCtrl) {
+        var _this = this;
         this.navCtrl = navCtrl;
         this.mdlCtrl = mdlCtrl;
         this.menuCtrl = menuCtrl;
         this.user = new objectFactory_1.User();
         this.recentPosts = [];
         //console.log(typeof(this.user));
-        this.loginCommand();
-    }
-    HomePage.prototype.showUser = function () {
-        this.menuCtrl.open();
-    };
-    HomePage.prototype.loginCommand = function () {
-        var _this = this;
         var login = this.mdlCtrl.create(login_1.LoginModal, null, { showBackdrop: false, enableBackdropDismiss: false });
         login.onDidDismiss(function (userId) {
             _this.setUserData(userId);
         });
         login.present();
+    }
+    HomePage.prototype.showUser = function () {
+        this.menuCtrl.open();
     };
     HomePage.prototype.getRecentPosts = function (userId) {
         //Go to server and retrieve all recent posts all groups user is associated with
         for (var i = 0; i < 15; i++) {
-            var p = new objectFactory_1.Post();
-            p.setId(i);
-            p.setGroupId(i);
-            p.setMemberId(i);
-            p.groupName = "Group " + i;
-            p.memberName = "Member " + i;
-            p.postData = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ut felis neque. Cras nec erat euismod, ultricies neque sagittis, gravida magna. Proin nec dignissim ipsum, quis sollicitudin neque. Vestibulum mattis justo turpis, sit amet tristique neque condimentum id. Curabitur ultrices dignissim gravida. Duis id ligula faucibus, blandit risus suscipit, semper sem.";
-            p.timestamp = new Date();
+            var p = new objectFactory_1.Post(i, i, i, "Member " + i, "Group " + i, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ut felis neque. Cras nec erat euismod, ultricies neque sagittis, gravida magna.", new Date());
             this.recentPosts.push(p);
         }
     };
@@ -202,14 +192,7 @@ var HomePage = /** @class */ (function () {
         var _this = this;
         setTimeout(function () {
             for (var i = 0; i < 15; i++) {
-                var p = new objectFactory_1.Post();
-                p.setId(i);
-                p.setGroupId(i);
-                p.setMemberId(i);
-                p.groupName = "Group " + i;
-                p.memberName = "Member " + i;
-                p.postData = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ut felis neque. Cras nec erat euismod, ultricies neque sagittis, gravida magna. Proin nec dignissim ipsum, quis sollicitudin neque. Vestibulum mattis justo turpis, sit amet tristique neque condimentum id. Curabitur ultrices dignissim gravida. Duis id ligula faucibus, blandit risus suscipit, semper sem.";
-                p.timestamp = new Date();
+                var p = new objectFactory_1.Post(i, i, i, "Member " + i, "Group " + i, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ut felis neque. Cras nec erat euismod, ultricies neque sagittis, gravida magna.", new Date());
                 _this.recentPosts.push(p);
             }
             infiniteScroll.complete();
@@ -217,10 +200,7 @@ var HomePage = /** @class */ (function () {
     };
     HomePage.prototype.setUserData = function (userId) {
         //Goes to server again and gets the user information that has been stored
-        this.user.name = "John Smith";
-        this.user.email = "jsmith@gmail.com";
-        this.user.phone = 3148675309;
-        this.user.username = "jsmith229";
+        this.user = new objectFactory_1.User(userId, "John Smith", "jsmith@mycloud.com", 3148675309, "_johnjohn");
         //calls the next function to get posts for user
         this.getRecentPosts(userId);
     };
@@ -231,7 +211,7 @@ var HomePage = /** @class */ (function () {
     };
     HomePage = __decorate([
         core_1.Component({
-            selector: 'page-home',template:/*ion-inline-start:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/pages/home/home.html"*/'<ion-header>\n  <ion-toolbar color="primary">\n    <button ion-button (click)="showUser()">\n      <ion-icon name="person" class="ion-icon-large"></ion-icon>\n    </button>\n    <ion-title> {{user.username}}</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content padding>\n  <ion-card *ngFor="let post of recentPosts" (click)=postSelected(post)>\n\n    <ion-item>\n      <ion-avatar item-start>\n        <ion-icon name="person" class="ion-icon-large"></ion-icon>\n      </ion-avatar>\n      <p readonly>{{post.memberName}} in {{post.groupName}}</p>\n    </ion-item>\n  \n    <ion-card-content>\n      <p readonly>{{post.postData}}</p> \n    </ion-card-content>\n  \n    <ion-row>\n      <ion-col>\n        <button ion-button icon-start clear small>\n          <ion-icon name="heart" class="ion-icon-heart-like"></ion-icon>\n          <div>12 Likes</div>\n        </button>\n      </ion-col>\n      <ion-col>\n        <button ion-button icon-start clear small>\n          <ion-icon name="text"></ion-icon>\n          <div>4 Comments</div>\n        </button>\n      </ion-col>\n      <ion-col align-self-center text-center>\n        <ion-note>\n          11h ago\n        </ion-note>\n      </ion-col>\n    </ion-row>\n  \n  </ion-card>\n  <ion-infinite-scroll (ionInfinite)="continueRecentPosts($event)">\n    <ion-infinite-scroll-content>\n\n    </ion-infinite-scroll-content>\n  </ion-infinite-scroll>\n</ion-content>\n\n<!--Side Menu to display user information-->\n<ion-menu side="left" [content]="userMenu" type="overlay" color="primary">\n  <ion-content class="bg-primary-style">\n    <ion-card no-padding class="card-strd-style">\n      <ion-card-content no-padding>\n        <ion-item padding-left>\n          <ion-avatar item-start>\n            <ion-icon name="person" class="ion-icon-large"></ion-icon>\n          </ion-avatar>\n          <h2>Name</h2>\n          <h3>{{user.name}}</h3>\n        </ion-item>\n      </ion-card-content>\n    </ion-card>\n    <ion-card no-padding class="card-strd-style">\n      <ion-card-content no-padding>\n        <ion-item padding-left>\n          <ion-avatar item-start>\n            <ion-icon name="mail" class="ion-icon-large"></ion-icon>\n          </ion-avatar>\n          <h2>Email Address</h2>\n          <h3>{{user.email}}</h3>\n        </ion-item>\n      </ion-card-content>\n    </ion-card>\n    <ion-card no-padding class="card-strd-style">\n      <ion-card-content no-padding>\n        <ion-item padding-left>\n          <ion-avatar item-start>\n            <ion-icon name="call" class="ion-icon-large"></ion-icon>\n          </ion-avatar>\n          <h2>Phone Number</h2>\n          <h3>{{user.phone}}</h3>\n        </ion-item>\n      </ion-card-content>\n    </ion-card>\n    <button ion-item details-push>\n      <h3>Chat (Coming Soon!)</h3>\n    </button>\n    <button ion-item details-push>\n      <h3>Profile (Coming Soon!)</h3>\n    </button>\n    <button ion-item details-push>\n      <h3>Settings (Coming Soon!)</h3>\n    </button>\n  </ion-content>\n</ion-menu>\n\n<ion-nav #userMenu [root]="rootPage"></ion-nav>'/*ion-inline-end:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/pages/home/home.html"*/
+            selector: 'page-home',template:/*ion-inline-start:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/pages/home/home.html"*/'<ion-header>\n  <ion-toolbar color="primary">\n    <button ion-button (click)="showUser()">\n      <ion-icon name="person" class="ion-icon-large"></ion-icon>\n    </button>\n    <ion-title> {{user.username}}</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content padding>\n  <ion-card *ngFor="let post of recentPosts" (click)=postSelected(post)>\n\n    <ion-item>\n      <ion-avatar item-start>\n        <ion-icon name="person" class="ion-icon-large"></ion-icon>\n      </ion-avatar>\n      <p readonly>{{post.memberName}} in {{post.groupName}}</p>\n    </ion-item>\n  \n    <ion-card-content>\n      <p readonly>{{post.postData}}</p> \n    </ion-card-content>\n  \n    <ion-row>\n      <ion-col>\n        <button ion-button icon-start clear small>\n          <ion-icon name="heart" class="ion-icon-heart-like"></ion-icon>\n          <div>12 Likes</div>\n        </button>\n      </ion-col>\n      <ion-col>\n        <button ion-button icon-start clear small>\n          <ion-icon name="text"></ion-icon>\n          <div>4 Comments</div>\n        </button>\n      </ion-col>\n      <ion-col align-self-center text-center>\n        <ion-note>\n          11h ago\n        </ion-note>\n      </ion-col>\n    </ion-row>\n  \n  </ion-card>\n  <ion-infinite-scroll (ionInfinite)="continueRecentPosts($event)">\n    <ion-infinite-scroll-content>\n\n    </ion-infinite-scroll-content>\n  </ion-infinite-scroll>\n</ion-content>\n\n<ion-nav #userMenu [root]="rootPage"></ion-nav>\n\n<!--Side Menu to display user information-->\n<ion-menu side="left" [content]="userMenu" type="overlay" color="primary">\n    <ion-content class="bg-primary-style">\n      <ion-card no-padding class="card-strd-style">\n        <ion-card-content no-padding>\n          <ion-item padding-left>\n            <ion-avatar item-start>\n              <ion-icon name="person" class="ion-icon-large"></ion-icon>\n            </ion-avatar>\n            <h2>Name</h2>\n            <h3>{{user != undefined ? user.name: \'\'}}</h3>\n          </ion-item>\n        </ion-card-content>\n      </ion-card>\n      <ion-card no-padding class="card-strd-style">\n        <ion-card-content no-padding>\n          <ion-item padding-left>\n            <ion-avatar item-start>\n              <ion-icon name="mail" class="ion-icon-large"></ion-icon>\n            </ion-avatar>\n            <h2>Email Address</h2>\n            <h3>{{user != undefined ? user.email: \'\'}}</h3>\n          </ion-item>\n        </ion-card-content>\n      </ion-card>\n      <ion-card no-padding class="card-strd-style">\n        <ion-card-content no-padding>\n          <ion-item padding-left>\n            <ion-avatar item-start>\n              <ion-icon name="call" class="ion-icon-large"></ion-icon>\n            </ion-avatar>\n            <h2>Phone Number</h2>\n            <h3>{{user != undefined ? user.phone: \'\'}}</h3>\n          </ion-item>\n        </ion-card-content>\n      </ion-card>\n      <button ion-item details-push>\n        <h3>Chat</h3>\n      </button>\n      <button ion-item details-push>\n        <h3>Profile</h3>\n      </button>\n      <button ion-item details-push>\n        <h3>Settings</h3>\n      </button>\n      <button ion-item details-push>\n        <h3 class="error-text">Logout</h3>\n      </button>\n    </ion-content>\n  </ion-menu>\n'/*ion-inline-end:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/pages/home/home.html"*/
         }),
         __metadata("design:paramtypes", [ionic_angular_1.NavController, ionic_angular_2.ModalController, ionic_angular_3.MenuController])
     ], HomePage);
@@ -395,20 +375,22 @@ exports.SignupModal = SignupModal;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var User = /** @class */ (function () {
-    function User() {
+    function User(id, name, email, phone, username) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.phone = phone;
+        this.username = username;
     }
     ;
-    User.prototype.setId = function (id) {
-        this.id = id;
-    };
     User.prototype.getId = function () {
         return this.id;
     };
     return User;
 }());
 exports.User = User;
-var group = /** @class */ (function () {
-    function group(id, adminId, name, description, goal) {
+var Group = /** @class */ (function () {
+    function Group(id, adminId, name, description, goal) {
         this.id = id;
         this.adminId = adminId;
         this.name = name;
@@ -416,37 +398,35 @@ var group = /** @class */ (function () {
         this.goal = goal;
     }
     ;
-    group.prototype.getId = function () {
+    Group.prototype.getId = function () {
         return this.id;
     };
-    group.prototype.getadminId = function () {
+    Group.prototype.getadminId = function () {
         return this.adminId;
     };
-    group.prototype.setName = function (newName) {
+    Group.prototype.setName = function (newName) {
         this.name = newName;
     };
-    group.prototype.setDescription = function (newDesc) {
+    Group.prototype.setDescription = function (newDesc) {
         this.description = newDesc;
     };
-    group.prototype.setGoal = function (newGoal) {
+    Group.prototype.setGoal = function (newGoal) {
         this.goal = newGoal;
     };
-    return group;
+    return Group;
 }());
-exports.group = group;
+exports.Group = Group;
 var Post = /** @class */ (function () {
-    function Post() {
+    function Post(id, groupId, memberId, memberName, groupName, postData, timestamp) {
+        this.id = id;
+        this.groupId = groupId;
+        this.memberId = memberId;
+        this.memberName = memberName;
+        this.groupName = groupName;
+        this.postData = postData;
+        this.timestamp = timestamp;
     }
     ;
-    Post.prototype.setId = function (id) {
-        this.id = id;
-    };
-    Post.prototype.setGroupId = function (id) {
-        this.groupId = id;
-    };
-    Post.prototype.setMemberId = function (id) {
-        this.memberId = id;
-    };
     Post.prototype.getId = function () {
         return this.id;
     };
@@ -523,6 +503,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
 var ionic_angular_1 = __webpack_require__(13);
 var objectFactory_1 = __webpack_require__(199);
+var group_1 = __webpack_require__(277);
 var PostPage = /** @class */ (function () {
     function PostPage(navCtrl, navPar) {
         this.navCtrl = navCtrl;
@@ -558,9 +539,12 @@ var PostPage = /** @class */ (function () {
         }
         return subComments;
     };
+    PostPage.prototype.showGroup = function () {
+        this.navCtrl.push(group_1.GroupPage, { "id": this.post.getGroupId() });
+    };
     PostPage = __decorate([
         core_1.Component({
-            selector: 'page-post',template:/*ion-inline-start:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/pages/post/post.html"*/'<ion-header>\n  <ion-toolbar color="primary">\n    <ion-title>\n      {{post.memberName}}\n    </ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content no-padding>\n  <!-- Post-->\n  <ion-card>\n\n    <ion-item>\n      <ion-avatar item-start>\n        <ion-icon name="person" class="ion-icon-large"></ion-icon>\n      </ion-avatar>\n      <p readonly>{{post.groupName}}</p>\n    </ion-item>\n\n    <ion-card-content>\n      <p readonly>{{post.postData}}</p>\n    </ion-card-content>\n\n    <ion-row>\n      <ion-col>\n        <button ion-button icon-start clear small>\n          <ion-icon name="heart" class="ion-icon-heart-like"></ion-icon>\n          <div>12 Likes</div>\n        </button>\n      </ion-col>\n      <ion-col>\n        <button ion-button icon-start clear small>\n          <ion-icon name="text"></ion-icon>\n          <div>4 Comments</div>\n        </button>\n      </ion-col>\n      <ion-col align-self-center text-center>\n        <ion-note>\n          11h ago\n        </ion-note>\n      </ion-col>\n    </ion-row>\n\n  </ion-card>\n  <!-- Comments -->\n  <ion-card *ngFor="let comment of comments">\n\n    <ion-card-content>\n      <p>\n        <ion-icon name="person" class="ion-icon-medium"></ion-icon> {{comment.memberName}} {{comment.commentData}}\n      </p>\n      <!-- Sub Comments-->\n      <div *ngFor="let sc of getSubComments(comment.getId())" class="subcomment">\n        <ion-icon name="person" class="ion-icon-small"></ion-icon> {{sc.memberName}} {{sc.commentData}}\n      </div>\n    </ion-card-content>\n\n\n\n  </ion-card>\n\n  <ion-infinite-scroll (ionInfinite)="continueComments($event)">\n    <ion-infinite-scroll-content>\n    </ion-infinite-scroll-content>\n  </ion-infinite-scroll>\n\n</ion-content>'/*ion-inline-end:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/pages/post/post.html"*/
+            selector: 'page-post',template:/*ion-inline-start:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/pages/post/post.html"*/'<ion-header>\n  <ion-navbar color="primary">\n    <ion-title (click)="showGroup()">\n      {{post.groupName}}\n    </ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content no-padding>\n  <!-- Post-->\n  <ion-card>\n\n    <ion-item>\n      <ion-avatar item-start>\n        <ion-icon name="person" class="ion-icon-large"></ion-icon>\n      </ion-avatar>\n      <p readonly>{{post.memberName}}</p>\n    </ion-item>\n\n    <ion-card-content>\n      <p readonly>{{post.postData}}</p>\n    </ion-card-content>\n\n    <ion-row>\n      <ion-col>\n        <button ion-button icon-start clear small>\n          <ion-icon name="heart" class="ion-icon-heart-like"></ion-icon>\n          <div>12 Likes</div>\n        </button>\n      </ion-col>\n      <ion-col>\n        <button ion-button icon-start clear small>\n          <ion-icon name="text"></ion-icon>\n          <div>4 Comments</div>\n        </button>\n      </ion-col>\n      <ion-col align-self-center text-center>\n        <ion-note>\n          11h ago\n        </ion-note>\n      </ion-col>\n    </ion-row>\n    <ion-row class="reply-bg-style" no-padding>\n      <ion-col col-9>\n        <ion-textarea placeholder="Reply..." name="post_reply" class="reply-style"></ion-textarea> \n      </ion-col>\n      <ion-col align-self-right text-right col-3>\n        <button ion-button small class="reply-style">Reply</button>\n      </ion-col>\n    </ion-row>\n\n  </ion-card>\n  <!-- Comments -->\n  <ion-card *ngFor="let comment of comments">\n\n    <ion-card-content>\n      <p>\n        <ion-icon name="person" class="ion-icon-medium"></ion-icon> {{comment.memberName}} {{comment.commentData}}\n      </p>\n      <!-- Sub Comments-->\n      <div *ngFor="let sc of getSubComments(comment.getId())" class="subcomment">\n        <ion-icon name="person" class="ion-icon-small"></ion-icon> {{sc.memberName}} {{sc.commentData}}\n      </div>\n      <ion-row class="reply-bg-style" no-padding>\n        <ion-col col-9>\n          <ion-textarea placeholder="Reply..." name="post_reply" class="reply-style"></ion-textarea> \n        </ion-col>\n        <ion-col align-self-right text-right col-3>\n          <button ion-button block small class="reply-style">Reply</button>\n        </ion-col>\n      </ion-row>\n    </ion-card-content>\n\n  </ion-card>\n\n  <ion-infinite-scroll (ionInfinite)="continueComments($event)">\n    <ion-infinite-scroll-content>\n    </ion-infinite-scroll-content>\n  </ion-infinite-scroll>\n\n</ion-content>'/*ion-inline-end:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/pages/post/post.html"*/
         }),
         __metadata("design:paramtypes", [ionic_angular_1.NavController, ionic_angular_1.NavParams])
     ], PostPage);
@@ -636,6 +620,7 @@ var ionic_angular_1 = __webpack_require__(13);
 var app_component_1 = __webpack_require__(268);
 var search_1 = __webpack_require__(194);
 var groups_1 = __webpack_require__(201);
+var group_1 = __webpack_require__(277);
 var notifications_1 = __webpack_require__(195);
 var home_1 = __webpack_require__(196);
 var tabs_1 = __webpack_require__(193);
@@ -655,6 +640,7 @@ var AppModule = /** @class */ (function () {
                 notifications_1.NotificationPage,
                 home_1.HomePage,
                 groups_1.GroupsPage,
+                group_1.GroupPage,
                 post_1.PostPage,
                 tabs_1.TabsPage,
                 login_1.LoginModal,
@@ -673,6 +659,7 @@ var AppModule = /** @class */ (function () {
                 notifications_1.NotificationPage,
                 home_1.HomePage,
                 groups_1.GroupsPage,
+                group_1.GroupPage,
                 post_1.PostPage,
                 tabs_1.TabsPage,
                 login_1.LoginModal,
@@ -755,6 +742,87 @@ var UsernameValidator = /** @class */ (function () {
 }());
 exports.UsernameValidator = UsernameValidator;
 //# sourceMappingURL=username.js.map
+
+/***/ }),
+
+/***/ 277:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__(0);
+var ionic_angular_1 = __webpack_require__(13);
+var objectFactory_1 = __webpack_require__(199);
+var post_1 = __webpack_require__(200);
+var GroupPage = /** @class */ (function () {
+    function GroupPage(navCtrl, navPar, menuCtrl) {
+        this.navCtrl = navCtrl;
+        this.navPar = navPar;
+        this.menuCtrl = menuCtrl;
+        this.members = [];
+        this.posts = [];
+        this.curGroup = this.getGroupInfo(this.navPar.get("id"));
+        this.getGroupInfo(this.navPar.get("id"));
+        this.getGroupMembers();
+        this.getGroupPosts(this.navPar.get("id"));
+    }
+    GroupPage.prototype.getGroupInfo = function (id) {
+        //got to server and get group informaiton
+        var groupData = new objectFactory_1.Group(17234, 23, "Going back to the Gym", "this group was created to help those get motivated to get in the gym", "Slowly work your way into a routine of hitting the gym");
+        return groupData;
+    };
+    GroupPage.prototype.getGroupMembers = function () {
+        //go to server and get group members
+        this.members = [
+            new objectFactory_1.User(1, "Jane Doe", "jdoe@yahoo.com", 2243241325, "Jdoe243"),
+            new objectFactory_1.User(2, "James Smith", "jsmith@mycloud.com", 5156542212, "smith324")
+        ];
+    };
+    GroupPage.prototype.getGroupPosts = function (id) {
+        //go to server to get posts of related group
+        for (var i = 0; i < 10; i++) {
+            var p = new objectFactory_1.Post(i, i, i, "Member " + i, "Group " + i, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ut felis neque. Cras nec erat euismod, ultricies neque sagittis, gravida magna.", new Date());
+            this.posts.push(p);
+        }
+    };
+    GroupPage.prototype.continuePosts = function (infiniteScroll) {
+        var _this = this;
+        setTimeout(function () {
+            for (var i = 0; i < 10; i++) {
+                var p = new objectFactory_1.Post(i, i, i, "Member " + i, "Group " + i, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ut felis neque. Cras nec erat euismod, ultricies neque sagittis, gravida magna.", new Date());
+                _this.posts.push(p);
+            }
+            infiniteScroll.complete();
+        }, 500);
+    };
+    GroupPage.prototype.postSelected = function (post) {
+        this.navCtrl.push(post_1.PostPage, {
+            selectedPost: post,
+        });
+    };
+    GroupPage.prototype.showGroupInfo = function () {
+        this.menuCtrl.open('right');
+    };
+    GroupPage = __decorate([
+        core_1.Component({
+            selector: 'page-group',template:/*ion-inline-start:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/pages/group/group.html"*/'<ion-header>\n  <ion-navbar color="primary">\n    <ion-title>\n      {{curGroup.name}}\n    </ion-title>\n    <ion-buttons end>\n      <button ion-button (click)="showGroupInfo()">\n        <ion-icon name="people" class="ion-icon-large"></ion-icon>\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n\n  <ion-card *ngFor="let post of posts" (click)=postSelected(post)>\n\n    <ion-item>\n      <ion-avatar item-start>\n        <ion-icon name="person" class="ion-icon-large"></ion-icon>\n      </ion-avatar>\n      <p readonly>{{post.memberName}}</p>\n    </ion-item>\n\n    <ion-card-content>\n      <p readonly>{{post.postData}}</p>\n    </ion-card-content>\n\n    <ion-row>\n      <ion-col>\n        <button ion-button icon-start clear small>\n          <ion-icon name="heart" class="ion-icon-heart-like"></ion-icon>\n          <div>12 Likes</div>\n        </button>\n      </ion-col>\n      <ion-col>\n        <button ion-button icon-start clear small>\n          <ion-icon name="text"></ion-icon>\n          <div>4 Comments</div>\n        </button>\n      </ion-col>\n      <ion-col align-self-center text-center>\n        <ion-note>\n          11h ago\n        </ion-note>\n      </ion-col>\n    </ion-row>\n\n  </ion-card>\n  <ion-infinite-scroll (ionInfinite)="continuePosts($event)">\n    <ion-infinite-scroll-content>\n\n    </ion-infinite-scroll-content>\n  </ion-infinite-scroll>\n\n</ion-content>\n\n<!-- Side Menu to display user information-->\n<ion-menu side="right" [content]="groupMenu" type="overlay" color="primary">\n  <ion-content class="bg-primary-style">\n    <ion-card no-padding class="card-strd-style">\n      <ion-card-content padding>\n        <h2>Name</h2>\n        <p>{{curGroup.name}}</p>\n      </ion-card-content>\n    </ion-card>\n    <ion-card no-padding class="card-strd-style">\n      <ion-card-content padding>\n        <h2>Description</h2>\n        <p>{{curGroup.description}}</p>\n      </ion-card-content>\n    </ion-card>\n    <ion-card no-padding class="card-strd-style">\n      <ion-card-content padding>\n        <h2>Goal</h2>\n        <p>{{curGroup.goal}}</p>\n      </ion-card-content>\n    </ion-card>\n    <button ion-item details-push>\n      <h3>Members</h3>\n    </button>\n    <button ion-item details-push>\n      <h3>Milestones</h3>\n    </button>\n  </ion-content>\n</ion-menu>\n\n<ion-nav #groupMenu [root]="GroupPage"></ion-nav>'/*ion-inline-end:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/pages/group/group.html"*/
+        }),
+        __metadata("design:paramtypes", [ionic_angular_1.NavController, ionic_angular_1.NavParams, ionic_angular_1.MenuController])
+    ], GroupPage);
+    return GroupPage;
+}());
+exports.GroupPage = GroupPage;
+//# sourceMappingURL=group.js.map
 
 /***/ })
 

@@ -1,9 +1,9 @@
 <ion-header>
-  <ion-toolbar color="primary">
-    <ion-title>
-      {{post.memberName}}
+  <ion-navbar color="primary">
+    <ion-title (click)="showGroup()">
+      {{post.groupName}}
     </ion-title>
-  </ion-toolbar>
+  </ion-navbar>
 </ion-header>
 
 <ion-content no-padding>
@@ -14,7 +14,7 @@
       <ion-avatar item-start>
         <ion-icon name="person" class="ion-icon-large"></ion-icon>
       </ion-avatar>
-      <p readonly>{{post.groupName}}</p>
+      <p readonly>{{post.memberName}}</p>
     </ion-item>
 
     <ion-card-content>
@@ -40,6 +40,14 @@
         </ion-note>
       </ion-col>
     </ion-row>
+    <ion-row class="reply-bg-style" no-padding>
+      <ion-col col-9>
+        <ion-textarea placeholder="Reply..." name="post_reply" class="reply-style"></ion-textarea> 
+      </ion-col>
+      <ion-col align-self-right text-right col-3>
+        <button ion-button small class="reply-style">Reply</button>
+      </ion-col>
+    </ion-row>
 
   </ion-card>
   <!-- Comments -->
@@ -53,9 +61,15 @@
       <div *ngFor="let sc of getSubComments(comment.getId())" class="subcomment">
         <ion-icon name="person" class="ion-icon-small"></ion-icon> {{sc.memberName}} {{sc.commentData}}
       </div>
+      <ion-row class="reply-bg-style" no-padding>
+        <ion-col col-9>
+          <ion-textarea placeholder="Reply..." name="post_reply" class="reply-style"></ion-textarea> 
+        </ion-col>
+        <ion-col align-self-right text-right col-3>
+          <button ion-button block small class="reply-style">Reply</button>
+        </ion-col>
+      </ion-row>
     </ion-card-content>
-
-
 
   </ion-card>
 

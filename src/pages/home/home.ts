@@ -15,17 +15,8 @@ export class HomePage {
 
   recentPosts: Post[] = [];
 
-  constructor(public navCtrl: NavController, public mdlCtrl: ModalController, public menuCtrl: MenuController) {
+  constructor(public navCtrl: NavController, public mdlCtrl: ModalController, private menuCtrl: MenuController) {
     //console.log(typeof(this.user));
-    this.loginCommand();
-  }
-
-  showUser() {
-    this.menuCtrl.open();
-  }
-
-  loginCommand() {
-
     let login = this.mdlCtrl.create(LoginModal, null, { showBackdrop: false, enableBackdropDismiss: false });
 
     login.onDidDismiss(userId => {
@@ -33,38 +24,25 @@ export class HomePage {
     });
 
     login.present();
+  }
 
+  showUser() {
+    this.menuCtrl.open();
   }
 
   getRecentPosts(userId: number) {
 
     //Go to server and retrieve all recent posts all groups user is associated with
-    for (let i = 0; i < 15; i++) {
-
-      let p = new Post();
-      p.setId(i);
-      p.setGroupId(i);
-      p.setMemberId(i);
-      p.groupName = "Group " + i;
-      p.memberName = "Member " + i;
-      p.postData = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ut felis neque. Cras nec erat euismod, ultricies neque sagittis, gravida magna. Proin nec dignissim ipsum, quis sollicitudin neque. Vestibulum mattis justo turpis, sit amet tristique neque condimentum id. Curabitur ultrices dignissim gravida. Duis id ligula faucibus, blandit risus suscipit, semper sem."
-      p.timestamp = new Date();
-      this.recentPosts.push(p);
-
+    for(let i = 0; i< 15; i++){
+      let p = new Post(i, i, i, "Member " +i, "Group "+i, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ut felis neque. Cras nec erat euismod, ultricies neque sagittis, gravida magna.", new Date());
+    this.recentPosts.push(p);
     }
   }
 
   continueRecentPosts(infiniteScroll){
     setTimeout( () =>{
       for(let i = 0; i< 15; i++){
-        let p = new Post();
-      p.setId(i);
-      p.setGroupId(i);
-      p.setMemberId(i);
-      p.groupName = "Group " + i;
-      p.memberName = "Member " + i;
-      p.postData = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ut felis neque. Cras nec erat euismod, ultricies neque sagittis, gravida magna. Proin nec dignissim ipsum, quis sollicitudin neque. Vestibulum mattis justo turpis, sit amet tristique neque condimentum id. Curabitur ultrices dignissim gravida. Duis id ligula faucibus, blandit risus suscipit, semper sem."
-      p.timestamp = new Date();
+        let p = new Post(i, i, i, "Member " +i, "Group "+i, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ut felis neque. Cras nec erat euismod, ultricies neque sagittis, gravida magna.", new Date());
       this.recentPosts.push(p);
       }
       infiniteScroll.complete();
@@ -74,10 +52,7 @@ export class HomePage {
   setUserData(userId: number) {
 
     //Goes to server again and gets the user information that has been stored
-    this.user.name = "John Smith";
-    this.user.email = "jsmith@gmail.com";
-    this.user.phone = 3148675309;
-    this.user.username = "jsmith229";
+    this.user = new User(userId, "John Smith", "jsmith@mycloud.com", 3148675309, "_johnjohn")
     //calls the next function to get posts for user
     this.getRecentPosts(userId);
 

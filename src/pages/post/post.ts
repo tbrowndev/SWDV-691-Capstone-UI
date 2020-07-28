@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { Post, Comment, Subcomment } from '../../objects/objectFactory'
+import { GroupPage } from '../group/group'
 
 @Component({
   selector: 'page-post',
@@ -45,6 +46,10 @@ export class PostPage {
       subComments.push(sc);
     }
     return subComments;
+  }
+
+  showGroup(){
+    this.navCtrl.push( GroupPage, {"id": this.post.getGroupId()})
   }
 
 }
