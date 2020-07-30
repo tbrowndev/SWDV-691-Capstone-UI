@@ -1,7 +1,9 @@
 import { Component } from "@angular/core";
-import { ModalController, ViewController} from 'ionic-angular';
+import { ModalController, ViewController } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { UsernameValidator } from '../../validators/username'
+import { Auth_DataProvider } from '../../service/service'
+import { User } from "../../objects/objectFactory";
 
 @Component({
     selector: 'page-signup',
@@ -13,7 +15,9 @@ export class SignupModal {
 
     fieldsRequired: boolean = false;
 
-    constructor(public mdlCtrl: ModalController, public vwCtrl: ViewController, public frmBuilder: FormBuilder){
+    registrationIssue: boolean = false;
+
+    constructor(public mdlCtrl: ModalController, public vwCtrl: ViewController, public frmBuilder: FormBuilder, private service: Auth_DataProvider) {
 
         this.formData = frmBuilder.group({
             firstname: ['', Validators.compose([Validators.maxLength(20), Validators.pattern('[a-zA-Z]*'), Validators.required])],
@@ -25,26 +29,31 @@ export class SignupModal {
         });
     }
 
-    registerUser(){
+    registerUser() {
 
-        if(this.formData.valid){
-            //console.log("User Registered!")
-            //console.log(this.formData.value)
+        if (this.formData.valid) {
             // sends this data to the database to be stored and retrieves user id
-            let registered_user_id = 999; // this is the field that is pulled from the database
-            this.startRegisteredUser(registered_user_id);
+            let non_user: User = new User(null, this.formData.value.firstname + " " + this.formData.value.lastname, this.formData.value.email, this.formData.value.phone, this.formData.value.username);
+            try {
+                this.service.register_new_user(non_user, this.formData.value.password).subscribe( res => {
+                    this.startRegisteredUser(res.registered_id)
+                })
+            } catch (err) {
+                //log the error for future reference.
+            }
         }
-        else{
+        else {
             this.fieldsRequired = true;
         }
     }
 
-    startRegisteredUser(id:number){
-        //passes valid username and password to login page
+    startRegisteredUser(id: any) {
+        //passes valid id to login page
+        console.log(id);
         this.vwCtrl.dismiss(id);
     }
 
-    backToLogin(){
+    backToLogin() {
         this.vwCtrl.dismiss()
     }
 }

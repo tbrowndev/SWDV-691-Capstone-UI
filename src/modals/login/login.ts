@@ -1,6 +1,7 @@
 import { Component } from "@angular/core";
 import { ModalController, ViewController } from 'ionic-angular';
 import { SignupModal } from '../signup/signup';
+import { Auth_DataProvider } from '../../service/service'
 
 @Component({
     selector: 'page-login',
@@ -12,9 +13,7 @@ export class LoginModal {
     user: string;
     key: string;
 
-    //security = new anchrEncrypt();
-
-    constructor(public mdlCtrl: ModalController, public vwCtrl: ViewController) {
+    constructor(public mdlCtrl: ModalController, public vwCtrl: ViewController, private service: Auth_DataProvider) {
     }
 
     startSignup() {
@@ -45,13 +44,18 @@ export class LoginModal {
     login() {
 
         //send to security to check credentials and return if true. 
-        if (this.user == "admin" && this.key == "123") {
-            this.user = null;
-            this.key = null
-            let valid_id = 999;
-            this.vwCtrl.dismiss(valid_id);
-        }else{
-            this.isValid = true;
+        try {
+            this.service.validate_user_cred(this.user, this.key).subscribe( res => {
+                if(res.valid){
+                    this.vwCtrl.dismiss(res.valid_id);
+                }
+                else{
+                    this.isValid = true;
+                }
+            })
+        } catch (err) {
+            console.log(err)
+            //handles any error when authenticating user credentials
         }
 
     }

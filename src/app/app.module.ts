@@ -9,13 +9,15 @@ import { GroupPage } from '../pages/group/group'
 import { NotificationPage } from '../pages/notifications/notifications';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
-import { PostPage } from '../pages/post/post'
+import { PostPage } from '../pages/post/post';
 
-import { LoginModal } from '../modals/login/login'
-import { SignupModal } from '../modals/signup/signup'
+import { LoginModal } from '../modals/login/login';
+import { SignupModal } from '../modals/signup/signup';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { Auth_DataProvider } from '../service/service';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -32,6 +34,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
@@ -50,7 +53,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    Auth_DataProvider
   ]
 })
 export class AppModule {}

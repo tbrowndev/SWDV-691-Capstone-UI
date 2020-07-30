@@ -17,8 +17,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
 var ionic_angular_1 = __webpack_require__(12);
-var objectFactory_1 = __webpack_require__(99);
-var group_1 = __webpack_require__(201);
+var objectFactory_1 = __webpack_require__(50);
+var group_1 = __webpack_require__(204);
 var PostPage = /** @class */ (function () {
     function PostPage(navCtrl, navPar) {
         this.navCtrl = navCtrl;
@@ -70,7 +70,7 @@ exports.PostPage = PostPage;
 
 /***/ }),
 
-/***/ 110:
+/***/ 112:
 /***/ (function(module, exports) {
 
 function webpackEmptyAsyncContext(req) {
@@ -83,11 +83,11 @@ function webpackEmptyAsyncContext(req) {
 webpackEmptyAsyncContext.keys = function() { return []; };
 webpackEmptyAsyncContext.resolve = webpackEmptyAsyncContext;
 module.exports = webpackEmptyAsyncContext;
-webpackEmptyAsyncContext.id = 110;
+webpackEmptyAsyncContext.id = 112;
 
 /***/ }),
 
-/***/ 151:
+/***/ 154:
 /***/ (function(module, exports) {
 
 function webpackEmptyAsyncContext(req) {
@@ -100,11 +100,11 @@ function webpackEmptyAsyncContext(req) {
 webpackEmptyAsyncContext.keys = function() { return []; };
 webpackEmptyAsyncContext.resolve = webpackEmptyAsyncContext;
 module.exports = webpackEmptyAsyncContext;
-webpackEmptyAsyncContext.id = 151;
+webpackEmptyAsyncContext.id = 154;
 
 /***/ }),
 
-/***/ 195:
+/***/ 198:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -120,10 +120,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
-var search_1 = __webpack_require__(196);
-var notifications_1 = __webpack_require__(197);
-var home_1 = __webpack_require__(198);
-var groups_1 = __webpack_require__(202);
+var search_1 = __webpack_require__(199);
+var notifications_1 = __webpack_require__(200);
+var home_1 = __webpack_require__(201);
+var groups_1 = __webpack_require__(205);
 var TabsPage = /** @class */ (function () {
     function TabsPage() {
         this.tab1Root = home_1.HomePage;
@@ -143,7 +143,7 @@ exports.TabsPage = TabsPage;
 
 /***/ }),
 
-/***/ 196:
+/***/ 199:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -177,7 +177,7 @@ exports.SearchPage = SearchPage;
 
 /***/ }),
 
-/***/ 197:
+/***/ 200:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -211,7 +211,7 @@ exports.NotificationPage = NotificationPage;
 
 /***/ }),
 
-/***/ 198:
+/***/ 201:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -229,9 +229,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
 var ionic_angular_1 = __webpack_require__(12);
 var ionic_angular_2 = __webpack_require__(12);
-var login_1 = __webpack_require__(199);
+var login_1 = __webpack_require__(202);
 var ionic_angular_3 = __webpack_require__(12);
-var objectFactory_1 = __webpack_require__(99);
+var objectFactory_1 = __webpack_require__(50);
 var post_1 = __webpack_require__(100);
 var HomePage = /** @class */ (function () {
     function HomePage(navCtrl, mdlCtrl, menuCtrl) {
@@ -272,7 +272,7 @@ var HomePage = /** @class */ (function () {
         //Goes to server again and gets the user information that has been stored
         this.user = new objectFactory_1.User(userId, "John Smith", "jsmith@mycloud.com", 3148675309, "_johnjohn");
         //calls the next function to get posts for user
-        this.getRecentPosts(userId);
+        //this.getRecentPosts(userId);
     };
     HomePage.prototype.postSelected = function (post) {
         this.navCtrl.push(post_1.PostPage, {
@@ -288,16 +288,17 @@ var HomePage = /** @class */ (function () {
         core_1.Component({
             selector: 'page-home',template:/*ion-inline-start:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/pages/home/home.html"*/'<ion-header>\n  <ion-toolbar color="primary">\n    <button ion-button (click)="showUser()">\n      <ion-icon name="person" class="ion-icon-large"></ion-icon>\n    </button>\n    <ion-title> {{user.username}}</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content padding>\n  <ion-card *ngFor="let post of recentPosts" (click)=postSelected(post)>\n\n    <ion-item>\n      <ion-avatar item-start>\n        <ion-icon name="person" class="ion-icon-large"></ion-icon>\n      </ion-avatar>\n      <p readonly>{{post.memberName}} in {{post.groupName}}</p>\n    </ion-item>\n  \n    <ion-card-content>\n      <p readonly>{{post.postData}}</p> \n    </ion-card-content>\n  \n    <ion-row>\n      <ion-col>\n        <button ion-button icon-start clear small>\n          <ion-icon name="heart" class="ion-icon-heart-like"></ion-icon>\n          <div>12 Likes</div>\n        </button>\n      </ion-col>\n      <ion-col>\n        <button ion-button icon-start clear small>\n          <ion-icon name="text"></ion-icon>\n          <div>4 Comments</div>\n        </button>\n      </ion-col>\n      <ion-col align-self-center text-center>\n        <ion-note>\n          11h ago\n        </ion-note>\n      </ion-col>\n    </ion-row>\n  \n  </ion-card>\n  <ion-infinite-scroll (ionInfinite)="continueRecentPosts($event)">\n    <ion-infinite-scroll-content>\n\n    </ion-infinite-scroll-content>\n  </ion-infinite-scroll>\n</ion-content>\n\n<ion-nav #userMenu [root]="rootPage"></ion-nav>\n\n<!--Side Menu to display user information-->\n<ion-menu side="left" [content]="userMenu" type="overlay" color="primary">\n    <ion-content class="bg-primary-style">\n      <ion-card no-padding class="card-strd-style">\n        <ion-card-content no-padding>\n          <ion-item padding-left>\n            <ion-avatar item-start>\n              <ion-icon name="person" class="ion-icon-large"></ion-icon>\n            </ion-avatar>\n            <h2>Name</h2>\n            <h3>{{user != undefined ? user.name: \'\'}}</h3>\n          </ion-item>\n        </ion-card-content>\n      </ion-card>\n      <ion-card no-padding class="card-strd-style">\n        <ion-card-content no-padding>\n          <ion-item padding-left>\n            <ion-avatar item-start>\n              <ion-icon name="mail" class="ion-icon-large"></ion-icon>\n            </ion-avatar>\n            <h2>Email Address</h2>\n            <h3>{{user != undefined ? user.email: \'\'}}</h3>\n          </ion-item>\n        </ion-card-content>\n      </ion-card>\n      <ion-card no-padding class="card-strd-style">\n        <ion-card-content no-padding>\n          <ion-item padding-left>\n            <ion-avatar item-start>\n              <ion-icon name="call" class="ion-icon-large"></ion-icon>\n            </ion-avatar>\n            <h2>Phone Number</h2>\n            <h3>{{user != undefined ? user.phone: \'\'}}</h3>\n          </ion-item>\n        </ion-card-content>\n      </ion-card>\n      <button ion-item details-push>\n        <h3>Chat</h3>\n      </button>\n      <button ion-item details-push>\n        <h3>Profile</h3>\n      </button>\n      <button ion-item details-push>\n        <h3>Settings</h3>\n      </button>\n      <button ion-item details-push (click)="logout()">\n        <h3 class="error-text">Logout</h3>\n      </button>\n    </ion-content>\n  </ion-menu>\n'/*ion-inline-end:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/pages/home/home.html"*/
         }),
-        __metadata("design:paramtypes", [ionic_angular_1.NavController, ionic_angular_2.ModalController, ionic_angular_3.MenuController])
+        __metadata("design:paramtypes", [typeof (_a = typeof ionic_angular_1.NavController !== "undefined" && ionic_angular_1.NavController) === "function" && _a || Object, typeof (_b = typeof ionic_angular_2.ModalController !== "undefined" && ionic_angular_2.ModalController) === "function" && _b || Object, typeof (_c = typeof ionic_angular_3.MenuController !== "undefined" && ionic_angular_3.MenuController) === "function" && _c || Object])
     ], HomePage);
     return HomePage;
+    var _a, _b, _c;
 }());
 exports.HomePage = HomePage;
 //# sourceMappingURL=home.js.map
 
 /***/ }),
 
-/***/ 199:
+/***/ 202:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -314,12 +315,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
 var ionic_angular_1 = __webpack_require__(12);
-var signup_1 = __webpack_require__(200);
+var signup_1 = __webpack_require__(203);
+var service_1 = __webpack_require__(278);
 var LoginModal = /** @class */ (function () {
-    //security = new anchrEncrypt();
-    function LoginModal(mdlCtrl, vwCtrl) {
+    function LoginModal(mdlCtrl, vwCtrl, service) {
         this.mdlCtrl = mdlCtrl;
         this.vwCtrl = vwCtrl;
+        this.service = service;
     }
     LoginModal.prototype.startSignup = function () {
         var _this = this;
@@ -338,31 +340,38 @@ var LoginModal = /** @class */ (function () {
         registeredUser = null;
     };
     LoginModal.prototype.login = function () {
+        var _this = this;
         //send to security to check credentials and return if true. 
-        if (this.user == "admin" && this.key == "123") {
-            this.user = null;
-            this.key = null;
-            var valid_id = 999;
-            this.vwCtrl.dismiss(valid_id);
+        try {
+            this.service.validate_user_cred(this.user, this.key).subscribe(function (res) {
+                if (res.valid) {
+                    _this.vwCtrl.dismiss(res.valid_id);
+                }
+                else {
+                    _this.isValid = true;
+                }
+            });
         }
-        else {
-            this.isValid = true;
+        catch (err) {
+            console.log(err);
+            //handles any error when authenticating user credentials
         }
     };
     LoginModal = __decorate([
         core_1.Component({
-            selector: 'page-login',template:/*ion-inline-start:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/modals/login/login.html"*/'<ion-content class="bg-primary-style">\n    <h1 padding text-center class="std-text-color">Anchr</h1>\n\n    <ion-item no-padding>\n        <ion-input type="text" [(ngModel)]="user" placeholder="Username or Email"></ion-input>\n    </ion-item>\n\n    <ion-item no-padding>\n        <ion-input type="password" [(ngModel)]="key" placeholder="Password"></ion-input>\n    </ion-item>\n\n    <p *ngIf="isValid" class="error-text">Authentication Failed!</p>\n\n    <div padding>\n        <button ion-button block class="bg-secondary-style std-text-color" (click)="login()">Login</button>\n    </div>\n\n    <ion-grid>\n        <ion-row>\n            <ion-col class="align-text-middle std-text-color">Don\'t have an account?<button ion-button clear no-padding\n                    color="secondary" (click)="startSignup()">Create one</button></ion-col>\n        </ion-row>\n    </ion-grid>\n\n</ion-content>'/*ion-inline-end:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/modals/login/login.html"*/
+            selector: 'page-login',template:/*ion-inline-start:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/modals/login/login.html"*/'<ion-content class="bg-primary-style">\n    <h1 padding text-center class="std-text-color">Anchr</h1>\n\n    <ion-item no-padding>\n        <ion-input type="text" [(ngModel)]="user" placeholder="Username"></ion-input>\n    </ion-item>\n\n    <ion-item no-padding>\n        <ion-input type="password" [(ngModel)]="key" placeholder="Password"></ion-input>\n    </ion-item>\n\n    <p *ngIf="isValid" class="error-text">Authentication Failed!</p>\n\n    <div padding>\n        <button ion-button block class="bg-secondary-style std-text-color" (click)="login()">Login</button>\n    </div>\n\n    <ion-grid>\n        <ion-row>\n            <ion-col class="align-text-middle std-text-color">Don\'t have an account?<button ion-button clear no-padding\n                    color="secondary" (click)="startSignup()">Create one</button></ion-col>\n        </ion-row>\n    </ion-grid>\n\n</ion-content>'/*ion-inline-end:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/modals/login/login.html"*/
         }),
-        __metadata("design:paramtypes", [ionic_angular_1.ModalController, ionic_angular_1.ViewController])
+        __metadata("design:paramtypes", [typeof (_a = typeof ionic_angular_1.ModalController !== "undefined" && ionic_angular_1.ModalController) === "function" && _a || Object, typeof (_b = typeof ionic_angular_1.ViewController !== "undefined" && ionic_angular_1.ViewController) === "function" && _b || Object, typeof (_c = typeof service_1.Auth_DataProvider !== "undefined" && service_1.Auth_DataProvider) === "function" && _c || Object])
     ], LoginModal);
     return LoginModal;
+    var _a, _b, _c;
 }());
 exports.LoginModal = LoginModal;
 //# sourceMappingURL=login.js.map
 
 /***/ }),
 
-/***/ 200:
+/***/ 203:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -381,12 +390,16 @@ var core_1 = __webpack_require__(0);
 var ionic_angular_1 = __webpack_require__(12);
 var forms_1 = __webpack_require__(16);
 var username_1 = __webpack_require__(277);
+var service_1 = __webpack_require__(278);
+var objectFactory_1 = __webpack_require__(50);
 var SignupModal = /** @class */ (function () {
-    function SignupModal(mdlCtrl, vwCtrl, frmBuilder) {
+    function SignupModal(mdlCtrl, vwCtrl, frmBuilder, service) {
         this.mdlCtrl = mdlCtrl;
         this.vwCtrl = vwCtrl;
         this.frmBuilder = frmBuilder;
+        this.service = service;
         this.fieldsRequired = false;
+        this.registrationIssue = false;
         this.formData = frmBuilder.group({
             firstname: ['', forms_1.Validators.compose([forms_1.Validators.maxLength(20), forms_1.Validators.pattern('[a-zA-Z]*'), forms_1.Validators.required])],
             lastname: ['', forms_1.Validators.compose([forms_1.Validators.maxLength(20), forms_1.Validators.pattern('[a-zA-Z]*'), forms_1.Validators.required])],
@@ -397,19 +410,26 @@ var SignupModal = /** @class */ (function () {
         });
     }
     SignupModal.prototype.registerUser = function () {
+        var _this = this;
         if (this.formData.valid) {
-            //console.log("User Registered!")
-            //console.log(this.formData.value)
             // sends this data to the database to be stored and retrieves user id
-            var registered_user_id = 999; // this is the field that is pulled from the database
-            this.startRegisteredUser(registered_user_id);
+            var non_user = new objectFactory_1.User(null, this.formData.value.firstname + " " + this.formData.value.lastname, this.formData.value.email, this.formData.value.phone, this.formData.value.username);
+            try {
+                this.service.register_new_user(non_user, this.formData.value.password).subscribe(function (res) {
+                    _this.startRegisteredUser(res.registered_id);
+                });
+            }
+            catch (err) {
+                //log the error for future reference.
+            }
         }
         else {
             this.fieldsRequired = true;
         }
     };
     SignupModal.prototype.startRegisteredUser = function (id) {
-        //passes valid username and password to login page
+        //passes valid id to login page
+        console.log(id);
         this.vwCtrl.dismiss(id);
     };
     SignupModal.prototype.backToLogin = function () {
@@ -417,18 +437,19 @@ var SignupModal = /** @class */ (function () {
     };
     SignupModal = __decorate([
         core_1.Component({
-            selector: 'page-signup',template:/*ion-inline-start:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/modals/signup/signup.html"*/'<ion-content class="bg-primary-style">\n    <h1 padding text-center class="std-text-color">Anchr</h1>\n    <h3 class="std-text-color">Sign Up</h3>\n\n    <p *ngIf="fieldsRequired" class="error-text">Please complete all fields</p>\n\n    <form [formGroup]="formData">\n\n        <ion-item no-padding>\n            <ion-input formControlName="firstname" type="text" placeholder="First Name" [class.invalid-input]="formData.controls.firstname.invalid && formData.controls.firstname.dirty"></ion-input>\n        </ion-item>\n\n        <ion-item no-padding>\n            <ion-input formControlName="lastname" type="text" placeholder="Last Name" [class.invalid-input]="formData.controls.lastname.invalid && formData.controls.lastname.dirty"></ion-input>\n        </ion-item>\n\n        <ion-item no-padding>\n            <ion-input formControlName="email" type="email" placeholder="Email" [class.invalid-input]="formData.controls.email.invalid && formData.controls.email.dirty"></ion-input>\n        </ion-item>\n\n        <ion-item no-padding>\n            <ion-input formControlName="phone" type="tel" placeholder="Phone" [class.invalid-input]="formData.controls.phone.invalid && formData.controls.phone.dirty"></ion-input>\n        </ion-item>\n\n        <div padding-top>\n\n            <ion-item no-padding>\n                <ion-input formControlName="username" type="text" placeholder="Username" [class.invalid-input]="formData.controls.username.invalid && formData.controls.username.dirty"></ion-input>\n            </ion-item>\n\n            <ion-item no-padding>\n                <ion-input formControlName="password" type="password" placeholder="Password" [class.invalid-input]="formData.controls.password.invalid && formData.controls.password.dirty"></ion-input>\n            </ion-item>\n\n        </div>\n\n    </form>\n\n    <p *ngIf="formData.controls.firstname.invalid && formData.controls.firstname.dirty" class="error-text">*First name must be letters only or length of name is too long</p>\n    <p *ngIf="formData.controls.lastname.invalid && formData.controls.lastname.dirty" class="error-text">*Last name must be letters only or length of name is too long</p>\n    <p *ngIf="formData.controls.email.invalid && formData.controls.email.dirty" class="error-text">*Email is not valid</p>\n    <p *ngIf="formData.controls.phone.invalid && formData.controls.phone.dirty" class="error-text">*Phone invalid. Must be 10 digits long</p>\n    <p *ngIf="formData.controls.username.invalid && formData.controls.username.dirty" class="error-text">*Username is already taken :-(</p>\n    <p *ngIf="formData.controls.password.invalid && formData.controls.password.dirty" class="error-text">*Password must be at least 8 characters</p>\n    \n\n\n    <div padding>\n        <button ion-button block class="bg-secondary-style std-text-color" (click)="registerUser()">Create Account</button>\n    </div>\n\n    <ion-grid>\n        <ion-row>\n            <ion-col class="align-text-middle std-text-color">Already have an account?<button ion-button clear\n                    no-padding color="secondary" (click)="backToLogin()">Login</button></ion-col>\n        </ion-row>\n    </ion-grid>\n\n</ion-content>'/*ion-inline-end:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/modals/signup/signup.html"*/
+            selector: 'page-signup',template:/*ion-inline-start:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/modals/signup/signup.html"*/'<ion-content class="bg-primary-style">\n    <h1 padding text-center class="std-text-color">Anchr</h1>\n    <h3 class="std-text-color">Sign Up</h3>\n\n    <p *ngIf="fieldsRequired" class="error-text">Please complete all fields</p>\n\n    <form [formGroup]="formData">\n\n        <ion-item no-padding>\n            <ion-input formControlName="firstname" type="text" placeholder="First Name" [class.invalid-input]="formData.controls.firstname.invalid && formData.controls.firstname.dirty"></ion-input>\n        </ion-item>\n\n        <ion-item no-padding>\n            <ion-input formControlName="lastname" type="text" placeholder="Last Name" [class.invalid-input]="formData.controls.lastname.invalid && formData.controls.lastname.dirty"></ion-input>\n        </ion-item>\n\n        <ion-item no-padding>\n            <ion-input formControlName="email" type="email" placeholder="Email" [class.invalid-input]="formData.controls.email.invalid && formData.controls.email.dirty"></ion-input>\n        </ion-item>\n\n        <ion-item no-padding>\n            <ion-input formControlName="phone" type="tel" placeholder="Phone" [class.invalid-input]="formData.controls.phone.invalid && formData.controls.phone.dirty"></ion-input>\n        </ion-item>\n\n        <div padding-top>\n\n            <ion-item no-padding>\n                <ion-input formControlName="username" type="text" placeholder="Username" [class.invalid-input]="formData.controls.username.invalid && formData.controls.username.dirty"></ion-input>\n            </ion-item>\n\n            <ion-item no-padding>\n                <ion-input formControlName="password" type="password" placeholder="Password" [class.invalid-input]="formData.controls.password.invalid && formData.controls.password.dirty"></ion-input>\n            </ion-item>\n\n        </div>\n\n    </form>\n\n    <p *ngIf="registrationIssue" class="error-text">Registration failed! Please try again later.</p>\n    <p *ngIf="formData.controls.firstname.invalid && formData.controls.firstname.dirty" class="error-text">*First name must be letters only or length of name is too long</p>\n    <p *ngIf="formData.controls.lastname.invalid && formData.controls.lastname.dirty" class="error-text">*Last name must be letters only or length of name is too long</p>\n    <p *ngIf="formData.controls.email.invalid && formData.controls.email.dirty" class="error-text">*Email is not valid</p>\n    <p *ngIf="formData.controls.phone.invalid && formData.controls.phone.dirty" class="error-text">*Phone invalid. Must be 10 digits long</p>\n    <p *ngIf="formData.controls.username.invalid && formData.controls.username.dirty" class="error-text">*Username is already taken :-(</p>\n    <p *ngIf="formData.controls.password.invalid && formData.controls.password.dirty" class="error-text">*Password must be at least 8 characters</p>\n    \n\n\n    <div padding>\n        <button ion-button block class="bg-secondary-style std-text-color" (click)="registerUser()">Create Account</button>\n    </div>\n\n    <ion-grid>\n        <ion-row>\n            <ion-col class="align-text-middle std-text-color">Already have an account?<button ion-button clear\n                    no-padding color="secondary" (click)="backToLogin()">Login</button></ion-col>\n        </ion-row>\n    </ion-grid>\n\n</ion-content>'/*ion-inline-end:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/modals/signup/signup.html"*/
         }),
-        __metadata("design:paramtypes", [ionic_angular_1.ModalController, ionic_angular_1.ViewController, forms_1.FormBuilder])
+        __metadata("design:paramtypes", [typeof (_a = typeof ionic_angular_1.ModalController !== "undefined" && ionic_angular_1.ModalController) === "function" && _a || Object, typeof (_b = typeof ionic_angular_1.ViewController !== "undefined" && ionic_angular_1.ViewController) === "function" && _b || Object, typeof (_c = typeof forms_1.FormBuilder !== "undefined" && forms_1.FormBuilder) === "function" && _c || Object, typeof (_d = typeof service_1.Auth_DataProvider !== "undefined" && service_1.Auth_DataProvider) === "function" && _d || Object])
     ], SignupModal);
     return SignupModal;
+    var _a, _b, _c, _d;
 }());
 exports.SignupModal = SignupModal;
 //# sourceMappingURL=signup.js.map
 
 /***/ }),
 
-/***/ 201:
+/***/ 204:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -445,7 +466,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
 var ionic_angular_1 = __webpack_require__(12);
-var objectFactory_1 = __webpack_require__(99);
+var objectFactory_1 = __webpack_require__(50);
 var post_1 = __webpack_require__(100);
 var GroupPage = /** @class */ (function () {
     function GroupPage(navCtrl, navPar, menuCtrl) {
@@ -509,7 +530,7 @@ exports.GroupPage = GroupPage;
 
 /***/ }),
 
-/***/ 202:
+/***/ 205:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -543,14 +564,14 @@ exports.GroupsPage = GroupsPage;
 
 /***/ }),
 
-/***/ 203:
+/***/ 206:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var platform_browser_dynamic_1 = __webpack_require__(204);
-var app_module_1 = __webpack_require__(226);
+var platform_browser_dynamic_1 = __webpack_require__(207);
+var app_module_1 = __webpack_require__(227);
 var core_1 = __webpack_require__(0);
 core_1.enableProdMode();
 platform_browser_dynamic_1.platformBrowserDynamic().bootstrapModule(app_module_1.AppModule);
@@ -558,7 +579,7 @@ platform_browser_dynamic_1.platformBrowserDynamic().bootstrapModule(app_module_1
 
 /***/ }),
 
-/***/ 226:
+/***/ 227:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -571,20 +592,22 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
-var platform_browser_1 = __webpack_require__(31);
+var platform_browser_1 = __webpack_require__(32);
 var ionic_angular_1 = __webpack_require__(12);
 var app_component_1 = __webpack_require__(269);
-var search_1 = __webpack_require__(196);
-var groups_1 = __webpack_require__(202);
-var group_1 = __webpack_require__(201);
-var notifications_1 = __webpack_require__(197);
-var home_1 = __webpack_require__(198);
-var tabs_1 = __webpack_require__(195);
+var search_1 = __webpack_require__(199);
+var groups_1 = __webpack_require__(205);
+var group_1 = __webpack_require__(204);
+var notifications_1 = __webpack_require__(200);
+var home_1 = __webpack_require__(201);
+var tabs_1 = __webpack_require__(198);
 var post_1 = __webpack_require__(100);
-var login_1 = __webpack_require__(199);
-var signup_1 = __webpack_require__(200);
-var status_bar_1 = __webpack_require__(191);
-var splash_screen_1 = __webpack_require__(194);
+var login_1 = __webpack_require__(202);
+var signup_1 = __webpack_require__(203);
+var status_bar_1 = __webpack_require__(194);
+var splash_screen_1 = __webpack_require__(197);
+var service_1 = __webpack_require__(278);
+var http_1 = __webpack_require__(279);
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
@@ -604,6 +627,7 @@ var AppModule = /** @class */ (function () {
             ],
             imports: [
                 platform_browser_1.BrowserModule,
+                http_1.HttpClientModule,
                 ionic_angular_1.IonicModule.forRoot(app_component_1.MyApp, {}, {
                     links: []
                 })
@@ -624,7 +648,8 @@ var AppModule = /** @class */ (function () {
             providers: [
                 status_bar_1.StatusBar,
                 splash_screen_1.SplashScreen,
-                { provide: core_1.ErrorHandler, useClass: ionic_angular_1.IonicErrorHandler }
+                { provide: core_1.ErrorHandler, useClass: ionic_angular_1.IonicErrorHandler },
+                service_1.Auth_DataProvider
             ]
         })
     ], AppModule);
@@ -652,9 +677,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
 var ionic_angular_1 = __webpack_require__(12);
-var status_bar_1 = __webpack_require__(191);
-var splash_screen_1 = __webpack_require__(194);
-var tabs_1 = __webpack_require__(195);
+var status_bar_1 = __webpack_require__(194);
+var splash_screen_1 = __webpack_require__(197);
+var tabs_1 = __webpack_require__(198);
 var MyApp = /** @class */ (function () {
     function MyApp(platform, statusBar, splashScreen) {
         this.rootPage = tabs_1.TabsPage;
@@ -668,10 +693,9 @@ var MyApp = /** @class */ (function () {
     MyApp = __decorate([
         core_1.Component({template:/*ion-inline-start:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/app/app.html"*/'<ion-nav [root]="rootPage"></ion-nav>\n'/*ion-inline-end:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/app/app.html"*/
         }),
-        __metadata("design:paramtypes", [typeof (_a = typeof ionic_angular_1.Platform !== "undefined" && ionic_angular_1.Platform) === "function" && _a || Object, typeof (_b = typeof status_bar_1.StatusBar !== "undefined" && status_bar_1.StatusBar) === "function" && _b || Object, typeof (_c = typeof splash_screen_1.SplashScreen !== "undefined" && splash_screen_1.SplashScreen) === "function" && _c || Object])
+        __metadata("design:paramtypes", [ionic_angular_1.Platform, status_bar_1.StatusBar, splash_screen_1.SplashScreen])
     ], MyApp);
     return MyApp;
-    var _a, _b, _c;
 }());
 exports.MyApp = MyApp;
 //# sourceMappingURL=app.component.js.map
@@ -702,7 +726,70 @@ exports.UsernameValidator = UsernameValidator;
 
 /***/ }),
 
-/***/ 99:
+/***/ 278:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__(0);
+var http_1 = __webpack_require__(279);
+var Observable_1 = __webpack_require__(9);
+var operators_1 = __webpack_require__(310);
+var Subject_1 = __webpack_require__(31);
+//handles extracting only the body of the server response
+function extract_data(res) {
+    var body = res;
+    return body || {};
+}
+//handles errors that occur
+function handle_error(error) {
+    var errMsg;
+    if (error instanceof Response) {
+        var err = error || '';
+        errMsg = error.status + " - " + (error.statusText || '') + " " + err;
+    }
+    else {
+        errMsg = error.message ? error.message : error.toString();
+    }
+    console.error(errMsg);
+    return Observable_1.Observable.throw(errMsg);
+}
+var Auth_DataProvider = /** @class */ (function () {
+    function Auth_DataProvider(http) {
+        this.http = http;
+        this.baseURL = 'http://localhost:6254';
+        this.dataChangeSubject = new Subject_1.Subject();
+        this.dataChanged$ = this.dataChangeSubject.asObservable();
+    }
+    Auth_DataProvider.prototype.register_new_user = function (non_user, non_user_key) {
+        return this.http.post(this.baseURL + "/auth/users", { "non_user": non_user, "non_user_key": non_user_key }).pipe(operators_1.map(extract_data), operators_1.catchError(handle_error));
+    };
+    Auth_DataProvider.prototype.validate_user_cred = function (input_name, input_key) {
+        return this.http.get(this.baseURL + "/auth/users", { "params": { "input_name": input_name, "input_key": input_key } }).pipe(operators_1.map(extract_data), operators_1.catchError(handle_error));
+    };
+    Auth_DataProvider = __decorate([
+        core_1.Injectable(),
+        __metadata("design:paramtypes", [typeof (_a = typeof http_1.HttpClient !== "undefined" && http_1.HttpClient) === "function" && _a || Object])
+    ], Auth_DataProvider);
+    return Auth_DataProvider;
+    var _a;
+}());
+exports.Auth_DataProvider = Auth_DataProvider;
+//# sourceMappingURL=service.js.map
+
+/***/ }),
+
+/***/ 50:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -819,5 +906,5 @@ exports.Subcomment = Subcomment;
 
 /***/ })
 
-},[203]);
+},[206]);
 //# sourceMappingURL=main.js.map

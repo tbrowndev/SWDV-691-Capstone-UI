@@ -54,7 +54,7 @@ export class HomePage {
     //Goes to server again and gets the user information that has been stored
     this.user = new User(userId, "John Smith", "jsmith@mycloud.com", 3148675309, "_johnjohn")
     //calls the next function to get posts for user
-    this.getRecentPosts(userId);
+    //this.getRecentPosts(userId);
 
   }
 
