@@ -1,0 +1,77 @@
+<ion-content class="bg-primary-style">
+    <h3 class="std-text-color">New Group Details</h3>
+
+    <p *ngIf="formValid" class="error-text">Please complete required fields(*)</p>
+
+    <form [formGroup]="groupData">
+
+        <ion-item no-padding>
+            <ion-input formControlName="name" type="text" placeholder="Name*"
+                [class.invalid-input]="groupData.controls.name.invalid && groupData.controls.name.dirty">
+            </ion-input>
+        </ion-item>
+
+        <ion-item no-padding>
+            <ion-textarea formControlName="description" type="text" placeholder="Description*"
+                [class.invalid-input]="groupData.controls.description.invalid && groupData.controls.description.dirty">
+            </ion-textarea>
+        </ion-item>
+
+        <ion-item no-padding>
+            <ion-textarea formControlName="goal" type="text" placeholder="Goal*"
+                [class.invalid-input]="groupData.controls.goal.invalid && groupData.controls.goal.dirty">
+            </ion-textarea>
+        </ion-item>
+    </form>
+
+    <ion-card>
+        <h3 class="no-item" *ngIf="milestones.length === 0">No milestones added! Add some below!</h3>
+
+        <ion-item *ngFor="let item of milestones; index as i">
+            <button ion-button clear item-start icon-only (click)="removeMilestone(i)">
+                <ion-icon name="close" color="kred"></ion-icon>
+            </button>
+            <ion-grid no-padding>
+                <ion-row>
+                    <ion-col col-9 class="item-title">
+                        <p>{{item.name}}</p>
+                    </ion-col>
+                    <ion-col col-3 class="right-align-small-text">
+                        <p>Order: {{item.order}}</p>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-item>
+
+    </ion-card>
+
+    <ion-grid>
+        <ion-row>
+            <ion-col>
+                <ion-item>
+                    <ion-input type="text" [(ngModel)]="name" placeholder="Enter milestone name">
+                    </ion-input>
+                </ion-item>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col col-3>
+                <ion-item>
+                    <ion-input type="number" [(ngModel)]="order" placeholder="Order"></ion-input>
+                </ion-item>
+            </ion-col>
+            <ion-col col-9>
+                <button ion-button block class="bg-secondary-style std-text-color" (click)="addMilestone()">Add</button>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+
+
+
+    <!--Button for adding and canceling group-->
+    <div padding>
+        <button ion-button block class="bg-secondary-style std-text-color" (click)="setupGroup()">Create Group</button>
+        <button ion-button block class="bg-danger-style std-text-color" (click)="cancelGroup()">Cancel</button>
+    </div>
+
+</ion-content>

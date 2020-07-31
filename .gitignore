@@ -11,7 +11,6 @@
 *.sln.docstates
 *.env
 node_modules
-src
 
 
 # User-specific files (MonoDevelop/Xamarin Studio)
