@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, ModalController } from 'ionic-angular';
+import { CreateGroupModal } from '../../modals/creategroup/creategroup';
 
 @Component({
   selector: 'page-groups',
@@ -7,8 +8,17 @@ import { NavController } from 'ionic-angular';
 })
 export class GroupsPage {
 
-  constructor(public navCtrl: NavController) {
-    
+  constructor(public navCtrl: NavController, public mdlCtrl: ModalController) {
+
+  }
+
+  createGroup() {
+
+    let group = this.mdlCtrl.create(CreateGroupModal, null, { 
+      showBackdrop: false, 
+      enableBackdropDismiss: true });
+    group.present();
+
   }
 
 }

@@ -1,3 +1,5 @@
+import { group } from "@angular/core/src/animation/dsl";
+
 export class User {
 
     private id: number;
@@ -147,4 +149,27 @@ export class Subcomment{
     getMemberId(){
         return this.memberId;
     }
+}
+
+export class Milestone{
+    private id:number;
+    private groupId:number;
+    public name:string;
+    public order:number;
+
+    constructor(id?:number, groupId?:number, name?:string, order?:number){
+        this.id = id;
+        this.groupId = groupId;
+        this.name = name;
+        this.order = order;
+    }
+
+    getId(){
+        return this.id;
+    }
+
+    getGroupId(){
+        return this.groupId;
+    }
+
 }

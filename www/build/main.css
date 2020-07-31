@@ -30556,6 +30556,10 @@ ion-navbar.toolbar {
   background-color: #e6b03d;
 }
 
+.bg-danger-style {
+  background-color: #f53d3d;
+}
+
 .std-text-color {
   color: white;
   font-weight: bold;
@@ -30652,6 +30656,21 @@ p {
 
 .ion-icon-heart-like {
   color: red;
+}
+
+page-creategroup ion-content {
+  --ion-background-color: color($colors, primary)
+    ;
+}
+
+page-creategroup .no-item {
+  text-align: center;
+  color: grey;
+}
+
+page-creategroup .right-align-small-text {
+  text-align: left;
+  font-size: smaller;
 }
 
 page-login ion-content {

@@ -18,6 +18,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Auth_DataProvider } from '../service/service';
 import { HttpClientModule } from '@angular/common/http';
+import { CreateGroupModal } from '../modals/creategroup/creategroup';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { HttpClientModule } from '@angular/common/http';
     HomePage,
     GroupsPage,
     GroupPage,
+    CreateGroupModal,
     PostPage,
     TabsPage,
     LoginModal,
@@ -45,6 +47,7 @@ import { HttpClientModule } from '@angular/common/http';
     HomePage,
     GroupsPage,
     GroupPage,
+    CreateGroupModal,
     PostPage,
     TabsPage,
     LoginModal,

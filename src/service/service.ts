@@ -29,7 +29,7 @@ function handle_error(error: Response | any) {
 @Injectable()
 export class Auth_DataProvider {
 
-    baseURL = 'http://localhost:6200';
+    baseURL = 'http://localhost:6254';
 
     dataChanged$: Observable<boolean>;
     private dataChangeSubject: Subject<boolean>;

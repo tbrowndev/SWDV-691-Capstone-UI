@@ -606,15 +606,24 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
 var ionic_angular_1 = __webpack_require__(19);
+var creategroup_1 = __webpack_require__(407);
 var GroupsPage = /** @class */ (function () {
-    function GroupsPage(navCtrl) {
+    function GroupsPage(navCtrl, mdlCtrl) {
         this.navCtrl = navCtrl;
+        this.mdlCtrl = mdlCtrl;
     }
+    GroupsPage.prototype.createGroup = function () {
+        var group = this.mdlCtrl.create(creategroup_1.CreateGroupModal, null, {
+            showBackdrop: false,
+            enableBackdropDismiss: true
+        });
+        group.present();
+    };
     GroupsPage = __decorate([
         core_1.Component({
-            selector: 'page-groups',template:/*ion-inline-start:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/pages/mygroups/groups.html"*/'<ion-header>\n  <ion-toolbar color="primary">\n    <ion-title>\n      My Groups\n    </ion-title>\n  </ion-toolbar>\n  <ion-searchbar class="searchbar" placeholder="Search my groups"></ion-searchbar>\n</ion-header>\n\n<ion-content padding>\n\n</ion-content>'/*ion-inline-end:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/pages/mygroups/groups.html"*/
+            selector: 'page-groups',template:/*ion-inline-start:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/pages/mygroups/groups.html"*/'<ion-header>\n  <ion-toolbar color="primary">\n    <ion-title>\n      My Groups\n    </ion-title>\n    <ion-buttons end>\n      <button ion-button (click)="createGroup()">\n        <ion-icon name="add" class="ion-icon-large"></ion-icon>\n      </button>\n    </ion-buttons>\n  </ion-toolbar>\n  <ion-searchbar class="searchbar" placeholder="Search my groups"></ion-searchbar>\n</ion-header>\n\n<ion-content padding>\n\n</ion-content>'/*ion-inline-end:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/pages/mygroups/groups.html"*/
         }),
-        __metadata("design:paramtypes", [ionic_angular_1.NavController])
+        __metadata("design:paramtypes", [ionic_angular_1.NavController, ionic_angular_1.ModalController])
     ], GroupsPage);
     return GroupsPage;
 }());
@@ -667,6 +676,7 @@ var status_bar_1 = __webpack_require__(221);
 var splash_screen_1 = __webpack_require__(224);
 var service_1 = __webpack_require__(119);
 var http_1 = __webpack_require__(231);
+var creategroup_1 = __webpack_require__(407);
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
@@ -679,6 +689,7 @@ var AppModule = /** @class */ (function () {
                 home_1.HomePage,
                 groups_1.GroupsPage,
                 group_1.GroupPage,
+                creategroup_1.CreateGroupModal,
                 post_1.PostPage,
                 tabs_1.TabsPage,
                 login_1.LoginModal,
@@ -699,6 +710,7 @@ var AppModule = /** @class */ (function () {
                 home_1.HomePage,
                 groups_1.GroupsPage,
                 group_1.GroupPage,
+                creategroup_1.CreateGroupModal,
                 post_1.PostPage,
                 tabs_1.TabsPage,
                 login_1.LoginModal,
@@ -782,6 +794,74 @@ var UsernameValidator = /** @class */ (function () {
 }());
 exports.UsernameValidator = UsernameValidator;
 //# sourceMappingURL=username.js.map
+
+/***/ }),
+
+/***/ 407:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__(0);
+var ionic_angular_1 = __webpack_require__(19);
+var forms_1 = __webpack_require__(24);
+var objectFactory_1 = __webpack_require__(66);
+var CreateGroupModal = /** @class */ (function () {
+    function CreateGroupModal(mdlCtrl, vwCtrl, frmBuilder) {
+        this.mdlCtrl = mdlCtrl;
+        this.vwCtrl = vwCtrl;
+        this.frmBuilder = frmBuilder;
+        this.formValid = false;
+        this.milestones = [];
+        this.groupData = frmBuilder.group({
+            name: ['', forms_1.Validators.compose([forms_1.Validators.maxLength(45), forms_1.Validators.required])],
+            description: ['', forms_1.Validators.compose([forms_1.Validators.maxLength(140), forms_1.Validators.required])],
+            goal: ['', forms_1.Validators.compose([forms_1.Validators.maxLength(140), forms_1.Validators.required])]
+        });
+    }
+    CreateGroupModal.prototype.addMilestone = function () {
+        var milestone = new objectFactory_1.Milestone();
+        milestone.name = this.name;
+        milestone.order = this.order;
+        this.name = null;
+        this.order = null;
+        this.milestones.push(milestone);
+    };
+    CreateGroupModal.prototype.removeMilestone = function (index) {
+        this.milestones.splice(index, 1);
+    };
+    CreateGroupModal.prototype.setupGroup = function () {
+        if (this.groupData.valid) {
+            console.log(this.groupData.value);
+        }
+        else {
+            this.formValid = true;
+        }
+    };
+    CreateGroupModal.prototype.cancelGroup = function () {
+        this.vwCtrl.dismiss();
+    };
+    CreateGroupModal = __decorate([
+        core_1.Component({
+            selector: 'page-login',template:/*ion-inline-start:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/modals/creategroup/creategroup.html"*/'<ion-content class="bg-primary-style">\n    <h3 class="std-text-color">New Group Details</h3>\n\n    <p *ngIf="formValid" class="error-text">Please complete required fields(*)</p>\n\n    <form [formGroup]="groupData">\n\n        <ion-item no-padding>\n            <ion-input formControlName="name" type="text" placeholder="Name*"\n                [class.invalid-input]="groupData.controls.name.invalid && groupData.controls.name.dirty">\n            </ion-input>\n        </ion-item>\n\n        <ion-item no-padding>\n            <ion-textarea formControlName="description" type="text" placeholder="Description*"\n                [class.invalid-input]="groupData.controls.description.invalid && groupData.controls.description.dirty">\n            </ion-textarea>\n        </ion-item>\n\n        <ion-item no-padding>\n            <ion-textarea formControlName="goal" type="text" placeholder="Goal*"\n                [class.invalid-input]="groupData.controls.goal.invalid && groupData.controls.goal.dirty">\n            </ion-textarea>\n        </ion-item>\n    </form>\n\n    <ion-card>\n        <h3 class="no-item" *ngIf="milestones.length === 0">No milestones added! Add some below!</h3>\n\n        <ion-item *ngFor="let item of milestones; index as i">\n            <button ion-button clear item-start icon-only (click)="removeMilestone(i)">\n                <ion-icon name="close" color="kred"></ion-icon>\n            </button>\n            <ion-grid no-padding>\n                <ion-row>\n                    <ion-col col-9 class="item-title">\n                        <p>{{item.name}}</p>\n                    </ion-col>\n                    <ion-col col-3 class="right-align-small-text">\n                        <p>Order: {{item.order}}</p>\n                    </ion-col>\n                </ion-row>\n            </ion-grid>\n        </ion-item>\n\n    </ion-card>\n\n    <ion-grid>\n        <ion-row>\n            <ion-col>\n                <ion-item>\n                    <ion-input type="text" [(ngModel)]="name" placeholder="Enter milestone name">\n                    </ion-input>\n                </ion-item>\n            </ion-col>\n        </ion-row>\n        <ion-row>\n            <ion-col col-3>\n                <ion-item>\n                    <ion-input type="number" [(ngModel)]="order" placeholder="Order"></ion-input>\n                </ion-item>\n            </ion-col>\n            <ion-col col-9>\n                <button ion-button block class="bg-secondary-style std-text-color" (click)="addMilestone()">Add</button>\n            </ion-col>\n        </ion-row>\n    </ion-grid>\n\n\n\n    <!--Button for adding and canceling group-->\n    <div padding>\n        <button ion-button block class="bg-secondary-style std-text-color" (click)="setupGroup()">Create Group</button>\n        <button ion-button block class="bg-danger-style std-text-color" (click)="cancelGroup()">Cancel</button>\n    </div>\n\n</ion-content>'/*ion-inline-end:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/modals/creategroup/creategroup.html"*/
+        }),
+        __metadata("design:paramtypes", [typeof (_a = typeof ionic_angular_1.ModalController !== "undefined" && ionic_angular_1.ModalController) === "function" && _a || Object, typeof (_b = typeof ionic_angular_1.ViewController !== "undefined" && ionic_angular_1.ViewController) === "function" && _b || Object, typeof (_c = typeof forms_1.FormBuilder !== "undefined" && forms_1.FormBuilder) === "function" && _c || Object])
+    ], CreateGroupModal);
+    return CreateGroupModal;
+    var _a, _b, _c;
+}());
+exports.CreateGroupModal = CreateGroupModal;
+//# sourceMappingURL=creategroup.js.map
 
 /***/ }),
 
@@ -898,6 +978,22 @@ var Subcomment = /** @class */ (function () {
     return Subcomment;
 }());
 exports.Subcomment = Subcomment;
+var Milestone = /** @class */ (function () {
+    function Milestone(id, groupId, name, order) {
+        this.id = id;
+        this.groupId = groupId;
+        this.name = name;
+        this.order = order;
+    }
+    Milestone.prototype.getId = function () {
+        return this.id;
+    };
+    Milestone.prototype.getGroupId = function () {
+        return this.groupId;
+    };
+    return Milestone;
+}());
+exports.Milestone = Milestone;
 //# sourceMappingURL=objectFactory.js.map
 
 /***/ })

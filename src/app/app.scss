@@ -24,6 +24,10 @@
     background-color: color($colors, secondary);
 }
 
+.bg-danger-style{
+    background-color: color($colors, danger);
+}
+
 .std-text-color{
     color: white;
     font-weight: bold;
