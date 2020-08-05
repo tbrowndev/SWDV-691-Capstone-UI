@@ -36,7 +36,7 @@ export class SignupModal {
             let non_user: User = new User(null, this.formData.value.firstname + " " + this.formData.value.lastname, this.formData.value.email, this.formData.value.phone, this.formData.value.username);
             try {
                 this.service.register_new_user(non_user, this.formData.value.password).subscribe( res => {
-                    this.startRegisteredUser(res.registered_id)
+                    this.startRegisteredUser(res.registered_user)
                 })
             } catch (err) {
                 //log the error for future reference.
@@ -49,7 +49,7 @@ export class SignupModal {
 
     startRegisteredUser(id: any) {
         //passes valid id to login page
-        console.log(id);
+        //console.log(id);
         this.vwCtrl.dismiss(id);
     }
 

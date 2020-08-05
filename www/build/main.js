@@ -18,7 +18,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
 var http_1 = __webpack_require__(231);
 var Observable_1 = __webpack_require__(9);
-var operators_1 = __webpack_require__(309);
+var operators_1 = __webpack_require__(310);
 var Subject_1 = __webpack_require__(13);
 //handles extracting only the body of the server response
 function extract_data(res) {
@@ -41,7 +41,7 @@ function handle_error(error) {
 var Auth_DataProvider = /** @class */ (function () {
     function Auth_DataProvider(http) {
         this.http = http;
-        this.baseURL = 'http://localhost:6254';
+        this.baseURL = 'http://localhost:6200';
         this.dataChangeSubject = new Subject_1.Subject();
         this.dataChanged$ = this.dataChangeSubject.asObservable();
     }
@@ -53,11 +53,45 @@ var Auth_DataProvider = /** @class */ (function () {
     };
     Auth_DataProvider = __decorate([
         core_1.Injectable(),
-        __metadata("design:paramtypes", [http_1.HttpClient])
+        __metadata("design:paramtypes", [typeof (_a = typeof http_1.HttpClient !== "undefined" && http_1.HttpClient) === "function" && _a || Object])
     ], Auth_DataProvider);
     return Auth_DataProvider;
+    var _a;
 }());
 exports.Auth_DataProvider = Auth_DataProvider;
+var User_DataProvider = /** @class */ (function () {
+    function User_DataProvider(http) {
+        this.http = http;
+        this.baseURL = 'http://localhost:6220';
+        this.dataChangeSubject = new Subject_1.Subject();
+        this.dataChanged$ = this.dataChangeSubject.asObservable();
+    }
+    User_DataProvider.prototype.get_user_information = function (id) {
+        return this.http.get(this.baseURL + "/users/" + id).pipe(operators_1.map(extract_data), operators_1.catchError(handle_error));
+    };
+    User_DataProvider = __decorate([
+        core_1.Injectable(),
+        __metadata("design:paramtypes", [typeof (_a = typeof http_1.HttpClient !== "undefined" && http_1.HttpClient) === "function" && _a || Object])
+    ], User_DataProvider);
+    return User_DataProvider;
+    var _a;
+}());
+exports.User_DataProvider = User_DataProvider;
+var Group_DataProvider = /** @class */ (function () {
+    function Group_DataProvider(http) {
+        this.http = http;
+        this.baseURL = 'http://localhost:6210';
+        this.dataChangeSubject = new Subject_1.Subject();
+        this.dataChanged$ = this.dataChangeSubject.asObservable();
+    }
+    Group_DataProvider = __decorate([
+        core_1.Injectable(),
+        __metadata("design:paramtypes", [typeof (_a = typeof http_1.HttpClient !== "undefined" && http_1.HttpClient) === "function" && _a || Object])
+    ], Group_DataProvider);
+    return Group_DataProvider;
+    var _a;
+}());
+exports.Group_DataProvider = Group_DataProvider;
 //# sourceMappingURL=service.js.map
 
 /***/ }),
@@ -78,8 +112,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
-var ionic_angular_1 = __webpack_require__(19);
-var objectFactory_1 = __webpack_require__(66);
+var ionic_angular_1 = __webpack_require__(18);
+var objectFactory_1 = __webpack_require__(51);
 var group_1 = __webpack_require__(249);
 var PostPage = /** @class */ (function () {
     function PostPage(navCtrl, navPar) {
@@ -221,7 +255,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
-var ionic_angular_1 = __webpack_require__(19);
+var ionic_angular_1 = __webpack_require__(18);
 var SearchPage = /** @class */ (function () {
     function SearchPage(navCtrl) {
         this.navCtrl = navCtrl;
@@ -255,7 +289,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
-var ionic_angular_1 = __webpack_require__(19);
+var ionic_angular_1 = __webpack_require__(18);
 var NotificationPage = /** @class */ (function () {
     function NotificationPage(navCtrl) {
         this.navCtrl = navCtrl;
@@ -289,19 +323,21 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
-var ionic_angular_1 = __webpack_require__(19);
-var ionic_angular_2 = __webpack_require__(19);
+var ionic_angular_1 = __webpack_require__(18);
+var ionic_angular_2 = __webpack_require__(18);
 var login_1 = __webpack_require__(229);
-var ionic_angular_3 = __webpack_require__(19);
-var objectFactory_1 = __webpack_require__(66);
+var ionic_angular_3 = __webpack_require__(18);
+var objectFactory_1 = __webpack_require__(51);
 var post_1 = __webpack_require__(126);
+var service_1 = __webpack_require__(119);
 var HomePage = /** @class */ (function () {
-    function HomePage(navCtrl, mdlCtrl, menuCtrl) {
+    function HomePage(navCtrl, mdlCtrl, menuCtrl, userService) {
         var _this = this;
         this.navCtrl = navCtrl;
         this.mdlCtrl = mdlCtrl;
         this.menuCtrl = menuCtrl;
-        this.user = new objectFactory_1.User();
+        this.userService = userService;
+        this.user = new objectFactory_1.User(null, null, null, null, null);
         this.recentPosts = [];
         //console.log(typeof(this.user));
         var login = this.mdlCtrl.create(login_1.LoginModal, null, { showBackdrop: false, enableBackdropDismiss: false });
@@ -310,6 +346,9 @@ var HomePage = /** @class */ (function () {
         });
         login.present();
     }
+    HomePage.prototype.ionViewDidLoad = function () {
+        console.log(this.user.id);
+    };
     HomePage.prototype.showUser = function () {
         this.menuCtrl.open();
     };
@@ -332,7 +371,8 @@ var HomePage = /** @class */ (function () {
     };
     HomePage.prototype.setUserData = function (userId) {
         //Goes to server again and gets the user information that has been stored
-        this.user = new objectFactory_1.User(userId, "John Smith", "jsmith@mycloud.com", 3148675309, "_johnjohn");
+        this.userService.get_user_information(userId).subscribe(user = this.user);
+        console.log(this.user);
         //calls the next function to get posts for user
         //this.getRecentPosts(userId);
     };
@@ -342,17 +382,18 @@ var HomePage = /** @class */ (function () {
         });
     };
     HomePage.prototype.logout = function () {
-        this.user = new objectFactory_1.User();
+        this.user = new objectFactory_1.User(null, null, null, null, null);
         this.navCtrl.popToRoot();
         location.reload();
     };
     HomePage = __decorate([
         core_1.Component({
-            selector: 'page-home',template:/*ion-inline-start:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/pages/home/home.html"*/'<ion-header>\n  <ion-toolbar color="primary">\n    <button ion-button (click)="showUser()">\n      <ion-icon name="person" class="ion-icon-large"></ion-icon>\n    </button>\n    <ion-title> {{user.username}}</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content padding>\n  <ion-card *ngFor="let post of recentPosts" (click)=postSelected(post)>\n\n    <ion-item>\n      <ion-avatar item-start>\n        <ion-icon name="person" class="ion-icon-large"></ion-icon>\n      </ion-avatar>\n      <p readonly>{{post.memberName}} in {{post.groupName}}</p>\n    </ion-item>\n  \n    <ion-card-content>\n      <p readonly>{{post.postData}}</p> \n    </ion-card-content>\n  \n    <ion-row>\n      <ion-col>\n        <button ion-button icon-start clear small>\n          <ion-icon name="heart" class="ion-icon-heart-like"></ion-icon>\n          <div>12 Likes</div>\n        </button>\n      </ion-col>\n      <ion-col>\n        <button ion-button icon-start clear small>\n          <ion-icon name="text"></ion-icon>\n          <div>4 Comments</div>\n        </button>\n      </ion-col>\n      <ion-col align-self-center text-center>\n        <ion-note>\n          11h ago\n        </ion-note>\n      </ion-col>\n    </ion-row>\n  \n  </ion-card>\n  <ion-infinite-scroll (ionInfinite)="continueRecentPosts($event)">\n    <ion-infinite-scroll-content>\n\n    </ion-infinite-scroll-content>\n  </ion-infinite-scroll>\n</ion-content>\n\n<ion-nav #userMenu [root]="rootPage"></ion-nav>\n\n<!--Side Menu to display user information-->\n<ion-menu side="left" [content]="userMenu" type="overlay" color="primary">\n    <ion-content class="bg-primary-style">\n      <ion-card no-padding class="card-strd-style">\n        <ion-card-content no-padding>\n          <ion-item padding-left>\n            <ion-avatar item-start>\n              <ion-icon name="person" class="ion-icon-large"></ion-icon>\n            </ion-avatar>\n            <h2>Name</h2>\n            <h3>{{user != undefined ? user.name: \'\'}}</h3>\n          </ion-item>\n        </ion-card-content>\n      </ion-card>\n      <ion-card no-padding class="card-strd-style">\n        <ion-card-content no-padding>\n          <ion-item padding-left>\n            <ion-avatar item-start>\n              <ion-icon name="mail" class="ion-icon-large"></ion-icon>\n            </ion-avatar>\n            <h2>Email Address</h2>\n            <h3>{{user != undefined ? user.email: \'\'}}</h3>\n          </ion-item>\n        </ion-card-content>\n      </ion-card>\n      <ion-card no-padding class="card-strd-style">\n        <ion-card-content no-padding>\n          <ion-item padding-left>\n            <ion-avatar item-start>\n              <ion-icon name="call" class="ion-icon-large"></ion-icon>\n            </ion-avatar>\n            <h2>Phone Number</h2>\n            <h3>{{user != undefined ? user.phone: \'\'}}</h3>\n          </ion-item>\n        </ion-card-content>\n      </ion-card>\n      <button ion-item details-push>\n        <h3>Chat</h3>\n      </button>\n      <button ion-item details-push>\n        <h3>Profile</h3>\n      </button>\n      <button ion-item details-push>\n        <h3>Settings</h3>\n      </button>\n      <button ion-item details-push (click)="logout()">\n        <h3 class="error-text">Logout</h3>\n      </button>\n    </ion-content>\n  </ion-menu>\n'/*ion-inline-end:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/pages/home/home.html"*/
+            selector: 'page-home',template:/*ion-inline-start:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/pages/home/home.html"*/'<ion-header>\n  <ion-toolbar color="primary">\n    <button ion-button (click)="showUser()">\n      <ion-icon name="person" class="ion-icon-large"></ion-icon>\n    </button>\n    <ion-title> {{user.username}}</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content padding>\n  <ion-card *ngFor="let post of recentPosts" (click)=postSelected(post)>\n\n    <ion-item>\n      <ion-avatar item-start>\n        <ion-icon name="person" class="ion-icon-large"></ion-icon>\n      </ion-avatar>\n      <p readonly>{{post.memberName}} in {{post.groupName}}</p>\n    </ion-item>\n  \n    <ion-card-content>\n      <p readonly>{{post.postData}}</p> \n    </ion-card-content>\n  \n    <ion-row>\n      <ion-col>\n        <button ion-button icon-start clear small>\n          <ion-icon name="heart" class="ion-icon-heart-like"></ion-icon>\n          <div>12 Likes</div>\n        </button>\n      </ion-col>\n      <ion-col>\n        <button ion-button icon-start clear small>\n          <ion-icon name="text"></ion-icon>\n          <div>4 Comments</div>\n        </button>\n      </ion-col>\n      <ion-col align-self-center text-center>\n        <ion-note>\n          11h ago\n        </ion-note>\n      </ion-col>\n    </ion-row>\n  \n  </ion-card>\n  <ion-infinite-scroll (ionInfinite)="continueRecentPosts($event)">\n    <ion-infinite-scroll-content>\n\n    </ion-infinite-scroll-content>\n  </ion-infinite-scroll>\n</ion-content>\n\n<ion-nav #userMenu [root]="rootPage"></ion-nav>\n\n<!--Side Menu to display user information-->\n<ion-menu side="left" [content]="userMenu" type="overlay" color="primary">\n    <ion-content class="bg-primary-style">\n      <ion-card no-padding class="card-strd-style">\n        <ion-card-content no-padding>\n          <ion-item padding-left>\n            <ion-avatar item-start>\n              <ion-icon name="person" class="ion-icon-large"></ion-icon>\n            </ion-avatar>\n            <h2>Name</h2>\n            <h3>{{user != undefined ? user.full_name: \'\'}}</h3>\n          </ion-item>\n        </ion-card-content>\n      </ion-card>\n      <ion-card no-padding class="card-strd-style">\n        <ion-card-content no-padding>\n          <ion-item padding-left>\n            <ion-avatar item-start>\n              <ion-icon name="mail" class="ion-icon-large"></ion-icon>\n            </ion-avatar>\n            <h2>Email Address</h2>\n            <h3>{{user != undefined ? user.email: \'\'}}</h3>\n          </ion-item>\n        </ion-card-content>\n      </ion-card>\n      <ion-card no-padding class="card-strd-style">\n        <ion-card-content no-padding>\n          <ion-item padding-left>\n            <ion-avatar item-start>\n              <ion-icon name="call" class="ion-icon-large"></ion-icon>\n            </ion-avatar>\n            <h2>Phone Number</h2>\n            <h3>{{user != undefined ? user.phone: \'\'}}</h3>\n          </ion-item>\n        </ion-card-content>\n      </ion-card>\n      <button ion-item details-push>\n        <h3>Chat</h3>\n      </button>\n      <button ion-item details-push>\n        <h3>Profile</h3>\n      </button>\n      <button ion-item details-push>\n        <h3>Settings</h3>\n      </button>\n      <button ion-item details-push (click)="logout()">\n        <h3 class="error-text">Logout</h3>\n      </button>\n    </ion-content>\n  </ion-menu>\n'/*ion-inline-end:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/pages/home/home.html"*/
         }),
-        __metadata("design:paramtypes", [ionic_angular_1.NavController, ionic_angular_2.ModalController, ionic_angular_3.MenuController])
+        __metadata("design:paramtypes", [typeof (_a = typeof ionic_angular_1.NavController !== "undefined" && ionic_angular_1.NavController) === "function" && _a || Object, typeof (_b = typeof ionic_angular_2.ModalController !== "undefined" && ionic_angular_2.ModalController) === "function" && _b || Object, typeof (_c = typeof ionic_angular_3.MenuController !== "undefined" && ionic_angular_3.MenuController) === "function" && _c || Object, typeof (_d = typeof service_1.User_DataProvider !== "undefined" && service_1.User_DataProvider) === "function" && _d || Object])
     ], HomePage);
     return HomePage;
+    var _a, _b, _c, _d;
 }());
 exports.HomePage = HomePage;
 //# sourceMappingURL=home.js.map
@@ -375,7 +416,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
-var ionic_angular_1 = __webpack_require__(19);
+var ionic_angular_1 = __webpack_require__(18);
 var signup_1 = __webpack_require__(230);
 var service_1 = __webpack_require__(119);
 var LoginModal = /** @class */ (function () {
@@ -447,11 +488,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
-var ionic_angular_1 = __webpack_require__(19);
-var forms_1 = __webpack_require__(24);
-var username_1 = __webpack_require__(306);
+var ionic_angular_1 = __webpack_require__(18);
+var forms_1 = __webpack_require__(20);
+var username_1 = __webpack_require__(307);
 var service_1 = __webpack_require__(119);
-var objectFactory_1 = __webpack_require__(66);
+var objectFactory_1 = __webpack_require__(51);
 var SignupModal = /** @class */ (function () {
     function SignupModal(mdlCtrl, vwCtrl, frmBuilder, service) {
         this.mdlCtrl = mdlCtrl;
@@ -476,7 +517,7 @@ var SignupModal = /** @class */ (function () {
             var non_user = new objectFactory_1.User(null, this.formData.value.firstname + " " + this.formData.value.lastname, this.formData.value.email, this.formData.value.phone, this.formData.value.username);
             try {
                 this.service.register_new_user(non_user, this.formData.value.password).subscribe(function (res) {
-                    _this.startRegisteredUser(res.registered_id);
+                    _this.startRegisteredUser(res.registered_user);
                 });
             }
             catch (err) {
@@ -489,7 +530,7 @@ var SignupModal = /** @class */ (function () {
     };
     SignupModal.prototype.startRegisteredUser = function (id) {
         //passes valid id to login page
-        console.log(id);
+        //console.log(id);
         this.vwCtrl.dismiss(id);
     };
     SignupModal.prototype.backToLogin = function () {
@@ -499,9 +540,10 @@ var SignupModal = /** @class */ (function () {
         core_1.Component({
             selector: 'page-signup',template:/*ion-inline-start:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/modals/signup/signup.html"*/'<ion-content class="bg-primary-style">\n    <h1 padding text-center class="std-text-color">Anchr</h1>\n    <h3 class="std-text-color">Sign Up</h3>\n\n    <p *ngIf="fieldsRequired" class="error-text">Please complete all fields</p>\n\n    <form [formGroup]="formData">\n\n        <ion-item no-padding>\n            <ion-input formControlName="firstname" type="text" placeholder="First Name" [class.invalid-input]="formData.controls.firstname.invalid && formData.controls.firstname.dirty"></ion-input>\n        </ion-item>\n\n        <ion-item no-padding>\n            <ion-input formControlName="lastname" type="text" placeholder="Last Name" [class.invalid-input]="formData.controls.lastname.invalid && formData.controls.lastname.dirty"></ion-input>\n        </ion-item>\n\n        <ion-item no-padding>\n            <ion-input formControlName="email" type="email" placeholder="Email" [class.invalid-input]="formData.controls.email.invalid && formData.controls.email.dirty"></ion-input>\n        </ion-item>\n\n        <ion-item no-padding>\n            <ion-input formControlName="phone" type="tel" placeholder="Phone" [class.invalid-input]="formData.controls.phone.invalid && formData.controls.phone.dirty"></ion-input>\n        </ion-item>\n\n        <div padding-top>\n\n            <ion-item no-padding>\n                <ion-input formControlName="username" type="text" placeholder="Username" [class.invalid-input]="formData.controls.username.invalid && formData.controls.username.dirty"></ion-input>\n            </ion-item>\n\n            <ion-item no-padding>\n                <ion-input formControlName="password" type="password" placeholder="Password" [class.invalid-input]="formData.controls.password.invalid && formData.controls.password.dirty"></ion-input>\n            </ion-item>\n\n        </div>\n\n    </form>\n\n    <p *ngIf="registrationIssue" class="error-text">Registration failed! Please try again later.</p>\n    <p *ngIf="formData.controls.firstname.invalid && formData.controls.firstname.dirty" class="error-text">*First name must be letters only or length of name is too long</p>\n    <p *ngIf="formData.controls.lastname.invalid && formData.controls.lastname.dirty" class="error-text">*Last name must be letters only or length of name is too long</p>\n    <p *ngIf="formData.controls.email.invalid && formData.controls.email.dirty" class="error-text">*Email is not valid</p>\n    <p *ngIf="formData.controls.phone.invalid && formData.controls.phone.dirty" class="error-text">*Phone invalid. Must be 10 digits long</p>\n    <p *ngIf="formData.controls.username.invalid && formData.controls.username.dirty" class="error-text">*Username is already taken :-(</p>\n    <p *ngIf="formData.controls.password.invalid && formData.controls.password.dirty" class="error-text">*Password must be at least 8 characters</p>\n    \n\n\n    <div padding>\n        <button ion-button block class="bg-secondary-style std-text-color" (click)="registerUser()">Create Account</button>\n    </div>\n\n    <ion-grid>\n        <ion-row>\n            <ion-col class="align-text-middle std-text-color">Already have an account?<button ion-button clear\n                    no-padding color="secondary" (click)="backToLogin()">Login</button></ion-col>\n        </ion-row>\n    </ion-grid>\n\n</ion-content>'/*ion-inline-end:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/modals/signup/signup.html"*/
         }),
-        __metadata("design:paramtypes", [ionic_angular_1.ModalController, ionic_angular_1.ViewController, forms_1.FormBuilder, service_1.Auth_DataProvider])
+        __metadata("design:paramtypes", [typeof (_a = typeof ionic_angular_1.ModalController !== "undefined" && ionic_angular_1.ModalController) === "function" && _a || Object, typeof (_b = typeof ionic_angular_1.ViewController !== "undefined" && ionic_angular_1.ViewController) === "function" && _b || Object, typeof (_c = typeof forms_1.FormBuilder !== "undefined" && forms_1.FormBuilder) === "function" && _c || Object, typeof (_d = typeof service_1.Auth_DataProvider !== "undefined" && service_1.Auth_DataProvider) === "function" && _d || Object])
     ], SignupModal);
     return SignupModal;
+    var _a, _b, _c, _d;
 }());
 exports.SignupModal = SignupModal;
 //# sourceMappingURL=signup.js.map
@@ -524,8 +566,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
-var ionic_angular_1 = __webpack_require__(19);
-var objectFactory_1 = __webpack_require__(66);
+var ionic_angular_1 = __webpack_require__(18);
+var objectFactory_1 = __webpack_require__(51);
 var post_1 = __webpack_require__(126);
 var GroupPage = /** @class */ (function () {
     function GroupPage(navCtrl, navPar, menuCtrl) {
@@ -605,8 +647,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
-var ionic_angular_1 = __webpack_require__(19);
-var creategroup_1 = __webpack_require__(407);
+var ionic_angular_1 = __webpack_require__(18);
+var creategroup_1 = __webpack_require__(251);
 var GroupsPage = /** @class */ (function () {
     function GroupsPage(navCtrl, mdlCtrl) {
         this.navCtrl = navCtrl;
@@ -637,9 +679,76 @@ exports.GroupsPage = GroupsPage;
 
 "use strict";
 
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-var platform_browser_dynamic_1 = __webpack_require__(252);
-var app_module_1 = __webpack_require__(259);
+var core_1 = __webpack_require__(0);
+var ionic_angular_1 = __webpack_require__(18);
+var forms_1 = __webpack_require__(20);
+var objectFactory_1 = __webpack_require__(51);
+var CreateGroupModal = /** @class */ (function () {
+    function CreateGroupModal(mdlCtrl, vwCtrl, frmBuilder) {
+        this.mdlCtrl = mdlCtrl;
+        this.vwCtrl = vwCtrl;
+        this.frmBuilder = frmBuilder;
+        this.formValid = false;
+        this.milestones = [];
+        this.groupData = frmBuilder.group({
+            name: ['', forms_1.Validators.compose([forms_1.Validators.maxLength(45), forms_1.Validators.required])],
+            description: ['', forms_1.Validators.compose([forms_1.Validators.maxLength(140), forms_1.Validators.required])],
+            goal: ['', forms_1.Validators.compose([forms_1.Validators.maxLength(140), forms_1.Validators.required])]
+        });
+    }
+    CreateGroupModal.prototype.addMilestone = function () {
+        var milestone = new objectFactory_1.Milestone();
+        milestone.name = this.name;
+        milestone.order = this.order;
+        this.name = null;
+        this.order = null;
+        this.milestones.push(milestone);
+    };
+    CreateGroupModal.prototype.removeMilestone = function (index) {
+        this.milestones.splice(index, 1);
+    };
+    CreateGroupModal.prototype.setupGroup = function () {
+        if (this.groupData.valid) {
+            console.log(this.groupData.value);
+        }
+        else {
+            this.formValid = true;
+        }
+    };
+    CreateGroupModal.prototype.cancelGroup = function () {
+        this.vwCtrl.dismiss();
+    };
+    CreateGroupModal = __decorate([
+        core_1.Component({
+            selector: 'page-login',template:/*ion-inline-start:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/modals/creategroup/creategroup.html"*/'<ion-content class="bg-primary-style">\n    <h3 class="std-text-color">New Group Details</h3>\n\n    <p *ngIf="formValid" class="error-text">Please complete required fields(*)</p>\n\n    <form [formGroup]="groupData">\n\n        <ion-item no-padding>\n            <ion-input formControlName="name" type="text" placeholder="Name*"\n                [class.invalid-input]="groupData.controls.name.invalid && groupData.controls.name.dirty">\n            </ion-input>\n        </ion-item>\n\n        <ion-item no-padding>\n            <ion-textarea formControlName="description" type="text" placeholder="Description*"\n                [class.invalid-input]="groupData.controls.description.invalid && groupData.controls.description.dirty">\n            </ion-textarea>\n        </ion-item>\n\n        <ion-item no-padding>\n            <ion-textarea formControlName="goal" type="text" placeholder="Goal*"\n                [class.invalid-input]="groupData.controls.goal.invalid && groupData.controls.goal.dirty">\n            </ion-textarea>\n        </ion-item>\n    </form>\n\n    <ion-card>\n        <h3 class="no-item" *ngIf="milestones.length === 0">No milestones added! Add some below!</h3>\n\n        <ion-item *ngFor="let item of milestones; index as i">\n            <button ion-button clear item-start icon-only (click)="removeMilestone(i)">\n                <ion-icon name="close" color="kred"></ion-icon>\n            </button>\n            <ion-grid no-padding>\n                <ion-row>\n                    <ion-col col-9 class="item-title">\n                        <p>{{item.name}}</p>\n                    </ion-col>\n                    <ion-col col-3 class="right-align-small-text">\n                        <p>Order: {{item.order}}</p>\n                    </ion-col>\n                </ion-row>\n            </ion-grid>\n        </ion-item>\n\n    </ion-card>\n\n    <ion-grid>\n        <ion-row>\n            <ion-col>\n                <ion-item>\n                    <ion-input type="text" [(ngModel)]="name" placeholder="Enter milestone name">\n                    </ion-input>\n                </ion-item>\n            </ion-col>\n        </ion-row>\n        <ion-row>\n            <ion-col col-3>\n                <ion-item>\n                    <ion-input type="number" [(ngModel)]="order" placeholder="Order"></ion-input>\n                </ion-item>\n            </ion-col>\n            <ion-col col-9>\n                <button ion-button block class="bg-secondary-style std-text-color" (click)="addMilestone()">Add</button>\n            </ion-col>\n        </ion-row>\n    </ion-grid>\n\n\n\n    <!--Button for adding and canceling group-->\n    <div padding>\n        <button ion-button block class="bg-secondary-style std-text-color" (click)="setupGroup()">Create Group</button>\n        <button ion-button block class="bg-danger-style std-text-color" (click)="cancelGroup()">Cancel</button>\n    </div>\n\n</ion-content>'/*ion-inline-end:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/modals/creategroup/creategroup.html"*/
+        }),
+        __metadata("design:paramtypes", [ionic_angular_1.ModalController, ionic_angular_1.ViewController, forms_1.FormBuilder])
+    ], CreateGroupModal);
+    return CreateGroupModal;
+}());
+exports.CreateGroupModal = CreateGroupModal;
+//# sourceMappingURL=creategroup.js.map
+
+/***/ }),
+
+/***/ 252:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var platform_browser_dynamic_1 = __webpack_require__(253);
+var app_module_1 = __webpack_require__(260);
 var core_1 = __webpack_require__(0);
 core_1.enableProdMode();
 platform_browser_dynamic_1.platformBrowserDynamic().bootstrapModule(app_module_1.AppModule);
@@ -647,7 +756,7 @@ platform_browser_dynamic_1.platformBrowserDynamic().bootstrapModule(app_module_1
 
 /***/ }),
 
-/***/ 259:
+/***/ 260:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -661,8 +770,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
 var platform_browser_1 = __webpack_require__(42);
-var ionic_angular_1 = __webpack_require__(19);
-var app_component_1 = __webpack_require__(298);
+var ionic_angular_1 = __webpack_require__(18);
+var app_component_1 = __webpack_require__(299);
 var search_1 = __webpack_require__(226);
 var groups_1 = __webpack_require__(250);
 var group_1 = __webpack_require__(249);
@@ -675,8 +784,10 @@ var signup_1 = __webpack_require__(230);
 var status_bar_1 = __webpack_require__(221);
 var splash_screen_1 = __webpack_require__(224);
 var service_1 = __webpack_require__(119);
+var service_2 = __webpack_require__(119);
+var service_3 = __webpack_require__(119);
 var http_1 = __webpack_require__(231);
-var creategroup_1 = __webpack_require__(407);
+var creategroup_1 = __webpack_require__(251);
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
@@ -720,7 +831,9 @@ var AppModule = /** @class */ (function () {
                 status_bar_1.StatusBar,
                 splash_screen_1.SplashScreen,
                 { provide: core_1.ErrorHandler, useClass: ionic_angular_1.IonicErrorHandler },
-                service_1.Auth_DataProvider
+                service_1.Auth_DataProvider,
+                service_2.User_DataProvider,
+                service_3.Group_DataProvider
             ]
         })
     ], AppModule);
@@ -731,7 +844,7 @@ exports.AppModule = AppModule;
 
 /***/ }),
 
-/***/ 298:
+/***/ 299:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -747,7 +860,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
-var ionic_angular_1 = __webpack_require__(19);
+var ionic_angular_1 = __webpack_require__(18);
 var status_bar_1 = __webpack_require__(221);
 var splash_screen_1 = __webpack_require__(224);
 var tabs_1 = __webpack_require__(225);
@@ -773,7 +886,7 @@ exports.MyApp = MyApp;
 
 /***/ }),
 
-/***/ 306:
+/***/ 307:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -797,80 +910,15 @@ exports.UsernameValidator = UsernameValidator;
 
 /***/ }),
 
-/***/ 407:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = __webpack_require__(0);
-var ionic_angular_1 = __webpack_require__(19);
-var forms_1 = __webpack_require__(24);
-var objectFactory_1 = __webpack_require__(66);
-var CreateGroupModal = /** @class */ (function () {
-    function CreateGroupModal(mdlCtrl, vwCtrl, frmBuilder) {
-        this.mdlCtrl = mdlCtrl;
-        this.vwCtrl = vwCtrl;
-        this.frmBuilder = frmBuilder;
-        this.formValid = false;
-        this.milestones = [];
-        this.groupData = frmBuilder.group({
-            name: ['', forms_1.Validators.compose([forms_1.Validators.maxLength(45), forms_1.Validators.required])],
-            description: ['', forms_1.Validators.compose([forms_1.Validators.maxLength(140), forms_1.Validators.required])],
-            goal: ['', forms_1.Validators.compose([forms_1.Validators.maxLength(140), forms_1.Validators.required])]
-        });
-    }
-    CreateGroupModal.prototype.addMilestone = function () {
-        var milestone = new objectFactory_1.Milestone();
-        milestone.name = this.name;
-        milestone.order = this.order;
-        this.name = null;
-        this.order = null;
-        this.milestones.push(milestone);
-    };
-    CreateGroupModal.prototype.removeMilestone = function (index) {
-        this.milestones.splice(index, 1);
-    };
-    CreateGroupModal.prototype.setupGroup = function () {
-        if (this.groupData.valid) {
-            console.log(this.groupData.value);
-        }
-        else {
-            this.formValid = true;
-        }
-    };
-    CreateGroupModal.prototype.cancelGroup = function () {
-        this.vwCtrl.dismiss();
-    };
-    CreateGroupModal = __decorate([
-        core_1.Component({
-            selector: 'page-login',template:/*ion-inline-start:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/modals/creategroup/creategroup.html"*/'<ion-content class="bg-primary-style">\n    <h3 class="std-text-color">New Group Details</h3>\n\n    <p *ngIf="formValid" class="error-text">Please complete required fields(*)</p>\n\n    <form [formGroup]="groupData">\n\n        <ion-item no-padding>\n            <ion-input formControlName="name" type="text" placeholder="Name*"\n                [class.invalid-input]="groupData.controls.name.invalid && groupData.controls.name.dirty">\n            </ion-input>\n        </ion-item>\n\n        <ion-item no-padding>\n            <ion-textarea formControlName="description" type="text" placeholder="Description*"\n                [class.invalid-input]="groupData.controls.description.invalid && groupData.controls.description.dirty">\n            </ion-textarea>\n        </ion-item>\n\n        <ion-item no-padding>\n            <ion-textarea formControlName="goal" type="text" placeholder="Goal*"\n                [class.invalid-input]="groupData.controls.goal.invalid && groupData.controls.goal.dirty">\n            </ion-textarea>\n        </ion-item>\n    </form>\n\n    <ion-card>\n        <h3 class="no-item" *ngIf="milestones.length === 0">No milestones added! Add some below!</h3>\n\n        <ion-item *ngFor="let item of milestones; index as i">\n            <button ion-button clear item-start icon-only (click)="removeMilestone(i)">\n                <ion-icon name="close" color="kred"></ion-icon>\n            </button>\n            <ion-grid no-padding>\n                <ion-row>\n                    <ion-col col-9 class="item-title">\n                        <p>{{item.name}}</p>\n                    </ion-col>\n                    <ion-col col-3 class="right-align-small-text">\n                        <p>Order: {{item.order}}</p>\n                    </ion-col>\n                </ion-row>\n            </ion-grid>\n        </ion-item>\n\n    </ion-card>\n\n    <ion-grid>\n        <ion-row>\n            <ion-col>\n                <ion-item>\n                    <ion-input type="text" [(ngModel)]="name" placeholder="Enter milestone name">\n                    </ion-input>\n                </ion-item>\n            </ion-col>\n        </ion-row>\n        <ion-row>\n            <ion-col col-3>\n                <ion-item>\n                    <ion-input type="number" [(ngModel)]="order" placeholder="Order"></ion-input>\n                </ion-item>\n            </ion-col>\n            <ion-col col-9>\n                <button ion-button block class="bg-secondary-style std-text-color" (click)="addMilestone()">Add</button>\n            </ion-col>\n        </ion-row>\n    </ion-grid>\n\n\n\n    <!--Button for adding and canceling group-->\n    <div padding>\n        <button ion-button block class="bg-secondary-style std-text-color" (click)="setupGroup()">Create Group</button>\n        <button ion-button block class="bg-danger-style std-text-color" (click)="cancelGroup()">Cancel</button>\n    </div>\n\n</ion-content>'/*ion-inline-end:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/modals/creategroup/creategroup.html"*/
-        }),
-        __metadata("design:paramtypes", [typeof (_a = typeof ionic_angular_1.ModalController !== "undefined" && ionic_angular_1.ModalController) === "function" && _a || Object, typeof (_b = typeof ionic_angular_1.ViewController !== "undefined" && ionic_angular_1.ViewController) === "function" && _b || Object, typeof (_c = typeof forms_1.FormBuilder !== "undefined" && forms_1.FormBuilder) === "function" && _c || Object])
-    ], CreateGroupModal);
-    return CreateGroupModal;
-    var _a, _b, _c;
-}());
-exports.CreateGroupModal = CreateGroupModal;
-//# sourceMappingURL=creategroup.js.map
-
-/***/ }),
-
-/***/ 66:
+/***/ 51:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
+/** hold user informaiton
+ *
+ */
 var User = /** @class */ (function () {
     function User(id, name, email, phone, username) {
         this.id = id;
@@ -879,10 +927,6 @@ var User = /** @class */ (function () {
         this.phone = phone;
         this.username = username;
     }
-    ;
-    User.prototype.getId = function () {
-        return this.id;
-    };
     return User;
 }());
 exports.User = User;
@@ -998,5 +1042,5 @@ exports.Milestone = Milestone;
 
 /***/ })
 
-},[251]);
+},[252]);
 //# sourceMappingURL=main.js.map

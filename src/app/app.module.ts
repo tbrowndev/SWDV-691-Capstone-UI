@@ -17,6 +17,8 @@ import { SignupModal } from '../modals/signup/signup';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Auth_DataProvider } from '../service/service';
+import { User_DataProvider } from '../service/service';
+import { Group_DataProvider } from '../service/service';
 import { HttpClientModule } from '@angular/common/http';
 import { CreateGroupModal } from '../modals/creategroup/creategroup';
 
@@ -57,7 +59,9 @@ import { CreateGroupModal } from '../modals/creategroup/creategroup';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    Auth_DataProvider
+    Auth_DataProvider,
+    User_DataProvider,
+    Group_DataProvider
   ]
 })
 export class AppModule {}

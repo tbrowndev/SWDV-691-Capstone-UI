@@ -5,17 +5,18 @@ import { LoginModal } from '../../modals/login/login';
 import { MenuController } from 'ionic-angular';
 import { User, Post } from '../../objects/objectFactory';
 import { PostPage } from '../post/post';
+import { User_DataProvider } from '../../service/service'
 
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
 })
 export class HomePage {
-  user: User = new User();
+  user:any = new User(null, null, null, null, null);
 
   recentPosts: Post[] = [];
 
-  constructor(public navCtrl: NavController, public mdlCtrl: ModalController, private menuCtrl: MenuController) {
+  constructor(public navCtrl: NavController, public mdlCtrl: ModalController, private menuCtrl: MenuController, private userService:User_DataProvider) {
     //console.log(typeof(this.user));
     let login = this.mdlCtrl.create(LoginModal, null, { showBackdrop: false, enableBackdropDismiss: false });
 
@@ -24,6 +25,10 @@ export class HomePage {
     });
 
     login.present();
+  }
+
+  ionViewDidLoad() {
+    console.log(this.user.id)
   }
 
   showUser() {
@@ -52,7 +57,10 @@ export class HomePage {
   setUserData(userId: number) {
 
     //Goes to server again and gets the user information that has been stored
-    this.user = new User(userId, "John Smith", "jsmith@mycloud.com", 3148675309, "_johnjohn")
+    this.userService.get_user_information(userId).subscribe(
+      user = this.user
+    )
+    console.log(this.user);
     //calls the next function to get posts for user
     //this.getRecentPosts(userId);
 
@@ -65,7 +73,7 @@ export class HomePage {
   }
 
   logout(){
-    this.user = new User();
+    this.user = new User(null, null, null, null, null);
     this.navCtrl.popToRoot();
     location.reload();
   }

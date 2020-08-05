@@ -1,25 +1,20 @@
-import { group } from "@angular/core/src/animation/dsl";
-
-export class User {
-
-    private id: number;
-
-    public name: string;
-    public email: string;
-    public phone: number;
-    public username: string;
-
-    constructor(id?:number,name?:string, email?:string, phone?:number, username?:string ) {
+/** hold user informaiton
+ * 
+ */
+export class User{
+    id:any;
+    name:any;
+    email:any;
+    phone:any;
+    username:any;
+    constructor(id, name, email, phone, username){
         this.id = id;
         this.name = name;
         this.email = email;
         this.phone = phone;
         this.username = username;
-    };
-
-    getId(){
-        return this.id;
     }
+    
 }
 
 export class Group{

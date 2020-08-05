@@ -29,7 +29,7 @@ function handle_error(error: Response | any) {
 @Injectable()
 export class Auth_DataProvider {
 
-    baseURL = 'http://localhost:6254';
+    baseURL = 'http://localhost:6200';
 
     dataChanged$: Observable<boolean>;
     private dataChangeSubject: Subject<boolean>;
@@ -55,5 +55,44 @@ export class Auth_DataProvider {
             map(extract_data),
             catchError(handle_error)
         )
+    }
+}
+
+@Injectable()
+export class User_DataProvider{
+    
+    baseURL = 'http://localhost:6220';
+
+    dataChanged$: Observable<boolean>;
+    private dataChangeSubject: Subject<boolean>;
+
+    constructor(public http: HttpClient) {
+
+        this.dataChangeSubject = new Subject<boolean>();
+        this.dataChanged$ = this.dataChangeSubject.asObservable();
+
+    }
+
+    get_user_information(id:number){
+        return this.http.get(this.baseURL+ "/users/"+id).pipe(
+            map(extract_data),
+            catchError(handle_error)
+        )
+    }
+}
+
+@Injectable()
+export class Group_DataProvider{
+    
+    baseURL = 'http://localhost:6210';
+
+    dataChanged$: Observable<boolean>;
+    private dataChangeSubject: Subject<boolean>;
+
+    constructor(public http: HttpClient) {
+
+        this.dataChangeSubject = new Subject<boolean>();
+        this.dataChanged$ = this.dataChangeSubject.asObservable();
+
     }
 }
