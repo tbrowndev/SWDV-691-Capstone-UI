@@ -16,6 +16,8 @@ export class HomePage {
 
   recentPosts: Post[] = [];
 
+  errorMessage:any;
+
   constructor(public navCtrl: NavController, public mdlCtrl: ModalController, private menuCtrl: MenuController, private userService:User_DataProvider) {
     //console.log(typeof(this.user));
     let login = this.mdlCtrl.create(LoginModal, null, { showBackdrop: false, enableBackdropDismiss: false });
@@ -28,7 +30,7 @@ export class HomePage {
   }
 
   ionViewDidLoad() {
-    console.log(this.user.id)
+    //console.log(this.user.id)
   }
 
   showUser() {
@@ -54,16 +56,19 @@ export class HomePage {
     }, 500);
   }
 
-  setUserData(userId: number) {
+  setUserData(userId: number){
 
     //Goes to server again and gets the user information that has been stored
     this.userService.get_user_information(userId).subscribe(
-      user = this.user
+      user => this.user = user,
+      error => this.errorMessage = <any>error
     )
-    console.log(this.user);
     //calls the next function to get posts for user
     //this.getRecentPosts(userId);
+  }
 
+  printUser(){
+    
   }
 
   postSelected(post){

@@ -73,7 +73,7 @@ export class User_DataProvider{
 
     }
 
-    get_user_information(id:number){
+    get_user_information(id:number): Observable<object[]>{
         return this.http.get(this.baseURL+ "/users/"+id).pipe(
             map(extract_data),
             catchError(handle_error)
