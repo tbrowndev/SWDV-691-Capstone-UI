@@ -17,41 +17,24 @@ export class User{
     
 }
 
-export class Group{
-    private id: number;
-    private adminId: number;
-    public name: string;
-    public description: string;
-    public goal: string;
-
-    constructor(id:number, adminId:number,name:string,description:string,goal:string){
+/**
+ * holds group information 
+ */
+export class Group {
+    id:any;
+    name:any;
+    description:any;
+    goal:any;
+    admin:any;
+    
+    constructor(id, name, description, goal, admin) {
         this.id = id;
-        this.adminId = adminId;
         this.name = name;
         this.description = description;
         this.goal = goal;
-    };
-
-    getId(){
-        return this.id;
+        this.admin = admin;
     }
 
-    getadminId(){
-        return this.adminId;
-    }
-
-    setName(newName:string){
-        this.name = newName;
-    }
-
-    setDescription(newDesc:string){
-        this.description = newDesc;
-    }
-
-    setGoal(newGoal:string){
-        this.goal = newGoal;
-    }
-    
 }
 
 export class Post {

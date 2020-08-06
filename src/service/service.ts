@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { map, catchError } from 'rxjs/operators'
 import { Subject } from 'rxjs/Subject';
-import { User } from '../objects/objectFactory'
+import { User, Group, Milestone } from '../objects/objectFactory'
 
 //handles extracting only the body of the server response
 function extract_data(res: Response) {
@@ -79,6 +79,13 @@ export class User_DataProvider{
             catchError(handle_error)
         )
     }
+
+    get_user_groups(id:number){
+        return this.http.get(this.baseURL+ "/users/"+id+"/groups").pipe(
+            map(extract_data),
+            catchError(handle_error)
+        )
+    }
 }
 
 @Injectable()
@@ -93,6 +100,12 @@ export class Group_DataProvider{
 
         this.dataChangeSubject = new Subject<boolean>();
         this.dataChanged$ = this.dataChangeSubject.asObservable();
+    }
 
+    add_new_group(group:Group, milestones:Milestone[]){
+        return this.http.post(this.baseURL+"/groups",{group, milestones}).pipe(
+            map(extract_data),
+            catchError(handle_error)
+        )
     }
 }

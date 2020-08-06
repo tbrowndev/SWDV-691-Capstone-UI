@@ -21,6 +21,7 @@ import { User_DataProvider } from '../service/service';
 import { Group_DataProvider } from '../service/service';
 import { HttpClientModule } from '@angular/common/http';
 import { CreateGroupModal } from '../modals/creategroup/creategroup';
+import { Share } from '../service/share';
 
 @NgModule({
   declarations: [
@@ -61,7 +62,8 @@ import { CreateGroupModal } from '../modals/creategroup/creategroup';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     Auth_DataProvider,
     User_DataProvider,
-    Group_DataProvider
+    Group_DataProvider,
+    Share
   ]
 })
 export class AppModule {}

@@ -30583,6 +30583,11 @@ ion-navbar.toolbar {
   border-width: 1px;
 }
 
+.no-item {
+  text-align: center;
+  color: grey;
+}
+
 h1 {
   font-size: 39pt;
   font-weight: bold;
@@ -30599,6 +30604,8 @@ h3 {
 
 p {
   font-size: 12pt;
+  word-wrap: normal;
+  white-space: normal;
 }
 
 .subcomment {
@@ -30661,16 +30668,6 @@ p {
 page-creategroup ion-content {
   --ion-background-color: color($colors, primary)
     ;
-}
-
-page-creategroup .no-item {
-  text-align: center;
-  color: grey;
-}
-
-page-creategroup .right-align-small-text {
-  text-align: left;
-  font-size: smaller;
 }
 
 page-login ion-content {

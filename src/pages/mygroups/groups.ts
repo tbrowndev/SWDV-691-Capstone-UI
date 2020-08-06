@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { NavController, ModalController } from 'ionic-angular';
 import { CreateGroupModal } from '../../modals/creategroup/creategroup';
+import { Group } from '../../objects/objectFactory';
+import { User_DataProvider } from '../../service/service';
+import { Share } from '../../service/share';
 
 @Component({
   selector: 'page-groups',
@@ -8,7 +11,11 @@ import { CreateGroupModal } from '../../modals/creategroup/creategroup';
 })
 export class GroupsPage {
 
-  constructor(public navCtrl: NavController, public mdlCtrl: ModalController) {
+  groups:Group[] = [];
+
+  constructor(public navCtrl: NavController, public mdlCtrl: ModalController, public userService: User_DataProvider, public shared: Share) {
+
+    this.getUserGroups();
 
   }
 
@@ -19,6 +26,13 @@ export class GroupsPage {
       enableBackdropDismiss: true });
     group.present();
 
+  }
+
+  getUserGroups(){
+    this.userService.get_user_groups(this.shared.items['userId']).subscribe( res => 
+      res => this.groups = res
+      
+    )
   }
 
 }

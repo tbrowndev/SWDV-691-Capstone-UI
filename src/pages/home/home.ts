@@ -6,6 +6,7 @@ import { MenuController } from 'ionic-angular';
 import { User, Post } from '../../objects/objectFactory';
 import { PostPage } from '../post/post';
 import { User_DataProvider } from '../../service/service'
+import { Share } from '../../service/share';
 
 @Component({
   selector: 'page-home',
@@ -18,19 +19,16 @@ export class HomePage {
 
   errorMessage:any;
 
-  constructor(public navCtrl: NavController, public mdlCtrl: ModalController, private menuCtrl: MenuController, private userService:User_DataProvider) {
+  constructor(public navCtrl: NavController, public mdlCtrl: ModalController, private menuCtrl: MenuController, private userService:User_DataProvider, public shared: Share) {
     //console.log(typeof(this.user));
     let login = this.mdlCtrl.create(LoginModal, null, { showBackdrop: false, enableBackdropDismiss: false });
 
     login.onDidDismiss(userId => {
       this.setUserData(userId);
+      shared.items['userId'] = userId;
     });
 
     login.present();
-  }
-
-  ionViewDidLoad() {
-    //console.log(this.user.id)
   }
 
   showUser() {
@@ -63,12 +61,9 @@ export class HomePage {
       user => this.user = user,
       error => this.errorMessage = <any>error
     )
+    
     //calls the next function to get posts for user
     //this.getRecentPosts(userId);
-  }
-
-  printUser(){
-    
   }
 
   postSelected(post){
