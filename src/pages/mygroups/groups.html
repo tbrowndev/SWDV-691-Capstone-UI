@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar color="primary">
+  <ion-navbar color="primary">
     <ion-title>
       My Groups
     </ion-title>
@@ -8,10 +8,20 @@
         <ion-icon name="add" class="ion-icon-large"></ion-icon>
       </button>
     </ion-buttons>
-  </ion-toolbar>
-  <ion-searchbar class="searchbar" placeholder="Search my groups"></ion-searchbar>
+  </ion-navbar>
+  <!--<ion-searchbar class="searchbar" placeholder="Search my groups"></ion-searchbar>-->
 </ion-header>
 
-<ion-content padding>
+<ion-content no-padding>
+
+  <p *ngIf="groups.length === 0" class="no-item">Not a member of any groups :(</p>
+
+  <button ion-item details-push *ngFor="let group of groups" (click)="groupSelected(group)">
+    <ion-avatar item-start>
+      <ion-icon name="people" class="ion-icon-large"></ion-icon>
+    </ion-avatar>
+    <h2>{{group.name}}</h2>
+    <p>{{group.description}}</p>
+  </button>
 
 </ion-content>

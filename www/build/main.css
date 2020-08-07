@@ -30665,6 +30665,13 @@ p {
   color: red;
 }
 
+.ion-textarea-style {
+  border-width: medium;
+  height: 70px;
+  margin-left: 5px;
+  margin-top: 5px;
+}
+
 page-creategroup ion-content {
   --ion-background-color: color($colors, primary)
     ;

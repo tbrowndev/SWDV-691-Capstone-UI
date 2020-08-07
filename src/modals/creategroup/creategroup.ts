@@ -35,6 +35,7 @@ export class CreateGroupModal {
     addMilestone(){
         if (this.milestoneData.valid) {
             this.milestones.push(new Milestone(null, null, this.milestoneData.value.name, this.milestoneData.value.order))
+            this.milestoneData.reset();
         }
         else {
             this.milestoneInvalid = true;

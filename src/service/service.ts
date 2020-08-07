@@ -86,6 +86,13 @@ export class User_DataProvider{
             catchError(handle_error)
         )
     }
+
+    is_user_a_member(id: number, group:number){
+        return this.http.get(this.baseURL+ "/users/"+id+"/groups/verify/"+group).pipe(
+            map(extract_data),
+            catchError(handle_error)
+        )
+    }
 }
 
 @Injectable()
@@ -104,6 +111,27 @@ export class Group_DataProvider{
 
     add_new_group(group:Group, milestones:Milestone[]){
         return this.http.post(this.baseURL+"/groups",{group, milestones}).pipe(
+            map(extract_data),
+            catchError(handle_error)
+        )
+    }
+
+    get_group_information(group:number){
+        return this.http.get(this.baseURL+"/groups/"+group).pipe(
+            map(extract_data),
+            catchError(handle_error)
+        )
+    }
+
+    get_group_search(search:string){
+        return this.http.get(this.baseURL+"/groups/search/"+search).pipe(
+            map(extract_data),
+            catchError(handle_error)
+        )
+    }
+
+    add_user_to_group(user:number, group:number){
+        return this.http.post(this.baseURL+"/groups/members", {user:user, group:group}).pipe(
             map(extract_data),
             catchError(handle_error)
         )

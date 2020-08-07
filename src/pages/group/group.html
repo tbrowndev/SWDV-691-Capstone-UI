@@ -12,7 +12,38 @@
 </ion-header>
 
 <ion-content padding>
-
+  <!--Display for non members-->
+  <div no-padding *ngIf="notAMember">
+    <ion-card no-padding class="card-strd-style">
+      <ion-card-content padding>
+        <h2>Name</h2>
+        <p>{{curGroup.name}}</p>
+      </ion-card-content>
+    </ion-card>
+    <ion-card no-padding class="card-strd-style">
+      <ion-card-content padding>
+        <h2>Description</h2>
+        <p>{{curGroup.description}}</p>
+      </ion-card-content>
+    </ion-card>
+    <ion-card no-padding class="card-strd-style">
+      <ion-card-content padding>
+        <h2>Goal</h2>
+        <p>{{curGroup.goal}}</p>
+      </ion-card-content>
+    </ion-card>
+    <button ion-button block class="bg-secondary-style" (click)="joinGroup()">Join Group</button>
+  </div>
+  <!-- Display for members-->
+  <ion-card>
+    <ion-textarea class="ion-textarea-style" maxlength="1000" rows="5" placeholder="What's on your mind?" [(ngModel)]="postText" (ionInput)="updateCount($event)"></ion-textarea>
+    <ion-grid>
+      <ion-row style="height:50px">
+        <ion-col col-9><p style="margin-top: 30px;">{{ 1000 - postText.length }}</p></ion-col><ion-col col-3><button ion-button float-right>Post</button></ion-col>
+      </ion-row>
+    </ion-grid>
+    
+  </ion-card>
   <ion-card *ngFor="let post of posts" (click)=postSelected(post)>
 
     <ion-item>
