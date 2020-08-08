@@ -19,4 +19,35 @@ export class Share{
 
         toast.present();
     }
+
+    getDisplayDate(date){
+        // Split timestamp into [ Y, M, D, h, m, s ]
+
+        var actiondate = new Date(date);
+        var today = new Date();
+;        if(today.getDate() === actiondate.getDate() && today.getMonth() === actiondate.getMonth() && today.getFullYear() === actiondate.getFullYear()){
+            var hourssince =   today.getHours() - actiondate.getHours();
+            var minutessince =   today.getMinutes() - actiondate.getMinutes();
+            var secondssince =   today.getSeconds() - actiondate.getSeconds();
+            if(hourssince > 0){
+                date = hourssince+'h';
+            }else if(minutessince > 0){
+                date = minutessince+'m';
+            }else{
+                date = secondssince+'s';
+            }
+        }else{
+            var oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
+            var diffDays = Math.round(Math.abs((today.getTime() - actiondate.getTime())/(oneDay)));
+            if(diffDays >= 7){
+                date = Math.round(diffDays / 7)+'w';
+            }else{
+                if(diffDays == 0){
+                    diffDays = 1;
+                }
+                date = diffDays+'d';
+            }
+        }
+        return date;
+    }
 }
