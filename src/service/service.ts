@@ -49,9 +49,9 @@ export class Auth_DataProvider {
         )
     }
 
-    validate_user_cred(input_name:string, input_key:string){
-        
-        return this.http.get(this.baseURL+ "/auth/users", {"params":{"input_name":input_name, "input_key":input_key}}).pipe(
+    validate_user_cred(input_name: string, input_key: string) {
+
+        return this.http.get(this.baseURL + "/auth/users", { "params": { "input_name": input_name, "input_key": input_key } }).pipe(
             map(extract_data),
             catchError(handle_error)
         )
@@ -59,8 +59,8 @@ export class Auth_DataProvider {
 }
 
 @Injectable()
-export class User_DataProvider{
-    
+export class User_DataProvider {
+
     baseURL = 'http://localhost:6220';
 
     dataChanged$: Observable<boolean>;
@@ -73,22 +73,22 @@ export class User_DataProvider{
 
     }
 
-    get_user_information(id:number): Observable<object[]>{
-        return this.http.get(this.baseURL+ "/users/"+id).pipe(
+    get_user_information(id: number): Observable<object[]> {
+        return this.http.get(this.baseURL + "/users/" + id).pipe(
             map(extract_data),
             catchError(handle_error)
         )
     }
 
-    get_user_groups(id:number){
-        return this.http.get(this.baseURL+ "/users/"+id+"/groups").pipe(
+    get_user_groups(id: number) {
+        return this.http.get(this.baseURL + "/users/" + id + "/groups").pipe(
             map(extract_data),
             catchError(handle_error)
         )
     }
 
-    is_user_a_member(id: number, group:number){
-        return this.http.get(this.baseURL+ "/users/"+id+"/groups/verify/"+group).pipe(
+    is_user_a_member(id: number, group: number) {
+        return this.http.get(this.baseURL + "/users/" + id + "/groups/verify/" + group).pipe(
             map(extract_data),
             catchError(handle_error)
         )
@@ -96,8 +96,8 @@ export class User_DataProvider{
 }
 
 @Injectable()
-export class Group_DataProvider{
-    
+export class Group_DataProvider {
+
     baseURL = 'http://localhost:6210';
 
     dataChanged$: Observable<boolean>;
@@ -109,31 +109,78 @@ export class Group_DataProvider{
         this.dataChanged$ = this.dataChangeSubject.asObservable();
     }
 
-    add_new_group(group:Group, milestones:Milestone[]){
-        return this.http.post(this.baseURL+"/groups",{group, milestones}).pipe(
+    //GROUP SECTION
+
+    add_new_group(group: Group, milestones: Milestone[]) {
+        return this.http.post(this.baseURL + "/groups", { group, milestones }).pipe(
             map(extract_data),
             catchError(handle_error)
         )
     }
 
-    get_group_information(group:number){
-        return this.http.get(this.baseURL+"/groups/"+group).pipe(
+    get_group_information(group: number) {
+        return this.http.get(this.baseURL + "/groups/" + group).pipe(
             map(extract_data),
             catchError(handle_error)
         )
     }
 
-    get_group_search(search:string){
-        return this.http.get(this.baseURL+"/groups/search/"+search).pipe(
+    get_group_search(search: string) {
+        return this.http.get(this.baseURL + "/groups/search/" + search).pipe(
             map(extract_data),
             catchError(handle_error)
         )
     }
 
-    add_user_to_group(user:number, group:number){
-        return this.http.post(this.baseURL+"/groups/members", {user:user, group:group}).pipe(
+    add_user_to_group(user: number, group: number) {
+        return this.http.post(this.baseURL + "/groups/members", { user: user, group: group }).pipe(
             map(extract_data),
             catchError(handle_error)
         )
     }
+
+    add_new_post(group: number, user: number, post: string) {
+        return this.http.post(this.baseURL + "/groups/" + group + "/posts", { user: user, post: post }).pipe(
+            map(extract_data),
+            catchError(handle_error)
+        )
+    }
+
+    get_group_top_posts(group: Number) {
+        return this.http.get(this.baseURL + "/groups/"+group+"/posts").pipe(
+            map(extract_data),
+            catchError(handle_error)
+        )
+    }
+
+    get_group_next_posts(group: number, lastPost: number) {
+        return this.http.get(this.baseURL + "/groups/"+group+"/posts/"+lastPost).pipe(
+            map(extract_data),
+            catchError(handle_error)
+        )
+    }
+
+    //POST SECTION
+    count_post_likes(post:number){
+
+    }
+
+    count_post_comments(post:number){
+        
+    }
+
+    add_comment_to_post(post:number, user:number, comment:string){
+        return this.http.post(this.baseURL+"/posts/"+post+"/comments", {user:user, comment:comment}).pipe(
+            map(extract_data),
+            catchError(handle_error)
+        )
+    }
+
+    get_post_comments(post:number){
+        return this.http.get(this.baseURL+"/posts/"+post+"/comments").pipe(
+            map(extract_data),
+            catchError(handle_error)
+        )
+    }
+    //COMMENT SECTION
 }
