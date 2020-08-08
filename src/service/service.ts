@@ -161,12 +161,15 @@ export class Group_DataProvider {
     }
 
     //POST SECTION
-    count_post_likes(post:number){
-
+    count_post_likes(post:number, user:number){
+        return this.http.get(this.baseURL+"/posts/"+post+"/likes/"+user).pipe(
+            map(extract_data),
+            catchError(handle_error)
+        )
     }
 
     count_post_comments(post:number){
-        
+
     }
 
     add_comment_to_post(post:number, user:number, comment:string){

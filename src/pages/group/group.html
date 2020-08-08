@@ -59,7 +59,7 @@
       <ion-avatar item-start>
         <ion-icon name="person" class="ion-icon-large"></ion-icon>
       </ion-avatar>
-      <p readonly>{{post.user}} ({{post.username}})</p>
+      <strong>{{post.user}}</strong> @{{post.username}}
     </ion-item>
 
     <ion-card-content (click)=postSelected(post)>
@@ -69,14 +69,15 @@
     <ion-row>
       <ion-col>
         <button ion-button icon-start clear small>
-          <ion-icon name="heart-outline" class="ion-icon-heart-like"></ion-icon>
-          <div>12 Likes</div>
+          <ion-icon name="heart-outline" class="ion-icon-heart-like" *ngIf="getPostLikes(post)[1] === 1"></ion-icon>
+          <ion-icon name="heart" class="ion-icon-heart-like" *ngIf="getPostLikes(post)[1] === 0"></ion-icon>
+          <div>{{getPostLikes(post)[0]}}</div>
         </button>
       </ion-col>
       <ion-col>
         <button ion-button icon-start clear small (click)=postSelected(post)>
           <ion-icon name="text"></ion-icon>
-          <div>4 Comments</div>
+          <div>4</div>
         </button>
       </ion-col>
       <ion-col align-self-center text-center>
