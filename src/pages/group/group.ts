@@ -16,7 +16,8 @@ export class GroupPage {
   posts: Post[] = [];
   notAMember: boolean = true;
   errorMessage: any;
-  postText:string = "";
+  postText: string = "";
+  lastPostId: number;
 
   constructor(public navCtrl: NavController, public navPar: NavParams, private menuCtrl: MenuController, public groupService: Group_DataProvider, public shared: Share, public userService: User_DataProvider) {
     this.getGroupInfo(this.navPar.get("id"));
@@ -52,27 +53,43 @@ export class GroupPage {
   }
 
   getGroupMembers(id: number) {
-    //go to server and get group members
-    this.members = [
-      new User(1, "Jane Doe", "jdoe@yahoo.com", 2243241325, "Jdoe243"),
-      new User(2, "James Smith", "jsmith@mycloud.com", 5156542212, "smith324")
-    ];
+    //go to server and get members associated with group
+  }
+
+  addPost() {
+    //add post data to database
+    if (this.postText.length > 0) {
+      this.groupService.add_new_post(this.curGroup.id, this.shared.items['userId'], this.postText).subscribe(
+        res => {
+          if (res.status = 200) {
+            this.shared.presentToast(res.message);
+            this.getGroupPosts(this.curGroup.id);
+          }
+        }
+      )
+      this.postText = "";
+    }
   }
 
   getGroupPosts(id: number) {
-    //go to server to get posts of related group
-    for (let i = 0; i < 10; i++) {
-      let p = new Post(i, i, i, "Member " + i, "Group " + i, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ut felis neque. Cras nec erat euismod, ultricies neque sagittis, gravida magna.", new Date());
-      this.posts.push(p);
-    }
+    //pull the most recent 10 posts from database for group
+    this.posts = [];
+    this.groupService.get_group_top_posts(id).subscribe(res => {
+      res.posts.forEach(post => {
+        this.posts.push(post);
+        this.lastPostId = post.id;
+      });
+    })
   }
 
   continuePosts(infiniteScroll) {
     setTimeout(() => {
-      for (let i = 0; i < 10; i++) {
-        let p = new Post(i, i, i, "Member " + i, "Group " + i, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ut felis neque. Cras nec erat euismod, ultricies neque sagittis, gravida magna.", new Date());
-        this.posts.push(p);
-      }
+      // pull next 10 posts from daatbase for group
+      this.groupService.get_group_next_posts(this.curGroup.id, this.lastPostId).subscribe(res => {
+        res.posts.forEach(post => {
+          this.posts.push(post);
+        });
+      })
       infiniteScroll.complete();
     }, 500);
   }
