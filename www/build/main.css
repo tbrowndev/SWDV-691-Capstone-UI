@@ -30672,6 +30672,16 @@ p {
   margin-top: 5px;
 }
 
+.post_button_style {
+  width: 40px;
+  height: 30px;
+}
+
+.post_button_style .post_button_text {
+  font-size: small;
+  color: white;
+}
+
 page-creategroup ion-content {
   --ion-background-color: color($colors, primary)
     ;
