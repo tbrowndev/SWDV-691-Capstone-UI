@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { Post, Comment, Subcomment } from '../../objects/objectFactory'
 import { GroupPage } from '../group/group'
+import { Group_DataProvider } from '../../service/service';
+import { Share } from '../../service/share';
 
 @Component({
   selector: 'page-post',
@@ -11,29 +13,35 @@ export class PostPage {
 
   post: Post;
   comments: Comment[] = [];
+  postReply:string = "";
 
-  constructor(public navCtrl: NavController, public navPar: NavParams) {
+  constructor(public navCtrl: NavController, public navPar: NavParams, public groupService:Group_DataProvider, public shared: Share) {
     this.post = navPar.get('selectedPost');
 
-    this.getPostComments(this.post.getId());
+    this.getPostComments(this.post.id);
+  }
+
+  replyToPost(){
+    this.groupService.add_comment_to_post(this.post.id, this.shared.items["userId"], this.postReply).subscribe(res => {
+      if(res.status == 200){
+        this.postReply = "";
+        this.shared.presentToast(res.message);
+        this.getPostComments(this.post.id);
+      }
+    })
   }
 
   getPostComments(id: number) {
-
     //Go to server and retrieve comments associated with post
-    for (let i = 0; i < 15; i++) {
-      let c = new Comment(i, this.post.getId(), i, "Member " + i, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ut felis neque.", new Date());
-      this.comments.push(c);
-    }
+    this.groupService.get_post_comments(id).subscribe(
+      res => this.comments = res.comments
+    )
   }
 
   continueComments(infiniteScroll) {
     setTimeout(() => {
       //Go to server and retrieve comments associated with post
-      for (let i = 0; i < 15; i++) {
-        let c = new Comment(i, this.post.getId(), i, "Member " + i, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ut felis neque.", new Date());
-        this.comments.push(c);
-      }
+      
       infiniteScroll.complete();
     }, 500);
   }
@@ -41,15 +49,12 @@ export class PostPage {
   getSubComments(id: number) {
     let subComments: Subcomment[] = [];
     //Go to server and retrieve comments associated with post
-    for (let i = 0; i < 2; i++) {
-      let sc = new Subcomment(i, id, i, "Member " + i, "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", new Date());
-      subComments.push(sc);
-    }
+    
     return subComments;
   }
 
   showGroup(){
-    this.navCtrl.push( GroupPage, {"id": this.post.getGroupId()})
+    this.navCtrl.push( GroupPage, {"id": this.post.groupId})
   }
 
 }
