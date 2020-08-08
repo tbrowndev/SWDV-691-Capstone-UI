@@ -36,51 +36,60 @@
   </div>
   <!-- Display for members-->
   <ion-card>
-    <ion-textarea class="ion-textarea-style" maxlength="1000" rows="5" placeholder="What's on your mind?" [(ngModel)]="postText" (ionInput)="updateCount($event)"></ion-textarea>
+    <ion-textarea class="ion-textarea-style" maxlength="1000" rows="5" placeholder="What's on your mind?"
+      [(ngModel)]="postText" (ionInput)="updateCount($event)"></ion-textarea>
     <ion-grid>
-      <ion-row style="height:50px">
-        <ion-col col-9><p style="margin-top: 30px;">{{ 1000 - postText.length }}</p></ion-col><ion-col col-3><button ion-button float-right>Post</button></ion-col>
+      <ion-row style="height:40px">
+        <ion-col col-10>
+          <p style="margin-top: 15px; text-align: right;">{{ 1000 - postText.length }}</p>
+        </ion-col>
+        <ion-col col-2 align-right>
+          <button class="post_button_style" ion-button float-right (click)=addPost()>
+            <p class="post_button_text">Post</p>
+          </button>
+        </ion-col>
       </ion-row>
     </ion-grid>
-    
-  </ion-card>
-  <ion-card *ngFor="let post of posts" (click)=postSelected(post)>
 
-    <ion-item>
+  </ion-card>
+  <h3 class="no-item" style="text-align: center;" *ngIf="posts.length === 0">No posts in group yet :(</h3>
+  <ion-card *ngFor="let post of posts">
+
+    <ion-item (click)=postSelected(post)>
       <ion-avatar item-start>
         <ion-icon name="person" class="ion-icon-large"></ion-icon>
       </ion-avatar>
-      <p readonly>{{post.memberName}}</p>
+      <p readonly>{{post.user}} ({{post.username}})</p>
     </ion-item>
 
-    <ion-card-content>
-      <p readonly>{{post.postData}}</p>
+    <ion-card-content (click)=postSelected(post)>
+      <p readonly>{{post.post}}</p>
     </ion-card-content>
 
     <ion-row>
       <ion-col>
         <button ion-button icon-start clear small>
-          <ion-icon name="heart" class="ion-icon-heart-like"></ion-icon>
+          <ion-icon name="heart-outline" class="ion-icon-heart-like"></ion-icon>
           <div>12 Likes</div>
         </button>
       </ion-col>
       <ion-col>
-        <button ion-button icon-start clear small>
+        <button ion-button icon-start clear small (click)=postSelected(post)>
           <ion-icon name="text"></ion-icon>
           <div>4 Comments</div>
         </button>
       </ion-col>
       <ion-col align-self-center text-center>
         <ion-note>
-          11h ago
+          {{this.shared.getDisplayDate(post.creationDate)}}
         </ion-note>
       </ion-col>
     </ion-row>
+    
 
   </ion-card>
   <ion-infinite-scroll (ionInfinite)="continuePosts($event)">
-    <ion-infinite-scroll-content>
-
+    <ion-infinite-scroll-content loadingspinner="bubbles">
     </ion-infinite-scroll-content>
   </ion-infinite-scroll>
 
