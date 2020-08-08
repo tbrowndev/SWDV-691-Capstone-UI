@@ -132,3 +132,12 @@ p{
     margin-left: 5px;
     margin-top: 5px;
 }
+
+.post_button_style{
+    width: 40px;
+    height: 30px;
+    .post_button_text{
+        font-size: small;
+        color: white;
+    }
+}
