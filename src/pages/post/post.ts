@@ -13,22 +13,24 @@ export class PostPage {
 
   post: Post;
   comments: Comment[] = [];
-  postReply:string = "";
+  postReply: string = "";
 
-  constructor(public navCtrl: NavController, public navPar: NavParams, public groupService:Group_DataProvider, public shared: Share) {
+  constructor(public navCtrl: NavController, public navPar: NavParams, public groupService: Group_DataProvider, public shared: Share) {
     this.post = navPar.get('selectedPost');
 
     this.getPostComments(this.post.id);
   }
 
-  replyToPost(){
-    this.groupService.add_comment_to_post(this.post.id, this.shared.items["userId"], this.postReply).subscribe(res => {
-      if(res.status == 200){
-        this.postReply = "";
-        this.shared.presentToast(res.message);
-        this.getPostComments(this.post.id);
-      }
-    })
+  replyToPost() {
+    if (this.postReply.length > 0) {
+      this.groupService.add_comment_to_post(this.post.id, this.shared.items["userId"], this.postReply).subscribe(res => {
+        if (res.status == 200) {
+          this.postReply = "";
+          this.shared.presentToast(res.message);
+          this.getPostComments(this.post.id);
+        }
+      });
+    }
   }
 
   getPostComments(id: number) {
@@ -41,7 +43,7 @@ export class PostPage {
   continueComments(infiniteScroll) {
     setTimeout(() => {
       //Go to server and retrieve comments associated with post
-      
+
       infiniteScroll.complete();
     }, 500);
   }
@@ -49,12 +51,12 @@ export class PostPage {
   getSubComments(id: number) {
     let subComments: Subcomment[] = [];
     //Go to server and retrieve comments associated with post
-    
+
     return subComments;
   }
 
-  showGroup(){
-    this.navCtrl.push( GroupPage, {"id": this.post.groupId})
+  showGroup() {
+    this.navCtrl.push(GroupPage, { "id": this.post.groupId })
   }
 
 }
