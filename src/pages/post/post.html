@@ -14,17 +14,17 @@
       <ion-avatar item-start>
         <ion-icon name="person" class="ion-icon-large"></ion-icon>
       </ion-avatar>
-      <p readonly>{{post.memberName}}</p>
+      <p readonly>{{post.user}} ( {{post.username}} )</p>
     </ion-item>
 
     <ion-card-content>
-      <p readonly>{{post.postData}}</p>
+      <p readonly>{{post.post}}</p>
     </ion-card-content>
 
     <ion-row>
       <ion-col>
         <button ion-button icon-start clear small>
-          <ion-icon name="heart" class="ion-icon-heart-like"></ion-icon>
+          <ion-icon name="heart-outline" class="ion-icon-heart-like"></ion-icon>
           <div>12 Likes</div>
         </button>
       </ion-col>
@@ -36,16 +36,19 @@
       </ion-col>
       <ion-col align-self-center text-center>
         <ion-note>
-          11h ago
+          {{this.shared.getDisplayDate(post.creationDate)}}
         </ion-note>
       </ion-col>
     </ion-row>
-    <ion-row class="reply-bg-style" no-padding>
-      <ion-col col-9>
-        <ion-textarea placeholder="Reply..." name="post_reply" class="reply-style"></ion-textarea> 
+    <ion-row no-padding style="height: 45px;">
+      <ion-col col-10>
+        <ion-textarea style="border-width: 2px;" [(ngModel)]="postReply" maxlength="1000" rows="2" placeholder="Reply to {{post.username}}">
+        </ion-textarea>
       </ion-col>
-      <ion-col align-self-right text-right col-3>
-        <button ion-button small class="reply-style">Reply</button>
+      <ion-col col-2 align-right>
+        <button class="post_button_style" ion-button float-right (click)=replyToPost()>
+          <p class="post_button_text">Reply</p>
+        </button>
       </ion-col>
     </ion-row>
 
@@ -53,22 +56,22 @@
   <!-- Comments -->
   <ion-card *ngFor="let comment of comments">
 
-    <ion-card-content>
+    <ion-card-content no-padding>
       <p>
-        <ion-icon name="person" class="ion-icon-medium"></ion-icon> {{comment.memberName}} {{comment.commentData}}
+        <ion-icon name="person" class="ion-icon-medium" padding></ion-icon><strong>{{comment.username}}</strong> {{comment.comment}}
       </p>
       <!-- Sub Comments-->
-      <div *ngFor="let sc of getSubComments(comment.getId())" class="subcomment">
+      <!-- <div *ngFor="let sc of getSubComments(comment.getId())" class="subcomment">
         <ion-icon name="person" class="ion-icon-small"></ion-icon> {{sc.memberName}} {{sc.commentData}}
       </div>
       <ion-row class="reply-bg-style" no-padding>
         <ion-col col-9>
-          <ion-textarea placeholder="Reply..." name="post_reply" class="reply-style"></ion-textarea> 
+          <ion-textarea placeholder="Reply to {{comment.username}}" name="comment_reply" class="reply-style"></ion-textarea>
         </ion-col>
         <ion-col align-self-right text-right col-3>
           <button ion-button block small class="reply-style">Reply</button>
         </ion-col>
-      </ion-row>
+      </ion-row> -->
     </ion-card-content>
 
   </ion-card>
