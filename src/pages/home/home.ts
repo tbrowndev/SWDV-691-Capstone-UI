@@ -36,20 +36,13 @@ export class HomePage {
   }
 
   getRecentPosts(userId: number) {
-
     //Go to server and retrieve all recent posts all groups user is associated with
-    for(let i = 0; i< 15; i++){
-      let p = new Post(i, i, i, "Member " +i, "Group "+i, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ut felis neque. Cras nec erat euismod, ultricies neque sagittis, gravida magna.", new Date());
-    this.recentPosts.push(p);
-    }
+    
   }
 
   continueRecentPosts(infiniteScroll){
     setTimeout( () =>{
-      for(let i = 0; i< 15; i++){
-        let p = new Post(i, i, i, "Member " +i, "Group "+i, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ut felis neque. Cras nec erat euismod, ultricies neque sagittis, gravida magna.", new Date());
-      this.recentPosts.push(p);
-      }
+      
       infiniteScroll.complete();
     }, 500);
   }
