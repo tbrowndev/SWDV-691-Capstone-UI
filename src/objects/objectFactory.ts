@@ -37,64 +37,48 @@ export class Group {
 
 }
 
+/**holds post information for user
+ * 
+ */
 export class Post {
-    private id: number;
-    private groupId: number;
-    private memberId: number;
 
-    public memberName: string;
-    public groupName: string;
-    public postData: string;
-    public timestamp: Date;
+    id:any;
+    groupId:any;
+    groupName:any;
+    user:any;
+    username:any;
+    post:any;
+    creationDate:any;
 
-    constructor(id:number, groupId:number, memberId:number, memberName: string, groupName:string, postData:string, timestamp:Date) {
+    constructor(id, group_id, group_name, user_name, username, post, date){
         this.id = id;
-        this.groupId = groupId;
-        this.memberId = memberId;
-        this.memberName = memberName;
-        this.groupName = groupName;
-        this.postData = postData;
-        this.timestamp = timestamp;
-    };
-
-    getId() {
-        return this.id;
-    }
-    getGroupId() {
-        return this.groupId;
-    }
-    getMemberId() {
-        return this.memberId;
+        this.groupId = group_id;
+        this.groupName = group_name;
+        this.user = user_name;
+        this.username = username;
+        this.post = post
+        this.creationDate = date;
     }
 }
 
+/**holds comment information 
+ * 
+*/
 export class Comment{
-    private id:number;
-    private postId:number;
-    private memberId:number;
-    public memberName: string;
-    public commentData: string;
-    public timestamp: Date;
+    id:any;
+    postId:any;
+    user:any;
+    username:any;
+    comment:any;
+    creationDate:any;
 
-    constructor(id:number, postId:number, memberId:number, memberName:string, commentData:string, timestamp:Date){
+    constructor(id, post_id, user, username, comment, date){
         this.id = id;
-        this.postId = postId;
-        this.memberId = memberId;
-        this.memberName = memberName;
-        this.commentData = commentData;
-        this.timestamp = timestamp;
-    }
-
-    getId(){
-        return this.id;
-    }
-
-    getPostId(){
-        return this.postId;
-    }
-
-    getmemberId(){
-        return this.memberId;
+        this.postId = post_id;
+        this.user = user;
+        this.username = username;
+        this.comment = comment;
+        this.creationDate = date;
     }
 }
 
