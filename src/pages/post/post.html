@@ -23,21 +23,21 @@
 
     <ion-row>
       <ion-col>
-        <button ion-button icon-start clear small>
-          <!-- <ion-icon name="heart-outline" class="ion-icon-heart-like"></ion-icon> -->
-          <ion-icon name="heart" class="ion-icon-heart-like"></ion-icon>
-          <div>12</div>
+        <button ion-button icon-start clear small (click)="likePost()">
+          <ion-icon name="heart-outline" class="ion-icon-heart-like" *ngIf="memberLiked === 0"></ion-icon>
+          <ion-icon name="heart" class="ion-icon-heart-like" *ngIf="memberLiked === 1"></ion-icon>
+          <div>{{likeCount}}</div>
         </button>
       </ion-col>
       <ion-col>
         <button ion-button icon-start clear small>
           <ion-icon name="text"></ion-icon>
-          <div></div>
+          <div>{{commentCount}}</div>
         </button>
       </ion-col>
       <ion-col align-self-center text-center>
         <ion-note>
-          {{this.shared.getDisplayDate(post.creationDate)}}
+          Posted {{this.shared.getDisplayDate(post.creationDate)}} ago
         </ion-note>
       </ion-col>
     </ion-row>
