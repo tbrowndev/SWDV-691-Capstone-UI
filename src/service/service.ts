@@ -169,7 +169,10 @@ export class Group_DataProvider {
     }
 
     count_post_comments(post:number){
-
+        return this.http.get(this.baseURL+"/posts/"+post+"/comments/count").pipe(
+            map(extract_data),
+            catchError(handle_error)
+        )
     }
 
     add_comment_to_post(post:number, user:number, comment:string){
@@ -185,5 +188,20 @@ export class Group_DataProvider {
             catchError(handle_error)
         )
     }
+
+    add_like_to_post(post:number, group:number, user:number){
+        return this.http.post(this.baseURL+"/posts/"+post+"/likes", {group:group, user:user}).pipe(
+            map(extract_data),
+            catchError(handle_error)
+        )
+    }
+
+    delete_like_from_post(like:number){
+        return this.http.delete(this.baseURL+"/likes/"+like).pipe(
+            map(extract_data),
+            catchError(handle_error)
+        )
+    }
+
     //COMMENT SECTION
 }
