@@ -21,6 +21,20 @@ export class PostPage {
     this.getPostComments(this.post.id);
   }
 
+  getPostLikes(post:Post){
+    // this.groupService.count_post_likes(post.id, this.shared.items["userId"]).subscribe(
+    //   res =>{
+    //     if(res.status == 200){
+    //       //return [res.likes, res.memberLiked]
+    //     }
+    //   }
+    // )
+  }
+
+  likePost(post:Post){
+
+  }
+
   replyToPost() {
     if (this.postReply.length > 0) {
       this.groupService.add_comment_to_post(this.post.id, this.shared.items["userId"], this.postReply).subscribe(res => {

@@ -24,20 +24,6 @@ export class GroupPage {
     this.isUserMember(this.shared.items["userId"], this.navPar.get("id"))
   }
 
-  getPostLikes(post:Post){
-    return this.groupService.count_post_likes(post.id, this.shared.items["userId"]).subscribe(
-      res =>{
-        if(res.status == 200){
-          return [res.likes, res.memberLiked]
-        }
-      }
-    )
-    
-  }
-
-  likePost(post:Post){
-
-  }
 
   isUserMember(user: number, group: number) {
     this.userService.is_user_a_member(user, group).subscribe(res => {
