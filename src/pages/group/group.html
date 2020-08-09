@@ -68,21 +68,12 @@
 
     <ion-row>
       <ion-col>
-        <button ion-button icon-start clear small>
-          <!-- <ion-icon name="heart-outline" class="ion-icon-heart-like" *ngIf="getPostLikes(post)[1] === 1"></ion-icon> -->
-          <ion-icon name="heart" class="ion-icon-heart-like"></ion-icon>
-          <div></div>
-        </button>
       </ion-col>
       <ion-col>
-        <button ion-button icon-start clear small (click)=postSelected(post)>
-          <ion-icon name="text"></ion-icon>
-          <div></div>
-        </button>
       </ion-col>
-      <ion-col align-self-center text-center>
+      <ion-col>
         <ion-note>
-          {{this.shared.getDisplayDate(post.creationDate)}}
+          Posted {{this.shared.getDisplayDate(post.creationDate)}} ago
         </ion-note>
       </ion-col>
     </ion-row>
