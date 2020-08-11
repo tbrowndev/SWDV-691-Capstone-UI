@@ -17,8 +17,6 @@ export class HomePage {
 
   recentPosts: Post[] = [];
 
-  errorMessage:any;
-
   constructor(public navCtrl: NavController, public mdlCtrl: ModalController, private menuCtrl: MenuController, private userService:User_DataProvider, public shared: Share) {
     //console.log(typeof(this.user));
     let login = this.mdlCtrl.create(LoginModal, null, { showBackdrop: false, enableBackdropDismiss: false });
@@ -26,8 +24,8 @@ export class HomePage {
     login.onDidDismiss(userId => {
       this.setUserData(userId);
       shared.items['userId'] = userId;
+      this.getRecentPosts(userId);
     });
-
     login.present();
   }
 
@@ -37,12 +35,18 @@ export class HomePage {
 
   getRecentPosts(userId: number) {
     //Go to server and retrieve all recent posts all groups user is associated with
-    
+    this.userService.get_user_homefeed(userId).subscribe(
+      res => {
+        if(res.status == 200){
+          this.recentPosts = res.posts;
+        }},
+      error => this.shared.presentAlert("Error", "This is embarassing... I am unable to load your timeline.")
+    )
   }
 
   continueRecentPosts(infiniteScroll){
     setTimeout( () =>{
-      
+      // continue getting the next 10 posts for a user. 
       infiniteScroll.complete();
     }, 500);
   }
@@ -52,7 +56,7 @@ export class HomePage {
     //Goes to server again and gets the user information that has been stored
     this.userService.get_user_information(userId).subscribe(
       user => this.user = user,
-      error => this.errorMessage = <any>error
+      error => this.shared.presentAlert("Error", "unable to load profile")
     )
     
     //calls the next function to get posts for user

@@ -93,6 +93,13 @@ export class User_DataProvider {
             catchError(handle_error)
         )
     }
+
+    get_user_homefeed(userId:number){
+        return this.http.get(this.baseURL+"/users/"+userId+"/feed").pipe(
+            map(extract_data),
+            catchError(handle_error)
+        )
+    }
 }
 
 @Injectable()

@@ -316,6 +316,7 @@ var HomePage = /** @class */ (function () {
         login.onDidDismiss(function (userId) {
             _this.setUserData(userId);
             shared.items['userId'] = userId;
+            _this.getRecentPosts(userId);
         });
         login.present();
     }
@@ -323,17 +324,24 @@ var HomePage = /** @class */ (function () {
         this.menuCtrl.open();
     };
     HomePage.prototype.getRecentPosts = function (userId) {
+        var _this = this;
         //Go to server and retrieve all recent posts all groups user is associated with
+        this.userService.get_user_homefeed(userId).subscribe(function (res) {
+            if (res.status == 200) {
+                _this.recentPosts = res.posts;
+            }
+        }, function (error) { return _this.shared.presentAlert("Error", "This is embarassing... I am unable to load your timeline."); });
     };
     HomePage.prototype.continueRecentPosts = function (infiniteScroll) {
         setTimeout(function () {
+            // continue getting the next 10 posts for a user. 
             infiniteScroll.complete();
         }, 500);
     };
     HomePage.prototype.setUserData = function (userId) {
         var _this = this;
         //Goes to server again and gets the user information that has been stored
-        this.userService.get_user_information(userId).subscribe(function (user) { return _this.user = user; }, function (error) { return _this.errorMessage = error; });
+        this.userService.get_user_information(userId).subscribe(function (user) { return _this.user = user; }, function (error) { return _this.shared.presentAlert("Error", "unable to load profile"); });
         //calls the next function to get posts for user
         //this.getRecentPosts(userId);
     };
@@ -505,6 +513,9 @@ var User_DataProvider = /** @class */ (function () {
     };
     User_DataProvider.prototype.is_user_a_member = function (id, group) {
         return this.http.get(this.baseURL + "/users/" + id + "/groups/verify/" + group).pipe(operators_1.map(extract_data), operators_1.catchError(handle_error));
+    };
+    User_DataProvider.prototype.get_user_homefeed = function (userId) {
+        return this.http.get(this.baseURL + "/users/" + userId + "/feed").pipe(operators_1.map(extract_data), operators_1.catchError(handle_error));
     };
     User_DataProvider = __decorate([
         core_1.Injectable(),
@@ -987,8 +998,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
 var ionic_angular_1 = __webpack_require__(16);
 var Share = /** @class */ (function () {
-    function Share(toasCtrl) {
+    function Share(toasCtrl, alertCtrl) {
         this.toasCtrl = toasCtrl;
+        this.alertCtrl = alertCtrl;
         this.items = {};
     }
     Share.prototype.presentToast = function (toast_message) {
@@ -998,6 +1010,18 @@ var Share = /** @class */ (function () {
             position: 'bottom'
         });
         toast.present();
+    };
+    Share.prototype.presentAlert = function (alert_type, alert_message) {
+        var alert = this.alertCtrl.create({
+            title: alert_type,
+            message: alert_message,
+            buttons: [
+                {
+                    text: "OK"
+                }
+            ]
+        });
+        alert.present();
     };
     Share.prototype.getDisplayDate = function (date) {
         // Split timestamp into [ Y, M, D, h, m, s ]
@@ -1037,7 +1061,7 @@ var Share = /** @class */ (function () {
         core_1.Component({
             template: ""
         }),
-        __metadata("design:paramtypes", [ionic_angular_1.ToastController])
+        __metadata("design:paramtypes", [ionic_angular_1.ToastController, ionic_angular_1.AlertController])
     ], Share);
     return Share;
 }());

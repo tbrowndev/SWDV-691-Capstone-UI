@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { ToastController } from 'ionic-angular';
+import { ToastController, AlertController } from 'ionic-angular';
 
 @Component({
     template:""
@@ -7,7 +7,7 @@ import { ToastController } from 'ionic-angular';
 export class Share{
 
     items = {}
-    constructor(private toasCtrl: ToastController){
+    constructor(private toasCtrl: ToastController, private alertCtrl: AlertController){
     }
 
     presentToast(toast_message:string){
@@ -18,6 +18,20 @@ export class Share{
         });
 
         toast.present();
+    }
+
+    presentAlert(alert_type:string, alert_message:string){
+        let alert = this.alertCtrl.create({
+            title: alert_type,
+            message: alert_message,
+            buttons: [
+                {
+                    text: "OK"
+                }
+            ]
+        });
+
+        alert.present();
     }
 
     getDisplayDate(date){
