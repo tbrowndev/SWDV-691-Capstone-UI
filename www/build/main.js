@@ -111,10 +111,9 @@ var PostPage = /** @class */ (function () {
         core_1.Component({
             selector: 'page-post',template:/*ion-inline-start:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/pages/post/post.html"*/'<ion-header>\n  <ion-navbar color="primary">\n    <ion-title (click)="showGroup()">\n      {{post.groupName}}\n    </ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content no-padding>\n  <!-- Post-->\n  <ion-card>\n\n    <ion-item>\n      <ion-avatar item-start>\n        <ion-icon name="person" class="ion-icon-large"></ion-icon>\n      </ion-avatar>\n      <strong>{{post.user}}</strong> @{{post.username}}\n    </ion-item>\n\n    <ion-card-content>\n      <p readonly>{{post.post}}</p>\n    </ion-card-content>\n\n    <ion-row>\n      <ion-col>\n        <button ion-button icon-start clear small (click)="likePost()">\n          <ion-icon name="heart-outline" class="ion-icon-heart-like" *ngIf="memberLiked === 0"></ion-icon>\n          <ion-icon name="heart" class="ion-icon-heart-like" *ngIf="memberLiked === 1"></ion-icon>\n          <div>{{likeCount}}</div>\n        </button>\n      </ion-col>\n      <ion-col>\n        <button ion-button icon-start clear small>\n          <ion-icon name="text"></ion-icon>\n          <div>{{commentCount}}</div>\n        </button>\n      </ion-col>\n      <ion-col align-self-center text-center>\n        <ion-note>\n          Posted {{this.shared.getDisplayDate(post.creationDate)}} ago\n        </ion-note>\n      </ion-col>\n    </ion-row>\n    <ion-row no-padding style="height: 45px;">\n      <ion-col col-10>\n        <ion-textarea style="border-width: 2px;" [(ngModel)]="postReply" maxlength="1000" rows="2" placeholder="Reply to {{post.username}}">\n        </ion-textarea>\n      </ion-col>\n      <ion-col col-2 align-right>\n        <button class="post_button_style" ion-button float-right (click)=replyToPost()>\n          <p class="post_button_text">Reply</p>\n        </button>\n      </ion-col>\n    </ion-row>\n\n  </ion-card>\n  <!-- Comments -->\n  <ion-card *ngFor="let comment of comments">\n\n    <ion-card-content no-padding>\n        <ion-row no-padding>\n          <ion-col col-1><ion-icon name="person" class="ion-icon-medium"></ion-icon></ion-col>\n          <ion-col col-11><strong>{{comment.username}}</strong> {{comment.comment}}</ion-col>\n        </ion-row>\n      <!-- Sub Comments-->\n      <!-- <div *ngFor="let sc of getSubComments(comment.getId())" class="subcomment">\n        <ion-icon name="person" class="ion-icon-small"></ion-icon> {{sc.memberName}} {{sc.commentData}}\n      </div>\n      <ion-row class="reply-bg-style" no-padding>\n        <ion-col col-9>\n          <ion-textarea placeholder="Reply to {{comment.username}}" name="comment_reply" class="reply-style"></ion-textarea>\n        </ion-col>\n        <ion-col align-self-right text-right col-3>\n          <button ion-button block small class="reply-style">Reply</button>\n        </ion-col>\n      </ion-row> -->\n    </ion-card-content>\n\n  </ion-card>\n\n  <ion-infinite-scroll (ionInfinite)="continueComments($event)">\n    <ion-infinite-scroll-content>\n    </ion-infinite-scroll-content>\n  </ion-infinite-scroll>\n\n</ion-content>'/*ion-inline-end:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/pages/post/post.html"*/
         }),
-        __metadata("design:paramtypes", [typeof (_a = typeof ionic_angular_1.NavController !== "undefined" && ionic_angular_1.NavController) === "function" && _a || Object, typeof (_b = typeof ionic_angular_1.NavParams !== "undefined" && ionic_angular_1.NavParams) === "function" && _b || Object, typeof (_c = typeof service_1.Group_DataProvider !== "undefined" && service_1.Group_DataProvider) === "function" && _c || Object, typeof (_d = typeof share_1.Share !== "undefined" && share_1.Share) === "function" && _d || Object])
+        __metadata("design:paramtypes", [ionic_angular_1.NavController, ionic_angular_1.NavParams, service_1.Group_DataProvider, share_1.Share])
     ], PostPage);
     return PostPage;
-    var _a, _b, _c, _d;
 }());
 exports.PostPage = PostPage;
 //# sourceMappingURL=post.js.map
@@ -468,13 +467,13 @@ function handle_error(error) {
     else {
         errMsg = error.message ? error.message : error.toString();
     }
-    console.error(errMsg);
+    //console.error(errMsg);
     return Observable_1.Observable.throw(errMsg);
 }
 var Auth_DataProvider = /** @class */ (function () {
     function Auth_DataProvider(http) {
         this.http = http;
-        this.baseURL = 'http://localhost:6200';
+        this.baseURL = 'ec2-3-19-75-69.us-east-2.compute.amazonaws.com:6200';
         this.dataChangeSubject = new Subject_1.Subject();
         this.dataChanged$ = this.dataChangeSubject.asObservable();
     }
@@ -486,16 +485,15 @@ var Auth_DataProvider = /** @class */ (function () {
     };
     Auth_DataProvider = __decorate([
         core_1.Injectable(),
-        __metadata("design:paramtypes", [typeof (_a = typeof http_1.HttpClient !== "undefined" && http_1.HttpClient) === "function" && _a || Object])
+        __metadata("design:paramtypes", [http_1.HttpClient])
     ], Auth_DataProvider);
     return Auth_DataProvider;
-    var _a;
 }());
 exports.Auth_DataProvider = Auth_DataProvider;
 var User_DataProvider = /** @class */ (function () {
     function User_DataProvider(http) {
         this.http = http;
-        this.baseURL = 'http://localhost:6220';
+        this.baseURL = 'ec2-3-19-75-69.us-east-2.compute.amazonaws.com:6220';
         this.dataChangeSubject = new Subject_1.Subject();
         this.dataChanged$ = this.dataChangeSubject.asObservable();
     }
@@ -510,16 +508,15 @@ var User_DataProvider = /** @class */ (function () {
     };
     User_DataProvider = __decorate([
         core_1.Injectable(),
-        __metadata("design:paramtypes", [typeof (_a = typeof http_1.HttpClient !== "undefined" && http_1.HttpClient) === "function" && _a || Object])
+        __metadata("design:paramtypes", [http_1.HttpClient])
     ], User_DataProvider);
     return User_DataProvider;
-    var _a;
 }());
 exports.User_DataProvider = User_DataProvider;
 var Group_DataProvider = /** @class */ (function () {
     function Group_DataProvider(http) {
         this.http = http;
-        this.baseURL = 'http://localhost:6210';
+        this.baseURL = 'ec2-3-19-75-69.us-east-2.compute.amazonaws.com:6210';
         this.dataChangeSubject = new Subject_1.Subject();
         this.dataChanged$ = this.dataChangeSubject.asObservable();
     }
@@ -566,10 +563,9 @@ var Group_DataProvider = /** @class */ (function () {
     };
     Group_DataProvider = __decorate([
         core_1.Injectable(),
-        __metadata("design:paramtypes", [typeof (_a = typeof http_1.HttpClient !== "undefined" && http_1.HttpClient) === "function" && _a || Object])
+        __metadata("design:paramtypes", [http_1.HttpClient])
     ], Group_DataProvider);
     return Group_DataProvider;
-    var _a;
 }());
 exports.Group_DataProvider = Group_DataProvider;
 //# sourceMappingURL=service.js.map
