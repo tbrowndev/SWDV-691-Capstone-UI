@@ -29,7 +29,7 @@ function handle_error(error: Response | any) {
 @Injectable()
 export class Auth_DataProvider {
 
-    baseURL = 'ec2-3-19-75-69.us-east-2.compute.amazonaws.com:6200';
+    baseURL = 'http://ec2-3-19-75-69.us-east-2.compute.amazonaws.com:6200';
 
     dataChanged$: Observable<boolean>;
     private dataChangeSubject: Subject<boolean>;
@@ -61,7 +61,7 @@ export class Auth_DataProvider {
 @Injectable()
 export class User_DataProvider {
 
-    baseURL = 'ec2-3-19-75-69.us-east-2.compute.amazonaws.com:6220';
+    baseURL = 'http://ec2-3-19-75-69.us-east-2.compute.amazonaws.com:6220';
 
     dataChanged$: Observable<boolean>;
     private dataChangeSubject: Subject<boolean>;
@@ -98,7 +98,7 @@ export class User_DataProvider {
 @Injectable()
 export class Group_DataProvider {
 
-    baseURL = 'ec2-3-19-75-69.us-east-2.compute.amazonaws.com:6210';
+    baseURL = 'http://ec2-3-19-75-69.us-east-2.compute.amazonaws.com:6210';
 
     dataChanged$: Observable<boolean>;
     private dataChangeSubject: Subject<boolean>;

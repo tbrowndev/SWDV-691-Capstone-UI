@@ -473,7 +473,7 @@ function handle_error(error) {
 var Auth_DataProvider = /** @class */ (function () {
     function Auth_DataProvider(http) {
         this.http = http;
-        this.baseURL = 'ec2-3-19-75-69.us-east-2.compute.amazonaws.com:6200';
+        this.baseURL = 'http://ec2-3-19-75-69.us-east-2.compute.amazonaws.com:6200';
         this.dataChangeSubject = new Subject_1.Subject();
         this.dataChanged$ = this.dataChangeSubject.asObservable();
     }
@@ -493,7 +493,7 @@ exports.Auth_DataProvider = Auth_DataProvider;
 var User_DataProvider = /** @class */ (function () {
     function User_DataProvider(http) {
         this.http = http;
-        this.baseURL = 'ec2-3-19-75-69.us-east-2.compute.amazonaws.com:6220';
+        this.baseURL = 'http://ec2-3-19-75-69.us-east-2.compute.amazonaws.com:6220';
         this.dataChangeSubject = new Subject_1.Subject();
         this.dataChanged$ = this.dataChangeSubject.asObservable();
     }
@@ -516,7 +516,7 @@ exports.User_DataProvider = User_DataProvider;
 var Group_DataProvider = /** @class */ (function () {
     function Group_DataProvider(http) {
         this.http = http;
-        this.baseURL = 'ec2-3-19-75-69.us-east-2.compute.amazonaws.com:6210';
+        this.baseURL = 'http://ec2-3-19-75-69.us-east-2.compute.amazonaws.com:6210';
         this.dataChangeSubject = new Subject_1.Subject();
         this.dataChanged$ = this.dataChangeSubject.asObservable();
     }
