@@ -481,7 +481,6 @@ var HomePage = /** @class */ (function () {
         this.userService.get_user_homefeed(userId).subscribe(function (res) {
             if (res.status == 200) {
                 _this.recentPosts = res.posts;
-                console.log(res.posts);
             }
         }, function (error) { return _this.shared.presentAlert("Error", "unable to load timeline."); });
     };

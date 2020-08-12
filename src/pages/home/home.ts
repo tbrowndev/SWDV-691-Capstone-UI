@@ -39,7 +39,6 @@ export class HomePage {
       res => {
         if(res.status == 200){
           this.recentPosts = res.posts;
-          console.log(res.posts);
         }},
       error => this.shared.presentAlert("Error", "unable to load timeline.")
     )
