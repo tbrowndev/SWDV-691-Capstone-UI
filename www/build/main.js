@@ -18,7 +18,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
 var ionic_angular_1 = __webpack_require__(16);
 var group_1 = __webpack_require__(65);
-var service_1 = __webpack_require__(25);
+var service_1 = __webpack_require__(22);
 var share_1 = __webpack_require__(45);
 var PostPage = /** @class */ (function () {
     function PostPage(navCtrl, navPar, groupService, shared) {
@@ -154,293 +154,7 @@ webpackEmptyAsyncContext.id = 183;
 
 /***/ }),
 
-/***/ 227:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = __webpack_require__(0);
-var search_1 = __webpack_require__(228);
-var notifications_1 = __webpack_require__(247);
-var home_1 = __webpack_require__(248);
-var groups_1 = __webpack_require__(251);
-var TabsPage = /** @class */ (function () {
-    function TabsPage() {
-        this.tab1Root = home_1.HomePage;
-        this.tab2Root = search_1.SearchPage;
-        this.tab3Root = notifications_1.NotificationPage;
-        this.tab4Root = groups_1.GroupsPage;
-    }
-    TabsPage = __decorate([
-        core_1.Component({template:/*ion-inline-start:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/pages/tabs/tabs.html"*/'<ion-tabs>\n  <ion-tab [root]="tab1Root" tabIcon="home"></ion-tab>\n  <ion-tab [root]="tab2Root" tabIcon="search"></ion-tab>\n  <ion-tab [root]="tab4Root" tabIcon="people"></ion-tab>\n  <ion-tab [root]="tab3Root" tabIcon="notifications"></ion-tab>\n</ion-tabs>\n'/*ion-inline-end:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/pages/tabs/tabs.html"*/
-        }),
-        __metadata("design:paramtypes", [])
-    ], TabsPage);
-    return TabsPage;
-}());
-exports.TabsPage = TabsPage;
-//# sourceMappingURL=tabs.js.map
-
-/***/ }),
-
-/***/ 228:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = __webpack_require__(0);
-var ionic_angular_1 = __webpack_require__(16);
-var group_1 = __webpack_require__(65);
-var service_1 = __webpack_require__(25);
-var SearchPage = /** @class */ (function () {
-    function SearchPage(navCtrl, groupService) {
-        this.navCtrl = navCtrl;
-        this.groupService = groupService;
-        this.groups = [];
-    }
-    SearchPage.prototype.onInput = function () {
-        var _this = this;
-        if (this.search_term.length > 0) {
-            this.groupService.get_group_search(this.search_term).subscribe(function (res) { return _this.groups = res.found_groups; }, function (error) { return _this.errorMessage = error; });
-        }
-        else {
-            this.groups = [];
-        }
-    };
-    SearchPage.prototype.groupSelected = function (group) {
-        this.navCtrl.push(group_1.GroupPage, { "id": group.id });
-    };
-    SearchPage = __decorate([
-        core_1.Component({
-            selector: 'page-search',template:/*ion-inline-start:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/pages/search/search.html"*/'<ion-header>\n  <ion-toolbar color="primary">\n    <ion-title>\n      Group Search\n    </ion-title>\n  </ion-toolbar>\n  <ion-searchbar \n    class="searchbar" \n    placeholder="Search for groups"\n    [(ngModel)]="search_term"\n    (ionInput)="onInput($event)">\n  </ion-searchbar>\n</ion-header>\n\n<ion-content padding>\n  <button ion-item details-push *ngFor="let group of groups" (click)="groupSelected(group)">\n    <ion-avatar item-start>\n      <ion-icon name="people" class="ion-icon-large"></ion-icon>\n    </ion-avatar>\n    <h2>{{group.name}}</h2>\n    <p>{{group.description}}</p>\n  </button>\n</ion-content>'/*ion-inline-end:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/pages/search/search.html"*/
-        }),
-        __metadata("design:paramtypes", [ionic_angular_1.NavController, service_1.Group_DataProvider])
-    ], SearchPage);
-    return SearchPage;
-}());
-exports.SearchPage = SearchPage;
-//# sourceMappingURL=search.js.map
-
-/***/ }),
-
-/***/ 247:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = __webpack_require__(0);
-var ionic_angular_1 = __webpack_require__(16);
-var NotificationPage = /** @class */ (function () {
-    function NotificationPage(navCtrl) {
-        this.navCtrl = navCtrl;
-    }
-    NotificationPage = __decorate([
-        core_1.Component({
-            selector: 'page-notifications',template:/*ion-inline-start:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/pages/notifications/notifications.html"*/'<ion-header>\n  <ion-toolbar color="primary">\n    <ion-title>\n      Notifications\n    </ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n</ion-content>\n'/*ion-inline-end:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/pages/notifications/notifications.html"*/
-        }),
-        __metadata("design:paramtypes", [ionic_angular_1.NavController])
-    ], NotificationPage);
-    return NotificationPage;
-}());
-exports.NotificationPage = NotificationPage;
-//# sourceMappingURL=notifications.js.map
-
-/***/ }),
-
-/***/ 248:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = __webpack_require__(0);
-var ionic_angular_1 = __webpack_require__(16);
-var ionic_angular_2 = __webpack_require__(16);
-var login_1 = __webpack_require__(249);
-var ionic_angular_3 = __webpack_require__(16);
-var objectFactory_1 = __webpack_require__(66);
-var post_1 = __webpack_require__(122);
-var service_1 = __webpack_require__(25);
-var share_1 = __webpack_require__(45);
-var HomePage = /** @class */ (function () {
-    function HomePage(navCtrl, mdlCtrl, menuCtrl, userService, shared) {
-        var _this = this;
-        this.navCtrl = navCtrl;
-        this.mdlCtrl = mdlCtrl;
-        this.menuCtrl = menuCtrl;
-        this.userService = userService;
-        this.shared = shared;
-        this.user = new objectFactory_1.User(null, null, null, null, null);
-        this.recentPosts = [];
-        //console.log(typeof(this.user));
-        var login = this.mdlCtrl.create(login_1.LoginModal, null, { showBackdrop: false, enableBackdropDismiss: false });
-        login.onDidDismiss(function (userId) {
-            _this.setUserData(userId);
-            shared.items['userId'] = userId;
-            _this.getRecentPosts(userId);
-        });
-        login.present();
-    }
-    HomePage.prototype.showUser = function () {
-        this.menuCtrl.open();
-    };
-    HomePage.prototype.getRecentPosts = function (userId) {
-        var _this = this;
-        //Go to server and retrieve all recent posts all groups user is associated with
-        this.userService.get_user_homefeed(userId).subscribe(function (res) {
-            if (res.status == 200) {
-                _this.recentPosts = res.posts;
-            }
-        }, function (error) { return _this.shared.presentAlert("Error", "This is embarassing... I am unable to load your timeline."); });
-    };
-    HomePage.prototype.continueRecentPosts = function (infiniteScroll) {
-        setTimeout(function () {
-            // continue getting the next 10 posts for a user. 
-            infiniteScroll.complete();
-        }, 500);
-    };
-    HomePage.prototype.setUserData = function (userId) {
-        var _this = this;
-        //Goes to server again and gets the user information that has been stored
-        this.userService.get_user_information(userId).subscribe(function (user) { return _this.user = user; }, function (error) { return _this.shared.presentAlert("Error", "unable to load profile"); });
-        //calls the next function to get posts for user
-        //this.getRecentPosts(userId);
-    };
-    HomePage.prototype.postSelected = function (post) {
-        this.navCtrl.push(post_1.PostPage, {
-            selectedPost: post,
-        });
-    };
-    HomePage.prototype.logout = function () {
-        this.user = new objectFactory_1.User(null, null, null, null, null);
-        this.navCtrl.popToRoot();
-        location.reload();
-    };
-    HomePage = __decorate([
-        core_1.Component({
-            selector: 'page-home',template:/*ion-inline-start:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/pages/home/home.html"*/'<ion-header>\n  <ion-toolbar color="primary">\n    <button ion-button (click)="showUser()">\n      <ion-icon name="person" class="ion-icon-large"></ion-icon>\n    </button>\n    <ion-title> {{user.username}}</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content padding>\n  <ion-card *ngFor="let post of recentPosts" (click)=postSelected(post)>\n\n    <ion-item>\n      <ion-avatar item-start>\n        <ion-icon name="person" class="ion-icon-large"></ion-icon>\n      </ion-avatar>\n      <p readonly>{{post.memberName}} in {{post.groupName}}</p>\n    </ion-item>\n  \n    <ion-card-content>\n      <p readonly>{{post.postData}}</p> \n    </ion-card-content>\n  \n    <ion-row>\n      <ion-col>\n        <button ion-button icon-start clear small>\n          <ion-icon name="heart" class="ion-icon-heart-like"></ion-icon>\n          <div>12 Likes</div>\n        </button>\n      </ion-col>\n      <ion-col>\n        <button ion-button icon-start clear small>\n          <ion-icon name="text"></ion-icon>\n          <div>4 Comments</div>\n        </button>\n      </ion-col>\n      <ion-col align-self-center text-center>\n        <ion-note>\n          11h ago\n        </ion-note>\n      </ion-col>\n    </ion-row>\n  \n  </ion-card>\n  <ion-infinite-scroll (ionInfinite)="continueRecentPosts($event)">\n    <ion-infinite-scroll-content>\n\n    </ion-infinite-scroll-content>\n  </ion-infinite-scroll>\n</ion-content>\n\n<ion-nav #userMenu [root]="rootPage"></ion-nav>\n\n<!--Side Menu to display user information-->\n<ion-menu side="left" [content]="userMenu" type="overlay" color="primary">\n    <ion-content class="bg-primary-style">\n      <ion-card no-padding class="card-strd-style">\n        <ion-card-content no-padding>\n          <ion-item padding-left>\n            <ion-avatar item-start>\n              <ion-icon name="person" class="ion-icon-large"></ion-icon>\n            </ion-avatar>\n            <h2>Name</h2>\n            <h3>{{user != undefined ? user.name: \'\'}}</h3>\n          </ion-item>\n        </ion-card-content>\n      </ion-card>\n      <ion-card no-padding class="card-strd-style">\n        <ion-card-content no-padding>\n          <ion-item padding-left>\n            <ion-avatar item-start>\n              <ion-icon name="mail" class="ion-icon-large"></ion-icon>\n            </ion-avatar>\n            <h2>Email Address</h2>\n            <h3>{{user != undefined ? user.email: \'\'}}</h3>\n          </ion-item>\n        </ion-card-content>\n      </ion-card>\n      <ion-card no-padding class="card-strd-style">\n        <ion-card-content no-padding>\n          <ion-item padding-left>\n            <ion-avatar item-start>\n              <ion-icon name="call" class="ion-icon-large"></ion-icon>\n            </ion-avatar>\n            <h2>Phone Number</h2>\n            <h3>{{user != undefined ? user.phone: \'\'}}</h3>\n          </ion-item>\n        </ion-card-content>\n      </ion-card>\n      <button ion-item details-push>\n        <h3>Chat</h3>\n      </button>\n      <button ion-item details-push>\n        <h3>Profile</h3>\n      </button>\n      <button ion-item details-push>\n        <h3>Settings</h3>\n      </button>\n      <button ion-item details-push (click)="logout()">\n        <h3 class="error-text">Logout</h3>\n      </button>\n    </ion-content>\n  </ion-menu>\n'/*ion-inline-end:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/pages/home/home.html"*/
-        }),
-        __metadata("design:paramtypes", [ionic_angular_1.NavController, ionic_angular_2.ModalController, ionic_angular_3.MenuController, service_1.User_DataProvider, share_1.Share])
-    ], HomePage);
-    return HomePage;
-}());
-exports.HomePage = HomePage;
-//# sourceMappingURL=home.js.map
-
-/***/ }),
-
-/***/ 249:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = __webpack_require__(0);
-var ionic_angular_1 = __webpack_require__(16);
-var signup_1 = __webpack_require__(250);
-var service_1 = __webpack_require__(25);
-var LoginModal = /** @class */ (function () {
-    function LoginModal(mdlCtrl, vwCtrl, service) {
-        this.mdlCtrl = mdlCtrl;
-        this.vwCtrl = vwCtrl;
-        this.service = service;
-    }
-    LoginModal.prototype.startSignup = function () {
-        var _this = this;
-        //console.log("starting Signup")
-        var signup = this.mdlCtrl.create(signup_1.SignupModal, null, { showBackdrop: false, enableBackdropDismiss: false });
-        signup.onDidDismiss(function (registeredUser) {
-            if (registeredUser !== undefined) {
-                _this.signUpLogin(registeredUser);
-                registeredUser = null;
-            }
-        });
-        signup.present();
-    };
-    LoginModal.prototype.signUpLogin = function (registeredUser) {
-        this.vwCtrl.dismiss(registeredUser);
-        registeredUser = null;
-    };
-    LoginModal.prototype.login = function () {
-        var _this = this;
-        //send to security to check credentials and return if true. 
-        try {
-            this.service.validate_user_cred(this.user, this.key).subscribe(function (res) {
-                if (res.valid) {
-                    _this.vwCtrl.dismiss(res.valid_id);
-                }
-                else {
-                    _this.isValid = true;
-                }
-            });
-        }
-        catch (err) {
-            console.log(err);
-            //handles any error when authenticating user credentials
-        }
-    };
-    LoginModal = __decorate([
-        core_1.Component({
-            selector: 'page-login',template:/*ion-inline-start:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/modals/login/login.html"*/'<ion-content class="bg-primary-style">\n    <h1 padding text-center class="std-text-color">Anchr</h1>\n\n    <ion-item no-padding>\n        <ion-input type="text" [(ngModel)]="user" placeholder="Username"></ion-input>\n    </ion-item>\n\n    <ion-item no-padding>\n        <ion-input type="password" [(ngModel)]="key" placeholder="Password"></ion-input>\n    </ion-item>\n\n    <p *ngIf="isValid" class="error-text">Authentication Failed!</p>\n\n    <div padding>\n        <button ion-button block class="bg-secondary-style std-text-color" (click)="login()">Login</button>\n    </div>\n\n    <ion-grid>\n        <ion-row>\n            <ion-col class="align-text-middle std-text-color">Don\'t have an account?<button ion-button clear no-padding\n                    color="secondary" (click)="startSignup()">Create one</button></ion-col>\n        </ion-row>\n    </ion-grid>\n\n</ion-content>'/*ion-inline-end:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/modals/login/login.html"*/
-        }),
-        __metadata("design:paramtypes", [ionic_angular_1.ModalController, ionic_angular_1.ViewController, service_1.Auth_DataProvider])
-    ], LoginModal);
-    return LoginModal;
-}());
-exports.LoginModal = LoginModal;
-//# sourceMappingURL=login.js.map
-
-/***/ }),
-
-/***/ 25:
+/***/ 22:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -535,8 +249,17 @@ var Group_DataProvider = /** @class */ (function () {
     Group_DataProvider.prototype.add_new_group = function (group, milestones) {
         return this.http.post(this.baseURL + "/groups", { group: group, milestones: milestones }).pipe(operators_1.map(extract_data), operators_1.catchError(handle_error));
     };
+    Group_DataProvider.prototype.delete_group = function (group) {
+        return this.http.delete(this.baseURL + "/groups/" + group.id).pipe(operators_1.map(extract_data), operators_1.catchError(handle_error));
+    };
     Group_DataProvider.prototype.get_group_information = function (group) {
         return this.http.get(this.baseURL + "/groups/" + group).pipe(operators_1.map(extract_data), operators_1.catchError(handle_error));
+    };
+    Group_DataProvider.prototype.get_group_members = function (group) {
+        return this.http.get(this.baseURL + "/groups/" + group + "/members").pipe(operators_1.map(extract_data), operators_1.catchError(handle_error));
+    };
+    Group_DataProvider.prototype.get_group_milestones = function (group) {
+        return this.http.get(this.baseURL + "/groups/" + group + "/milestones").pipe(operators_1.map(extract_data), operators_1.catchError(handle_error));
     };
     Group_DataProvider.prototype.get_group_search = function (search) {
         return this.http.get(this.baseURL + "/groups/search/" + search).pipe(operators_1.map(extract_data), operators_1.catchError(handle_error));
@@ -583,6 +306,292 @@ exports.Group_DataProvider = Group_DataProvider;
 
 /***/ }),
 
+/***/ 227:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__(0);
+var search_1 = __webpack_require__(228);
+var notifications_1 = __webpack_require__(247);
+var home_1 = __webpack_require__(248);
+var groups_1 = __webpack_require__(251);
+var TabsPage = /** @class */ (function () {
+    function TabsPage() {
+        this.tab1Root = home_1.HomePage;
+        this.tab2Root = search_1.SearchPage;
+        this.tab3Root = notifications_1.NotificationPage;
+        this.tab4Root = groups_1.GroupsPage;
+    }
+    TabsPage = __decorate([
+        core_1.Component({template:/*ion-inline-start:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/pages/tabs/tabs.html"*/'<ion-tabs>\n  <ion-tab [root]="tab1Root" tabIcon="home"></ion-tab>\n  <ion-tab [root]="tab2Root" tabIcon="search"></ion-tab>\n  <ion-tab [root]="tab4Root" tabIcon="people"></ion-tab>\n  <ion-tab [root]="tab3Root" tabIcon="notifications"></ion-tab>\n</ion-tabs>\n'/*ion-inline-end:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/pages/tabs/tabs.html"*/
+        }),
+        __metadata("design:paramtypes", [])
+    ], TabsPage);
+    return TabsPage;
+}());
+exports.TabsPage = TabsPage;
+//# sourceMappingURL=tabs.js.map
+
+/***/ }),
+
+/***/ 228:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__(0);
+var ionic_angular_1 = __webpack_require__(16);
+var group_1 = __webpack_require__(65);
+var service_1 = __webpack_require__(22);
+var SearchPage = /** @class */ (function () {
+    function SearchPage(navCtrl, groupService) {
+        this.navCtrl = navCtrl;
+        this.groupService = groupService;
+        this.groups = [];
+    }
+    SearchPage.prototype.onInput = function () {
+        var _this = this;
+        if (this.search_term.length > 0) {
+            this.groupService.get_group_search(this.search_term).subscribe(function (res) { return _this.groups = res.found_groups; }, function (error) { return _this.errorMessage = error; });
+        }
+        else {
+            this.groups = [];
+        }
+    };
+    SearchPage.prototype.groupSelected = function (group) {
+        this.navCtrl.push(group_1.GroupPage, { "id": group.id });
+    };
+    SearchPage = __decorate([
+        core_1.Component({
+            selector: 'page-search',template:/*ion-inline-start:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/pages/search/search.html"*/'<ion-header>\n  <ion-toolbar color="primary">\n    <ion-title>\n      Group Search\n    </ion-title>\n  </ion-toolbar>\n  <ion-searchbar \n    class="searchbar" \n    placeholder="Search for groups"\n    [(ngModel)]="search_term"\n    (ionInput)="onInput($event)">\n  </ion-searchbar>\n</ion-header>\n\n<ion-content padding>\n  <button ion-item details-push *ngFor="let group of groups" (click)="groupSelected(group)">\n    <ion-avatar item-start>\n      <ion-icon name="people" class="ion-icon-large"></ion-icon>\n    </ion-avatar>\n    <h2>{{group.name}}</h2>\n    <p>{{group.description}}</p>\n  </button>\n</ion-content>'/*ion-inline-end:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/pages/search/search.html"*/
+        }),
+        __metadata("design:paramtypes", [ionic_angular_1.NavController, service_1.Group_DataProvider])
+    ], SearchPage);
+    return SearchPage;
+}());
+exports.SearchPage = SearchPage;
+//# sourceMappingURL=search.js.map
+
+/***/ }),
+
+/***/ 247:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__(0);
+var ionic_angular_1 = __webpack_require__(16);
+var NotificationPage = /** @class */ (function () {
+    function NotificationPage(navCtrl) {
+        this.navCtrl = navCtrl;
+    }
+    NotificationPage = __decorate([
+        core_1.Component({
+            selector: 'page-notifications',template:/*ion-inline-start:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/pages/notifications/notifications.html"*/'<ion-header>\n  <ion-toolbar color="primary">\n    <ion-title>\n      Notifications\n    </ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n</ion-content>\n'/*ion-inline-end:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/pages/notifications/notifications.html"*/
+        }),
+        __metadata("design:paramtypes", [ionic_angular_1.NavController])
+    ], NotificationPage);
+    return NotificationPage;
+}());
+exports.NotificationPage = NotificationPage;
+//# sourceMappingURL=notifications.js.map
+
+/***/ }),
+
+/***/ 248:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__(0);
+var ionic_angular_1 = __webpack_require__(16);
+var ionic_angular_2 = __webpack_require__(16);
+var login_1 = __webpack_require__(249);
+var ionic_angular_3 = __webpack_require__(16);
+var objectFactory_1 = __webpack_require__(66);
+var post_1 = __webpack_require__(122);
+var service_1 = __webpack_require__(22);
+var share_1 = __webpack_require__(45);
+var HomePage = /** @class */ (function () {
+    function HomePage(navCtrl, mdlCtrl, menuCtrl, userService, shared) {
+        var _this = this;
+        this.navCtrl = navCtrl;
+        this.mdlCtrl = mdlCtrl;
+        this.menuCtrl = menuCtrl;
+        this.userService = userService;
+        this.shared = shared;
+        this.user = new objectFactory_1.User(null, null, null, null, null);
+        this.recentPosts = [];
+        //console.log(typeof(this.user));
+        var login = this.mdlCtrl.create(login_1.LoginModal, null, { showBackdrop: false, enableBackdropDismiss: false });
+        login.onDidDismiss(function (userId) {
+            _this.setUserData(userId);
+            shared.items['userId'] = userId;
+            _this.getRecentPosts(userId);
+        });
+        login.present();
+    }
+    HomePage.prototype.showUser = function () {
+        this.menuCtrl.open();
+    };
+    HomePage.prototype.getRecentPosts = function (userId) {
+        var _this = this;
+        //Go to server and retrieve all recent posts all groups user is associated with
+        this.userService.get_user_homefeed(userId).subscribe(function (res) {
+            if (res.status == 200) {
+                _this.recentPosts = res.posts;
+            }
+        }, function (error) { return _this.shared.presentAlert("Error", "This is embarassing... I am unable to load your timeline."); });
+    };
+    HomePage.prototype.continueRecentPosts = function (infiniteScroll) {
+        setTimeout(function () {
+            // continue getting the next 10 posts for a user. 
+            infiniteScroll.complete();
+        }, 500);
+    };
+    HomePage.prototype.setUserData = function (userId) {
+        var _this = this;
+        //Goes to server again and gets the user information that has been stored
+        this.userService.get_user_information(userId).subscribe(function (user) { return _this.user = user; }, function (error) { return _this.shared.presentAlert("Error", "unable to load profile"); });
+        //calls the next function to get posts for user
+        //this.getRecentPosts(userId);
+    };
+    HomePage.prototype.postSelected = function (post) {
+        this.navCtrl.push(post_1.PostPage, {
+            selectedPost: post,
+        });
+    };
+    HomePage.prototype.logout = function () {
+        this.user = new objectFactory_1.User(null, null, null, null, null);
+        this.navCtrl.popToRoot();
+        location.reload();
+    };
+    HomePage = __decorate([
+        core_1.Component({
+            selector: 'page-home',template:/*ion-inline-start:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/pages/home/home.html"*/'<ion-header>\n  <ion-toolbar color="primary">\n    <button ion-button (click)="showUser()">\n      <ion-icon name="person" class="ion-icon-large"></ion-icon>\n    </button>\n    <ion-title> {{user.username}}</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content padding>\n  <ion-card *ngFor="let post of recentPosts" (click)=postSelected(post)>\n\n    <ion-item>\n      <ion-avatar item-start>\n        <ion-icon name="person" class="ion-icon-large"></ion-icon>\n      </ion-avatar>\n      <p readonly>{{post.memberName}} in {{post.groupName}}</p>\n    </ion-item>\n  \n    <ion-card-content>\n      <p readonly>{{post.postData}}</p> \n    </ion-card-content>\n  \n    <ion-row>\n      <ion-col>\n        <button ion-button icon-start clear small>\n          <ion-icon name="heart" class="ion-icon-heart-like"></ion-icon>\n          <div>12 Likes</div>\n        </button>\n      </ion-col>\n      <ion-col>\n        <button ion-button icon-start clear small>\n          <ion-icon name="text"></ion-icon>\n          <div>4 Comments</div>\n        </button>\n      </ion-col>\n      <ion-col align-self-center text-center>\n        <ion-note>\n          11h ago\n        </ion-note>\n      </ion-col>\n    </ion-row>\n  \n  </ion-card>\n  <ion-infinite-scroll (ionInfinite)="continueRecentPosts($event)">\n    <ion-infinite-scroll-content>\n\n    </ion-infinite-scroll-content>\n  </ion-infinite-scroll>\n</ion-content>\n\n<ion-nav #userMenu [root]="rootPage"></ion-nav>\n\n<!--Side Menu to display user information-->\n<ion-menu side="left" [content]="userMenu" type="overlay" color="primary">\n    <ion-content class="bg-primary-style">\n      <ion-card no-padding class="card-strd-style">\n        <ion-card-content no-padding>\n          <ion-item padding-left>\n            <ion-avatar item-start>\n              <ion-icon name="person" class="ion-icon-large"></ion-icon>\n            </ion-avatar>\n            <h2>Name</h2>\n            <h3>{{user != undefined ? user.name: \'\'}}</h3>\n          </ion-item>\n        </ion-card-content>\n      </ion-card>\n      <ion-card no-padding class="card-strd-style">\n        <ion-card-content no-padding>\n          <ion-item padding-left>\n            <ion-avatar item-start>\n              <ion-icon name="mail" class="ion-icon-large"></ion-icon>\n            </ion-avatar>\n            <h2>Email Address</h2>\n            <h3>{{user != undefined ? user.email: \'\'}}</h3>\n          </ion-item>\n        </ion-card-content>\n      </ion-card>\n      <ion-card no-padding class="card-strd-style">\n        <ion-card-content no-padding>\n          <ion-item padding-left>\n            <ion-avatar item-start>\n              <ion-icon name="call" class="ion-icon-large"></ion-icon>\n            </ion-avatar>\n            <h2>Phone Number</h2>\n            <h3>{{user != undefined ? user.phone: \'\'}}</h3>\n          </ion-item>\n        </ion-card-content>\n      </ion-card>\n      <button ion-item details-push>\n        <h3>Chat</h3>\n      </button>\n      <button ion-item details-push>\n        <h3>Profile</h3>\n      </button>\n      <button ion-item details-push>\n        <h3>Settings</h3>\n      </button>\n      <button ion-item details-push (click)="logout()">\n        <h3 class="error-text">Logout</h3>\n      </button>\n    </ion-content>\n  </ion-menu>\n'/*ion-inline-end:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/pages/home/home.html"*/
+        }),
+        __metadata("design:paramtypes", [ionic_angular_1.NavController, ionic_angular_2.ModalController, ionic_angular_3.MenuController, service_1.User_DataProvider, share_1.Share])
+    ], HomePage);
+    return HomePage;
+}());
+exports.HomePage = HomePage;
+//# sourceMappingURL=home.js.map
+
+/***/ }),
+
+/***/ 249:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__(0);
+var ionic_angular_1 = __webpack_require__(16);
+var signup_1 = __webpack_require__(250);
+var service_1 = __webpack_require__(22);
+var LoginModal = /** @class */ (function () {
+    function LoginModal(mdlCtrl, vwCtrl, service) {
+        this.mdlCtrl = mdlCtrl;
+        this.vwCtrl = vwCtrl;
+        this.service = service;
+    }
+    LoginModal.prototype.startSignup = function () {
+        var _this = this;
+        //console.log("starting Signup")
+        var signup = this.mdlCtrl.create(signup_1.SignupModal, null, { showBackdrop: false, enableBackdropDismiss: false });
+        signup.onDidDismiss(function (registeredUser) {
+            if (registeredUser !== undefined) {
+                _this.signUpLogin(registeredUser);
+                registeredUser = null;
+            }
+        });
+        signup.present();
+    };
+    LoginModal.prototype.signUpLogin = function (registeredUser) {
+        this.vwCtrl.dismiss(registeredUser);
+        registeredUser = null;
+    };
+    LoginModal.prototype.login = function () {
+        var _this = this;
+        //send to security to check credentials and return if true. 
+        try {
+            this.service.validate_user_cred(this.user, this.key).subscribe(function (res) {
+                if (res.valid) {
+                    _this.vwCtrl.dismiss(res.valid_id);
+                }
+                else {
+                    _this.isValid = true;
+                }
+            });
+        }
+        catch (err) {
+            console.log(err);
+            //handles any error when authenticating user credentials
+        }
+    };
+    LoginModal = __decorate([
+        core_1.Component({
+            selector: 'page-login',template:/*ion-inline-start:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/modals/login/login.html"*/'<ion-content class="bg-primary-style">\n    <h1 padding text-center class="std-text-color">Anchr</h1>\n\n    <ion-item no-padding>\n        <ion-input type="text" [(ngModel)]="user" placeholder="Username"></ion-input>\n    </ion-item>\n\n    <ion-item no-padding>\n        <ion-input type="password" [(ngModel)]="key" placeholder="Password"></ion-input>\n    </ion-item>\n\n    <p *ngIf="isValid" class="error-text">Authentication Failed!</p>\n\n    <div padding>\n        <button ion-button block class="bg-secondary-style std-text-color" (click)="login()">Login</button>\n    </div>\n\n    <ion-grid>\n        <ion-row>\n            <ion-col class="align-text-middle std-text-color">Don\'t have an account?<button ion-button clear no-padding\n                    color="secondary" (click)="startSignup()">Create one</button></ion-col>\n        </ion-row>\n    </ion-grid>\n\n</ion-content>'/*ion-inline-end:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/modals/login/login.html"*/
+        }),
+        __metadata("design:paramtypes", [ionic_angular_1.ModalController, ionic_angular_1.ViewController, service_1.Auth_DataProvider])
+    ], LoginModal);
+    return LoginModal;
+}());
+exports.LoginModal = LoginModal;
+//# sourceMappingURL=login.js.map
+
+/***/ }),
+
 /***/ 250:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -602,7 +611,7 @@ var core_1 = __webpack_require__(0);
 var ionic_angular_1 = __webpack_require__(16);
 var forms_1 = __webpack_require__(20);
 var username_1 = __webpack_require__(408);
-var service_1 = __webpack_require__(25);
+var service_1 = __webpack_require__(22);
 var objectFactory_1 = __webpack_require__(66);
 var SignupModal = /** @class */ (function () {
     function SignupModal(mdlCtrl, vwCtrl, frmBuilder, service) {
@@ -678,7 +687,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
 var ionic_angular_1 = __webpack_require__(16);
 var creategroup_1 = __webpack_require__(252);
-var service_1 = __webpack_require__(25);
+var service_1 = __webpack_require__(22);
 var share_1 = __webpack_require__(45);
 var group_1 = __webpack_require__(65);
 var GroupsPage = /** @class */ (function () {
@@ -742,7 +751,7 @@ var ionic_angular_1 = __webpack_require__(16);
 var forms_1 = __webpack_require__(20);
 var objectFactory_1 = __webpack_require__(66);
 var share_1 = __webpack_require__(45);
-var service_1 = __webpack_require__(25);
+var service_1 = __webpack_require__(22);
 var CreateGroupModal = /** @class */ (function () {
     function CreateGroupModal(mdlCtrl, vwCtrl, frmBuilder, shared, groupServce) {
         this.mdlCtrl = mdlCtrl;
@@ -851,9 +860,9 @@ var login_1 = __webpack_require__(249);
 var signup_1 = __webpack_require__(250);
 var status_bar_1 = __webpack_require__(223);
 var splash_screen_1 = __webpack_require__(226);
-var service_1 = __webpack_require__(25);
-var service_2 = __webpack_require__(25);
-var service_3 = __webpack_require__(25);
+var service_1 = __webpack_require__(22);
+var service_2 = __webpack_require__(22);
+var service_3 = __webpack_require__(22);
 var http_1 = __webpack_require__(229);
 var creategroup_1 = __webpack_require__(252);
 var share_1 = __webpack_require__(45);
@@ -997,12 +1006,19 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
 var ionic_angular_1 = __webpack_require__(16);
+var service_1 = __webpack_require__(22);
 var Share = /** @class */ (function () {
-    function Share(toasCtrl, alertCtrl) {
+    function Share(toasCtrl, alertCtrl, actionCtrl, groupService) {
         this.toasCtrl = toasCtrl;
         this.alertCtrl = alertCtrl;
+        this.actionCtrl = actionCtrl;
+        this.groupService = groupService;
         this.items = {};
     }
+    /**
+     * Displays a message to the user
+     * @param toast_message the message to display to the user
+     */
     Share.prototype.presentToast = function (toast_message) {
         var toast = this.toasCtrl.create({
             message: toast_message,
@@ -1011,18 +1027,77 @@ var Share = /** @class */ (function () {
         });
         toast.present();
     };
-    Share.prototype.presentAlert = function (alert_type, alert_message) {
+    /**
+     * Displays the options for a group, edit or delete
+     * @param group the group object to perform the action on
+     */
+    Share.prototype.presentGroupOptions = function (group) {
+        var _this = this;
+        var options = this.actionCtrl.create({
+            title: "Group Options",
+            buttons: [
+                // {
+                //     text: "Edit",
+                //     handler: () => {
+                //         //handles editing a group
+                //     }
+                // },
+                {
+                    text: "Delete",
+                    role: "destructive",
+                    handler: function () {
+                        _this.confrmGroupDeletion(group);
+                    }
+                }
+            ]
+        });
+        options.present();
+    };
+    /**
+     * internal method to confirms deleteion of the group
+     * @param group the group object
+     */
+    Share.prototype.confrmGroupDeletion = function (group) {
+        var _this = this;
         var alert = this.alertCtrl.create({
-            title: alert_type,
-            message: alert_message,
+            title: "Are you Sure?",
+            subTitle: "Delete " + group.name,
+            message: "All members, milestones, and posts wil be removed. This action cant be undone",
             buttons: [
                 {
-                    text: "OK"
+                    text: "Delete",
+                    role: "cancel",
+                    handler: function () {
+                        _this.groupService.delete_group(group.id);
+                    }
+                },
+                {
+                    text: "Cancel",
+                    handler: function () {
+                        //left blacnk intentially
+                    }
                 }
             ]
         });
         alert.present();
     };
+    /**
+     * Displays alert to the user
+     * @param alert_title the title of the alert to show user ex. Error, Information
+     * @param alert_message the message to display ot the user
+     */
+    Share.prototype.presentAlert = function (alert_title, alert_message) {
+        var alert = this.alertCtrl.create({
+            title: alert_title,
+            message: alert_message,
+            buttons: ["Dismiss"]
+        });
+        alert.present();
+    };
+    /**
+     * gives the time different between the inputted date and time and the urrent date and time
+     * @param date a date less than the current date
+     */
     Share.prototype.getDisplayDate = function (date) {
         // Split timestamp into [ Y, M, D, h, m, s ]
         var actiondate = new Date(date);
@@ -1061,7 +1136,7 @@ var Share = /** @class */ (function () {
         core_1.Component({
             template: ""
         }),
-        __metadata("design:paramtypes", [ionic_angular_1.ToastController, ionic_angular_1.AlertController])
+        __metadata("design:paramtypes", [ionic_angular_1.ToastController, ionic_angular_1.AlertController, ionic_angular_1.ActionSheetController, service_1.Group_DataProvider])
     ], Share);
     return Share;
 }());
@@ -1089,7 +1164,7 @@ var core_1 = __webpack_require__(0);
 var ionic_angular_1 = __webpack_require__(16);
 var objectFactory_1 = __webpack_require__(66);
 var post_1 = __webpack_require__(122);
-var service_1 = __webpack_require__(25);
+var service_1 = __webpack_require__(22);
 var share_1 = __webpack_require__(45);
 var GroupPage = /** @class */ (function () {
     function GroupPage(navCtrl, navPar, menuCtrl, groupService, shared, userService) {
@@ -1101,12 +1176,21 @@ var GroupPage = /** @class */ (function () {
         this.userService = userService;
         this.curGroup = new objectFactory_1.Group(null, null, null, null, null);
         this.members = [];
+        this.milestones = [];
         this.posts = [];
         this.notAMember = true;
         this.postText = "";
         this.getGroupInfo(this.navPar.get("id"));
         this.isUserMember(this.shared.items["userId"], this.navPar.get("id"));
+        this.getGroupMilestones(this.shared.items["userId"]);
+        this.getGroupMembers(this.shared.items["userId"]);
     }
+    GroupPage.prototype.isuserAdmin = function () {
+        return this.curGroup.admin == this.shared.items["userId"];
+    };
+    GroupPage.prototype.showGroupOptions = function () {
+        this.shared.presentGroupOptions(this.curGroup);
+    };
     GroupPage.prototype.isUserMember = function (user, group) {
         var _this = this;
         this.userService.is_user_a_member(user, group).subscribe(function (res) {
@@ -1132,7 +1216,27 @@ var GroupPage = /** @class */ (function () {
         this.groupService.get_group_information(id).subscribe(function (res) { return _this.curGroup = res.group; }, function (error) { return _this.errorMessage = error; });
     };
     GroupPage.prototype.getGroupMembers = function (id) {
+        var _this = this;
         //go to server and get members associated with group
+        this.groupService.get_group_members(id).subscribe(function (res) {
+            if (res.status == 200) {
+                _this.members = res.members;
+            }
+            else {
+                _this.shared.presentAlert("Error", "Unable to get group members at this time");
+            }
+        });
+    };
+    GroupPage.prototype.getGroupMilestones = function (id) {
+        var _this = this;
+        this.groupService.get_group_milestones(id).subscribe(function (res) {
+            if (res.status == 200) {
+                _this.milestones = res.milestones;
+            }
+            else {
+                _this.shared.presentAlert("Error", "unable to get group milestones at this time");
+            }
+        });
     };
     GroupPage.prototype.addPost = function () {
         var _this = this;
@@ -1180,7 +1284,7 @@ var GroupPage = /** @class */ (function () {
     };
     GroupPage = __decorate([
         core_1.Component({
-            selector: 'page-group',template:/*ion-inline-start:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/pages/group/group.html"*/'<ion-header>\n  <ion-navbar color="primary">\n    <ion-title>\n      {{curGroup.name}}\n    </ion-title>\n    <ion-buttons end>\n      <button ion-button (click)="showGroupInfo()">\n        <ion-icon name="people" class="ion-icon-large"></ion-icon>\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  <!--Display for non members-->\n  <div no-padding *ngIf="notAMember">\n    <ion-card no-padding class="card-strd-style">\n      <ion-card-content padding>\n        <h2>Name</h2>\n        <p>{{curGroup.name}}</p>\n      </ion-card-content>\n    </ion-card>\n    <ion-card no-padding class="card-strd-style">\n      <ion-card-content padding>\n        <h2>Description</h2>\n        <p>{{curGroup.description}}</p>\n      </ion-card-content>\n    </ion-card>\n    <ion-card no-padding class="card-strd-style">\n      <ion-card-content padding>\n        <h2>Goal</h2>\n        <p>{{curGroup.goal}}</p>\n      </ion-card-content>\n    </ion-card>\n    <button ion-button block class="bg-secondary-style" (click)="joinGroup()">Join Group</button>\n  </div>\n  <!-- Display for members-->\n  <ion-card>\n    <ion-textarea class="ion-textarea-style" maxlength="1000" rows="5" placeholder="What\'s on your mind?"\n      [(ngModel)]="postText" (ionInput)="updateCount($event)"></ion-textarea>\n    <ion-grid>\n      <ion-row style="height:40px">\n        <ion-col col-10>\n          <p style="margin-top: 15px; text-align: right;">{{ 1000 - postText.length }}</p>\n        </ion-col>\n        <ion-col col-2 align-right>\n          <button class="post_button_style" ion-button float-right (click)=addPost()>\n            <p class="post_button_text">Post</p>\n          </button>\n        </ion-col>\n      </ion-row>\n    </ion-grid>\n\n  </ion-card>\n  <h3 class="no-item" style="text-align: center;" *ngIf="posts.length === 0">No posts in group yet :(</h3>\n  <ion-card *ngFor="let post of posts">\n\n    <ion-item (click)=postSelected(post)>\n      <ion-avatar item-start>\n        <ion-icon name="person" class="ion-icon-large"></ion-icon>\n      </ion-avatar>\n      <strong>{{post.user}}</strong> @{{post.username}}\n    </ion-item>\n\n    <ion-card-content (click)=postSelected(post)>\n      <p readonly>{{post.post}}</p>\n    </ion-card-content>\n\n    <ion-row>\n      <ion-col>\n      </ion-col>\n      <ion-col>\n      </ion-col>\n      <ion-col>\n        <ion-note>\n          Posted {{this.shared.getDisplayDate(post.creationDate)}} ago\n        </ion-note>\n      </ion-col>\n    </ion-row>\n    \n\n  </ion-card>\n  <ion-infinite-scroll (ionInfinite)="continuePosts($event)">\n    <ion-infinite-scroll-content loadingspinner="bubbles">\n    </ion-infinite-scroll-content>\n  </ion-infinite-scroll>\n\n</ion-content>\n\n<!-- Side Menu to display user information-->\n<ion-menu side="right" [content]="groupMenu" type="overlay" color="primary">\n  <ion-content class="bg-primary-style">\n    <ion-card no-padding class="card-strd-style">\n      <ion-card-content padding>\n        <h2>Name</h2>\n        <p>{{curGroup.name}}</p>\n      </ion-card-content>\n    </ion-card>\n    <ion-card no-padding class="card-strd-style">\n      <ion-card-content padding>\n        <h2>Description</h2>\n        <p>{{curGroup.description}}</p>\n      </ion-card-content>\n    </ion-card>\n    <ion-card no-padding class="card-strd-style">\n      <ion-card-content padding>\n        <h2>Goal</h2>\n        <p>{{curGroup.goal}}</p>\n      </ion-card-content>\n    </ion-card>\n    <button ion-item details-push>\n      <h3>Members</h3>\n    </button>\n    <button ion-item details-push>\n      <h3>Milestones</h3>\n    </button>\n  </ion-content>\n</ion-menu>\n\n<ion-nav #groupMenu [root]="GroupPage"></ion-nav>'/*ion-inline-end:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/pages/group/group.html"*/
+            selector: 'page-group',template:/*ion-inline-start:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/pages/group/group.html"*/'<ion-header>\n  <ion-navbar color="primary">\n    <ion-title (click)="showGroupOptions()">\n      {{curGroup.name}}\n    </ion-title>\n    <ion-buttons end>\n      <button ion-button (click)="showGroupOptions()" *ngIf="isuserAdmin()">\n        <ion-icon name="settings" class="ion-icon-large"></ion-icon>\n      </button>\n      <button ion-button (click)="showGroupInfo()">\n        <ion-icon name="people" class="ion-icon-large"></ion-icon>\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  <!--Display for non members-->\n  <div no-padding *ngIf="notAMember">\n    <ion-card no-padding class="card-strd-style">\n      <ion-card-content padding>\n        <h2>Name</h2>\n        <p>{{curGroup.name}}</p>\n      </ion-card-content>\n    </ion-card>\n    <ion-card no-padding class="card-strd-style">\n      <ion-card-content padding>\n        <h2>Description</h2>\n        <p>{{curGroup.description}}</p>\n      </ion-card-content>\n    </ion-card>\n    <ion-card no-padding class="card-strd-style">\n      <ion-card-content padding>\n        <h2>Goal</h2>\n        <p>{{curGroup.goal}}</p>\n      </ion-card-content>\n    </ion-card>\n    <button ion-button block class="bg-secondary-style" (click)="joinGroup()">Join Group</button>\n  </div>\n  <!-- Display for members-->\n  <ion-card>\n    <ion-textarea class="ion-textarea-style" maxlength="1000" rows="5" placeholder="What\'s on your mind?"\n      [(ngModel)]="postText" (ionInput)="updateCount($event)"></ion-textarea>\n    <ion-grid>\n      <ion-row style="height:40px">\n        <ion-col col-10>\n          <p style="margin-top: 15px; text-align: right;">{{ 1000 - postText.length }}</p>\n        </ion-col>\n        <ion-col col-2 align-right>\n          <button class="post_button_style" ion-button float-right (click)=addPost()>\n            <p class="post_button_text">Post</p>\n          </button>\n        </ion-col>\n      </ion-row>\n    </ion-grid>\n\n  </ion-card>\n  <h3 class="no-item" style="text-align: center;" *ngIf="posts.length === 0">No posts in group yet :(</h3>\n  <ion-card *ngFor="let post of posts">\n\n    <ion-item (click)=postSelected(post)>\n      <ion-avatar item-start>\n        <ion-icon name="person" class="ion-icon-large"></ion-icon>\n      </ion-avatar>\n      <strong>{{post.user}}</strong> @{{post.username}}\n    </ion-item>\n\n    <ion-card-content (click)=postSelected(post)>\n      <p readonly>{{post.post}}</p>\n    </ion-card-content>\n\n    <ion-row>\n      <ion-col>\n      </ion-col>\n      <ion-col>\n      </ion-col>\n      <ion-col>\n        <ion-note>\n          Posted {{this.shared.getDisplayDate(post.creationDate)}} ago\n        </ion-note>\n      </ion-col>\n    </ion-row>\n    \n\n  </ion-card>\n  <ion-infinite-scroll (ionInfinite)="continuePosts($event)">\n    <ion-infinite-scroll-content loadingspinner="bubbles">\n    </ion-infinite-scroll-content>\n  </ion-infinite-scroll>\n\n</ion-content>\n\n<!-- Side Menu to display user information-->\n<ion-menu side="right" [content]="groupMenu" type="overlay" color="primary">\n  <ion-content class="bg-primary-style">\n    <ion-card no-padding class="card-strd-style">\n      <ion-card-content padding>\n        <h2>Name</h2>\n        <p>{{curGroup.name}}</p>\n      </ion-card-content>\n    </ion-card>\n    <ion-card no-padding class="card-strd-style">\n      <ion-card-content padding>\n        <h2>Description</h2>\n        <p>{{curGroup.description}}</p>\n      </ion-card-content>\n    </ion-card>\n    <ion-card no-padding class="card-strd-style">\n      <ion-card-content padding>\n        <h2>Goal</h2>\n        <p>{{curGroup.goal}}</p>\n      </ion-card-content>\n    </ion-card>\n    <button ion-item details-push>\n      <h3>Members</h3>\n    </button>\n    <button ion-item details-push>\n      <h3>Milestones</h3>\n    </button>\n  </ion-content>\n</ion-menu>\n\n<ion-nav #groupMenu [root]="GroupPage"></ion-nav>'/*ion-inline-end:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/pages/group/group.html"*/
         }),
         __metadata("design:paramtypes", [ionic_angular_1.NavController, ionic_angular_1.NavParams, ionic_angular_1.MenuController, service_1.Group_DataProvider, share_1.Share, service_1.User_DataProvider])
     ], GroupPage);
