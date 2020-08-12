@@ -82,37 +82,6 @@ export class Comment{
     }
 }
 
-export class Subcomment{
-    private id:number;
-    private commentId:number;
-    private memberId:number;
-    public memberName:string;
-    public commentData:string;
-    public timestamp: Date;
-
-    constructor(id:number, commentId:number, memberId:number,membername:string, commentData:string, timestamp:Date){
-
-        this.id = id;
-        this.commentId = commentId;
-        this.memberId = memberId;
-        this.memberName = membername;
-        this.commentData = commentData;
-        this.timestamp = timestamp;
-    }
-
-    getId(){
-        return this.id;
-    }
-
-    getCommentId(){
-        return this.commentId;
-    }
-
-    getMemberId(){
-        return this.memberId;
-    }
-}
-
 /**holds milestone information
  * 
  */

@@ -1366,27 +1366,6 @@ var Comment = /** @class */ (function () {
     return Comment;
 }());
 exports.Comment = Comment;
-var Subcomment = /** @class */ (function () {
-    function Subcomment(id, commentId, memberId, membername, commentData, timestamp) {
-        this.id = id;
-        this.commentId = commentId;
-        this.memberId = memberId;
-        this.memberName = membername;
-        this.commentData = commentData;
-        this.timestamp = timestamp;
-    }
-    Subcomment.prototype.getId = function () {
-        return this.id;
-    };
-    Subcomment.prototype.getCommentId = function () {
-        return this.commentId;
-    };
-    Subcomment.prototype.getMemberId = function () {
-        return this.memberId;
-    };
-    return Subcomment;
-}());
-exports.Subcomment = Subcomment;
 /**holds milestone information
  *
  */
