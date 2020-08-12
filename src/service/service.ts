@@ -125,8 +125,29 @@ export class Group_DataProvider {
         )
     }
 
+    delete_group(group:Group){
+        return this.http.delete(this.baseURL+"/groups/"+group.id).pipe(
+            map(extract_data),
+            catchError(handle_error)
+        )
+    }
+
     get_group_information(group: number) {
         return this.http.get(this.baseURL + "/groups/" + group).pipe(
+            map(extract_data),
+            catchError(handle_error)
+        )
+    }
+
+    get_group_members(group:number){
+        return this.http.get(this.baseURL+"/groups/"+group+"/members").pipe(
+            map(extract_data),
+            catchError(handle_error)
+        )
+    }
+
+    get_group_milestones(group:number){
+        return this.http.get(this.baseURL+"/groups/"+group+"/milestones").pipe(
             map(extract_data),
             catchError(handle_error)
         )
