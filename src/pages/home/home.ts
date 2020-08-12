@@ -15,7 +15,7 @@ import { Share } from '../../service/share';
 export class HomePage {
   user:any = new User(null, null, null, null, null);
 
-  recentPosts: Post[] = [];
+  recentPosts:Post[] = [];
 
   constructor(public navCtrl: NavController, public mdlCtrl: ModalController, private menuCtrl: MenuController, private userService:User_DataProvider, public shared: Share) {
     //console.log(typeof(this.user));
@@ -39,6 +39,7 @@ export class HomePage {
       res => {
         if(res.status == 200){
           this.recentPosts = res.posts;
+          console.log(res.posts);
         }},
       error => this.shared.presentAlert("Error", "unable to load timeline.")
     )
