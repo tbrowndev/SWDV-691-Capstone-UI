@@ -1,9 +1,12 @@
 <ion-header>
   <ion-navbar color="primary">
-    <ion-title>
+    <ion-title (click)="showGroupOptions()">
       {{curGroup.name}}
     </ion-title>
     <ion-buttons end>
+      <button ion-button (click)="showGroupOptions()">
+        <ion-icon name="settings" class="ion-icon-large"></ion-icon>
+      </button>
       <button ion-button (click)="showGroupInfo()">
         <ion-icon name="people" class="ion-icon-large"></ion-icon>
       </button>
