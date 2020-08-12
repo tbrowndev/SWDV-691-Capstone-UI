@@ -113,25 +113,18 @@ export class Subcomment{
     }
 }
 
+/**holds milestone information
+ * 
+ */
 export class Milestone{
-    private id:number;
-    private groupId:number;
-    public name:string;
-    public order:number;
-
-    constructor(id?:number, groupId?:number, name?:string, order?:number){
+    id:any;
+    groupId:any;
+    name:any;
+    order:any;
+    constructor(id, group_id, name, order){
         this.id = id;
-        this.groupId = groupId;
+        this.groupId = group_id;
         this.name = name;
         this.order = order;
     }
-
-    getId(){
-        return this.id;
-    }
-
-    getGroupId(){
-        return this.groupId;
-    }
-
 }
