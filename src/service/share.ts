@@ -1,5 +1,7 @@
 import { Component } from "@angular/core";
-import { ToastController, AlertController } from 'ionic-angular';
+import { ToastController, AlertController, ActionSheetController } from 'ionic-angular';
+import { Group } from "../objects/objectFactory";
+import { Group_DataProvider } from "./service";
 
 @Component({
     template:""
@@ -7,9 +9,13 @@ import { ToastController, AlertController } from 'ionic-angular';
 export class Share{
 
     items = {}
-    constructor(private toasCtrl: ToastController, private alertCtrl: AlertController){
+    constructor(private toasCtrl: ToastController, private alertCtrl: AlertController, private actionCtrl:ActionSheetController, private groupService: Group_DataProvider){
     }
 
+    /**
+     * Displays a message to the user
+     * @param toast_message the message to display to the user
+     */
     presentToast(toast_message:string){
         let toast = this.toasCtrl.create({
             message: toast_message,
@@ -20,13 +26,55 @@ export class Share{
         toast.present();
     }
 
-    presentAlert(alert_type:string, alert_message:string){
+    /**
+     * Displays the options for a group, edit or delete
+     * @param group the group object to perform the action on
+     */
+    presentGroupOptions(group:Group){
+        let options = this.actionCtrl.create({
+            title: "Group Options",
+            buttons:[
+                // {
+                //     text: "Edit",
+                //     handler: () => {
+                //         //handles editing a group
+                //     }
+                // },
+                {
+                    text: "Delete",
+                    role:"destructive",
+                    handler:() => {
+                        this.confrmGroupDeletion(group);
+                    }
+                }
+            ]
+        });
+
+        options.present();
+    }
+
+    /**
+     * internal method to confirms deleteion of the group
+     * @param group the group object
+     */
+    private confrmGroupDeletion(group:Group){
         let alert = this.alertCtrl.create({
-            title: alert_type,
-            message: alert_message,
+            title: "Are you Sure?",
+            subTitle: "Delete "+ group.name,
+            message: "All members, milestones, and posts wil be removed. This action cant be undone",
             buttons: [
                 {
-                    text: "OK"
+                    text: "Delete",
+                    role: "cancel",
+                    handler:()=>{
+                        this.groupService.delete_group(group.id);
+                    }
+                },
+                {
+                    text: "Cancel",
+                    handler:()=>{
+                        //left blacnk intentially
+                    }
                 }
             ]
         });
@@ -34,6 +82,25 @@ export class Share{
         alert.present();
     }
 
+    /**
+     * Displays alert to the user
+     * @param alert_title the title of the alert to show user ex. Error, Information
+     * @param alert_message the message to display ot the user
+     */
+    presentAlert(alert_title:string, alert_message:string){
+        let alert = this.alertCtrl.create({
+            title: alert_title,
+            message: alert_message,
+            buttons: ["Dismiss"]
+        });
+
+        alert.present();
+    }
+
+    /**
+     * gives the time different between the inputted date and time and the urrent date and time
+     * @param date a date less than the current date
+     */
     getDisplayDate(date){
         // Split timestamp into [ Y, M, D, h, m, s ]
 
