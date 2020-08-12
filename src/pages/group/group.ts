@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, MenuController } from 'ionic-angular';
-import { Group, User, Post } from '../../objects/objectFactory'
+import { Group, Post } from '../../objects/objectFactory'
 import { PostPage } from '../post/post';
 import { Group_DataProvider, User_DataProvider } from '../../service/service';
 import { Share } from '../../service/share';
