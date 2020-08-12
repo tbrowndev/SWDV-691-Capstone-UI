@@ -27,8 +27,12 @@ export class GroupPage {
     this.getGroupMembers(this.shared.items["userId"]);
   }
 
-  isuserAdmin(){
-    return this.curGroup.admin == this.shared.items["userId"];
+  isUserAdmin(){
+    if(this.curGroup.admin == this.shared.items["userId"]){
+      return true;
+    }else{
+      return false;
+    }
   }
 
   showGroupOptions(){
