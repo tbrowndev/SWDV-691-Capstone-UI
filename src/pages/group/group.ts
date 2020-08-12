@@ -12,7 +12,8 @@ import { Share } from '../../service/share';
 export class GroupPage {
 
   curGroup: Group = new Group(null, null, null, null, null);
-  members: User[] = [];
+  members = [];
+  milestones = [];
   posts: Post[] = [];
   notAMember: boolean = true;
   errorMessage: any;
@@ -22,8 +23,17 @@ export class GroupPage {
   constructor(public navCtrl: NavController, public navPar: NavParams, private menuCtrl: MenuController, public groupService: Group_DataProvider, public shared: Share, public userService: User_DataProvider) {
     this.getGroupInfo(this.navPar.get("id"));
     this.isUserMember(this.shared.items["userId"], this.navPar.get("id"))
+    this.getGroupMilestones(this.shared.items["userId"]);
+    this.getGroupMembers(this.shared.items["userId"]);
   }
 
+  isuserAdmin(){
+    return this.curGroup.admin == this.shared.items["userId"];
+  }
+
+  showGroupOptions(){
+    this.shared.presentGroupOptions(this.curGroup);
+  }
 
   isUserMember(user: number, group: number) {
     this.userService.is_user_a_member(user, group).subscribe(res => {
@@ -55,6 +65,25 @@ export class GroupPage {
 
   getGroupMembers(id: number) {
     //go to server and get members associated with group
+    this.groupService.get_group_members(id).subscribe(res => {
+      if (res.status == 200){
+        this.members = res.members;
+      }
+      else{
+        this.shared.presentAlert("Error", "Unable to get group members at this time");
+      }
+    })
+  }
+
+  getGroupMilestones(id:number){
+    this.groupService.get_group_milestones(id).subscribe( res => {
+      if(res.status == 200){
+        this.milestones = res.milestones;
+      }
+      else{
+        this.shared.presentAlert("Error", "unable to get group milestones at this time");
+      }
+    })
   }
 
   addPost() {
