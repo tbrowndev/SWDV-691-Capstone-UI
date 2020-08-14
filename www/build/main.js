@@ -36,6 +36,17 @@ var PostPage = /** @class */ (function () {
         this.getLikeCount();
         this.getCommentCount();
     }
+    PostPage.prototype.userOwnsPost = function () {
+        if (this.post.username = this.shared.items["user"].username) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    };
+    PostPage.prototype.showPostOptions = function () {
+        this.shared.presentPostOptions(this.post);
+    };
     PostPage.prototype.getLikeCount = function () {
         var _this = this;
         this.groupService.count_post_likes(this.post.id, this.shared.items["userId"]).subscribe(function (res) {
@@ -109,7 +120,7 @@ var PostPage = /** @class */ (function () {
     };
     PostPage = __decorate([
         core_1.Component({
-            selector: 'page-post',template:/*ion-inline-start:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/pages/post/post.html"*/'<ion-header>\n  <ion-navbar color="primary">\n    <ion-title (click)="showGroup()">\n      {{post.groupName}}\n    </ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content no-padding>\n  <!-- Post-->\n  <ion-card>\n\n    <ion-item>\n      <ion-avatar item-start>\n        <ion-icon name="person" class="ion-icon-large"></ion-icon>\n      </ion-avatar>\n      <strong>{{post.user}}</strong> @{{post.username}}\n    </ion-item>\n\n    <ion-card-content>\n      <p readonly>{{post.post}}</p>\n    </ion-card-content>\n\n    <ion-row>\n      <ion-col>\n        <button ion-button icon-start clear small (click)="likePost()">\n          <ion-icon name="heart-outline" class="ion-icon-heart-like" *ngIf="memberLiked === 0"></ion-icon>\n          <ion-icon name="heart" class="ion-icon-heart-like" *ngIf="memberLiked === 1"></ion-icon>\n          <div>{{likeCount}}</div>\n        </button>\n      </ion-col>\n      <ion-col>\n        <button ion-button icon-start clear small>\n          <ion-icon name="text"></ion-icon>\n          <div>{{commentCount}}</div>\n        </button>\n      </ion-col>\n      <ion-col align-self-center text-center>\n        <ion-note>\n          Posted {{this.shared.getDisplayDate(post.creationDate)}} ago\n        </ion-note>\n      </ion-col>\n    </ion-row>\n    <ion-row no-padding style="height: 45px;">\n      <ion-col col-10>\n        <ion-textarea style="border-width: 2px;" [(ngModel)]="postReply" maxlength="1000" rows="2" placeholder="Reply to {{post.username}}">\n        </ion-textarea>\n      </ion-col>\n      <ion-col col-2 align-right>\n        <button class="post_button_style" ion-button float-right (click)=replyToPost()>\n          <p class="post_button_text">Reply</p>\n        </button>\n      </ion-col>\n    </ion-row>\n\n  </ion-card>\n  <!-- Comments -->\n  <ion-card *ngFor="let comment of comments">\n\n    <ion-card-content no-padding>\n        <ion-row no-padding>\n          <ion-col col-1><ion-icon name="person" class="ion-icon-medium"></ion-icon></ion-col>\n          <ion-col col-11><strong>{{comment.username}}</strong> {{comment.comment}}</ion-col>\n        </ion-row>\n      <!-- Sub Comments-->\n      <!-- <div *ngFor="let sc of getSubComments(comment.getId())" class="subcomment">\n        <ion-icon name="person" class="ion-icon-small"></ion-icon> {{sc.memberName}} {{sc.commentData}}\n      </div>\n      <ion-row class="reply-bg-style" no-padding>\n        <ion-col col-9>\n          <ion-textarea placeholder="Reply to {{comment.username}}" name="comment_reply" class="reply-style"></ion-textarea>\n        </ion-col>\n        <ion-col align-self-right text-right col-3>\n          <button ion-button block small class="reply-style">Reply</button>\n        </ion-col>\n      </ion-row> -->\n    </ion-card-content>\n\n  </ion-card>\n\n  <ion-infinite-scroll (ionInfinite)="continueComments($event)">\n    <ion-infinite-scroll-content>\n    </ion-infinite-scroll-content>\n  </ion-infinite-scroll>\n\n</ion-content>'/*ion-inline-end:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/pages/post/post.html"*/
+            selector: 'page-post',template:/*ion-inline-start:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/pages/post/post.html"*/'<ion-header>\n  <ion-navbar color="primary">\n    <ion-title (click)="showGroup()">\n      {{post.groupName}}\n    </ion-title>\n    <ion-buttons end>\n      <button ion-button (click)="showPostOptions()" *ngIf="userOwnsPost()">\n        <ion-icon name="more" class="ion-icon-large"></ion-icon>\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n\n<ion-content no-padding>\n  <!-- Post-->\n  <ion-card>\n\n    <ion-item>\n      <ion-avatar item-start>\n        <ion-icon name="person" class="ion-icon-large"></ion-icon>\n      </ion-avatar>\n      <strong>{{post.user}}</strong> @{{post.username}}\n    </ion-item>\n\n    <ion-card-content>\n      <p readonly>{{post.post}}</p>\n    </ion-card-content>\n\n    <ion-row>\n      <ion-col>\n        <button ion-button icon-start clear small (click)="likePost()">\n          <ion-icon name="heart-outline" class="ion-icon-heart-like" *ngIf="memberLiked === 0"></ion-icon>\n          <ion-icon name="heart" class="ion-icon-heart-like" *ngIf="memberLiked === 1"></ion-icon>\n          <div>{{likeCount}}</div>\n        </button>\n      </ion-col>\n      <ion-col>\n        <button ion-button icon-start clear small>\n          <ion-icon name="text"></ion-icon>\n          <div>{{commentCount}}</div>\n        </button>\n      </ion-col>\n      <ion-col align-self-center text-center>\n        <ion-note>\n          Posted {{this.shared.getDisplayDate(post.creationDate)}} ago\n        </ion-note>\n      </ion-col>\n    </ion-row>\n    <ion-row no-padding style="height: 45px;">\n      <ion-col col-10>\n        <ion-textarea style="border-width: 2px;" [(ngModel)]="postReply" maxlength="1000" rows="2" placeholder="Reply to {{post.username}}">\n        </ion-textarea>\n      </ion-col>\n      <ion-col col-2 align-right>\n        <button class="post_button_style" ion-button float-right (click)=replyToPost()>\n          <p class="post_button_text">Reply</p>\n        </button>\n      </ion-col>\n    </ion-row>\n\n  </ion-card>\n  <!-- Comments -->\n  <ion-card *ngFor="let comment of comments">\n\n    <ion-card-content no-padding>\n        <ion-row no-padding>\n          <ion-col col-1><ion-icon name="person" class="ion-icon-medium"></ion-icon></ion-col>\n          <ion-col col-11><strong>{{comment.username}}</strong> {{comment.comment}}</ion-col>\n        </ion-row>\n      <!-- Sub Comments-->\n      <!-- <div *ngFor="let sc of getSubComments(comment.getId())" class="subcomment">\n        <ion-icon name="person" class="ion-icon-small"></ion-icon> {{sc.memberName}} {{sc.commentData}}\n      </div>\n      <ion-row class="reply-bg-style" no-padding>\n        <ion-col col-9>\n          <ion-textarea placeholder="Reply to {{comment.username}}" name="comment_reply" class="reply-style"></ion-textarea>\n        </ion-col>\n        <ion-col align-self-right text-right col-3>\n          <button ion-button block small class="reply-style">Reply</button>\n        </ion-col>\n      </ion-row> -->\n    </ion-card-content>\n\n  </ion-card>\n\n  <ion-infinite-scroll (ionInfinite)="continueComments($event)">\n    <ion-infinite-scroll-content>\n    </ion-infinite-scroll-content>\n  </ion-infinite-scroll>\n\n</ion-content>'/*ion-inline-end:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/pages/post/post.html"*/
         }),
         __metadata("design:paramtypes", [ionic_angular_1.NavController, ionic_angular_1.NavParams, service_1.Group_DataProvider, share_1.Share])
     ], PostPage);
@@ -294,6 +305,9 @@ var Group_DataProvider = /** @class */ (function () {
     };
     Group_DataProvider.prototype.delete_like_from_post = function (like) {
         return this.http.delete(this.baseURL + "/likes/" + like).pipe(operators_1.map(extract_data), operators_1.catchError(handle_error));
+    };
+    Group_DataProvider.prototype.delete_post = function (post) {
+        return this.http.delete(this.baseURL + "/posts/" + post.id).pipe(operators_1.map(extract_data), operators_1.catchError(handle_error));
     };
     Group_DataProvider = __decorate([
         core_1.Injectable(),
@@ -493,7 +507,10 @@ var HomePage = /** @class */ (function () {
     HomePage.prototype.setUserData = function (userId) {
         var _this = this;
         //Goes to server again and gets the user information that has been stored
-        this.userService.get_user_information(userId).subscribe(function (user) { return _this.user = user; }, function (error) { return _this.shared.presentAlert("Error", "unable to load profile"); });
+        this.userService.get_user_information(userId).subscribe(function (user) {
+            _this.user = user;
+            _this.shared.items["user"] = user;
+        }, function (error) { return _this.shared.presentAlert("Error", "unable to load profile"); });
         //calls the next function to get posts for user
         //this.getRecentPosts(userId);
     };
@@ -509,7 +526,7 @@ var HomePage = /** @class */ (function () {
     };
     HomePage = __decorate([
         core_1.Component({
-            selector: 'page-home',template:/*ion-inline-start:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/pages/home/home.html"*/'<ion-header>\n  <ion-toolbar color="primary">\n    <button ion-button (click)="showUser()">\n      <ion-icon name="person" class="ion-icon-large"></ion-icon>\n    </button>\n    <ion-title> {{user.username}}</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content padding>\n  <ion-card *ngFor="let post of recentPosts">\n\n    <ion-item (click)=postSelected(post)>\n      <ion-avatar item-start>\n        <ion-icon name="person" class="ion-icon-large"></ion-icon>\n      </ion-avatar>\n      <strong>{{post.user}}</strong> @{{post.username}} in <strong>{{post.groupName}}</strong>\n    </ion-item>\n\n    <ion-card-content (click)=postSelected(post)>\n      <p readonly>{{post.post}}</p>\n    </ion-card-content>\n\n    <ion-row>\n      <ion-col>\n      </ion-col>\n      <ion-col>\n      </ion-col>\n      <ion-col>\n        <ion-note>\n          Posted {{this.shared.getDisplayDate(post.creationDate)}} ago\n        </ion-note>\n      </ion-col>\n    </ion-row>\n    \n\n  </ion-card>\n  <ion-infinite-scroll (ionInfinite)="continueRecentPosts($event)">\n    <ion-infinite-scroll-content>\n\n    </ion-infinite-scroll-content>\n  </ion-infinite-scroll>\n</ion-content>\n\n<ion-nav #userMenu [root]="rootPage"></ion-nav>\n\n<!--Side Menu to display user information-->\n<ion-menu side="left" [content]="userMenu" type="overlay" color="primary">\n    <ion-content class="bg-primary-style">\n      <ion-card no-padding class="card-strd-style">\n        <ion-card-content no-padding>\n          <ion-item padding-left>\n            <ion-avatar item-start>\n              <ion-icon name="person" class="ion-icon-large"></ion-icon>\n            </ion-avatar>\n            <h2>Name</h2>\n            <h3>{{user != undefined ? user.name: \'\'}}</h3>\n          </ion-item>\n        </ion-card-content>\n      </ion-card>\n      <ion-card no-padding class="card-strd-style">\n        <ion-card-content no-padding>\n          <ion-item padding-left>\n            <ion-avatar item-start>\n              <ion-icon name="mail" class="ion-icon-large"></ion-icon>\n            </ion-avatar>\n            <h2>Email Address</h2>\n            <h3>{{user != undefined ? user.email: \'\'}}</h3>\n          </ion-item>\n        </ion-card-content>\n      </ion-card>\n      <ion-card no-padding class="card-strd-style">\n        <ion-card-content no-padding>\n          <ion-item padding-left>\n            <ion-avatar item-start>\n              <ion-icon name="call" class="ion-icon-large"></ion-icon>\n            </ion-avatar>\n            <h2>Phone Number</h2>\n            <h3>{{user != undefined ? user.phone: \'\'}}</h3>\n          </ion-item>\n        </ion-card-content>\n      </ion-card>\n      <button ion-item details-push>\n        <h3>Chat</h3>\n      </button>\n      <button ion-item details-push>\n        <h3>Profile</h3>\n      </button>\n      <button ion-item details-push>\n        <h3>Settings</h3>\n      </button>\n      <button ion-item details-push (click)="logout()">\n        <h3 class="error-text">Logout</h3>\n      </button>\n    </ion-content>\n  </ion-menu>\n'/*ion-inline-end:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/pages/home/home.html"*/
+            selector: 'page-home',template:/*ion-inline-start:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/pages/home/home.html"*/'<ion-header>\n  <ion-toolbar color="primary">\n    <button ion-button (click)="showUser()">\n      <ion-icon name="person" class="ion-icon-large"></ion-icon>\n    </button>\n    <ion-title> {{user.username}}</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content padding>\n  <ion-card *ngFor="let post of recentPosts">\n\n    <ion-item (click)=postSelected(post)>\n      <ion-avatar item-start>\n        <ion-icon name="person" class="ion-icon-large"></ion-icon>\n      </ion-avatar>\n      <strong>{{post.user}}</strong> @{{post.username}} in <strong>{{post.groupName}}</strong>\n    </ion-item>\n\n    <ion-card-content (click)=postSelected(post)>\n      <p readonly>{{post.post}}</p>\n    </ion-card-content>\n\n    <ion-row>\n      <ion-col>\n      </ion-col>\n      <ion-col>\n      </ion-col>\n      <ion-col>\n        <ion-note>\n          Posted {{this.shared.getDisplayDate(post.creationDate)}} ago\n        </ion-note>\n      </ion-col>\n    </ion-row>\n    \n\n  </ion-card>\n  <ion-infinite-scroll (ionInfinite)="continueRecentPosts($event)">\n    <ion-infinite-scroll-content>\n\n    </ion-infinite-scroll-content>\n  </ion-infinite-scroll>\n</ion-content>\n\n<ion-nav #userMenu [root]="rootPage"></ion-nav>\n\n<!--Side Menu to display user information-->\n<ion-menu side="left" [content]="userMenu" type="overlay" color="primary">\n    <ion-content class="bg-primary-style">\n      <ion-card no-padding class="card-strd-style">\n        <ion-card-content no-padding>\n          <ion-item padding-left>\n            <ion-avatar item-start>\n              <ion-icon name="person" class="ion-icon-large"></ion-icon>\n            </ion-avatar>\n            <h2>Name</h2>\n            <h3>{{user != undefined ? user.name: \'\'}}</h3>\n          </ion-item>\n        </ion-card-content>\n      </ion-card>\n      <ion-card no-padding class="card-strd-style">\n        <ion-card-content no-padding>\n          <ion-item padding-left>\n            <ion-avatar item-start>\n              <ion-icon name="mail" class="ion-icon-large"></ion-icon>\n            </ion-avatar>\n            <h2>Email Address</h2>\n            <h3>{{user != undefined ? user.email: \'\'}}</h3>\n          </ion-item>\n        </ion-card-content>\n      </ion-card>\n      <ion-card no-padding class="card-strd-style">\n        <ion-card-content no-padding>\n          <ion-item padding-left>\n            <ion-avatar item-start>\n              <ion-icon name="call" class="ion-icon-large"></ion-icon>\n            </ion-avatar>\n            <h2>Phone Number</h2>\n            <h3>{{user != undefined ? user.phone: \'\'}}</h3>\n          </ion-item>\n        </ion-card-content>\n      </ion-card>\n      <!-- <button ion-item details-push>\n        <h3>Chat</h3>\n      </button>\n      <button ion-item details-push>\n        <h3>Profile</h3>\n      </button>\n      <button ion-item details-push>\n        <h3>Settings</h3>\n      </button> -->\n      <button ion-item details-push (click)="logout()">\n        <h3 class="error-text">Logout</h3>\n      </button>\n    </ion-content>\n  </ion-menu>\n'/*ion-inline-end:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/pages/home/home.html"*/
         }),
         __metadata("design:paramtypes", [ionic_angular_1.NavController, ionic_angular_2.ModalController, ionic_angular_3.MenuController, service_1.User_DataProvider, share_1.Share])
     ], HomePage);
@@ -1068,7 +1085,74 @@ var Share = /** @class */ (function () {
                     text: "Delete",
                     role: "cancel",
                     handler: function () {
-                        _this.groupService.delete_group(group.id);
+                        _this.groupService.delete_group(group.id).subscribe(function (res) {
+                            if (res.status == 200) {
+                                _this.presentToast(group.name + " has been deleted!");
+                            }
+                            else {
+                                _this.presentToast("Group could not be deleted at this time. Please try again later.");
+                            }
+                        });
+                    }
+                },
+                {
+                    text: "Cancel",
+                    handler: function () {
+                        //left blacnk intentially
+                    }
+                }
+            ]
+        });
+        alert.present();
+    };
+    /**
+     * Displays the options for a post, edit or delete
+     * @param post the post object to perform the action on
+     */
+    Share.prototype.presentPostOptions = function (post) {
+        var _this = this;
+        var options = this.actionCtrl.create({
+            title: "Post Options",
+            buttons: [
+                // {
+                //     text: "Edit",
+                //     handler: () => {
+                //         //handles editing a group
+                //     }
+                // },
+                {
+                    text: "Delete",
+                    role: "destructive",
+                    handler: function () {
+                        _this.confrmPostDeletion(post);
+                    }
+                }
+            ]
+        });
+        options.present();
+    };
+    /**
+     * internal method to confirms deleteion of the post
+     * @param post the group object
+     */
+    Share.prototype.confrmPostDeletion = function (post) {
+        var _this = this;
+        var alert = this.alertCtrl.create({
+            title: "Are you Sure?",
+            subTitle: "Delete Post",
+            buttons: [
+                {
+                    text: "Delete",
+                    role: "cancel",
+                    handler: function () {
+                        _this.groupService.delete_post(post.id).subscribe(function (res) {
+                            if (res.status == 200) {
+                                _this.presentToast("Post has been deleted!");
+                            }
+                            else {
+                                _this.presentToast("Group could not be deleted at this time. Please try again later.");
+                            }
+                        });
                     }
                 },
                 {
@@ -1289,7 +1373,7 @@ var GroupPage = /** @class */ (function () {
     };
     GroupPage = __decorate([
         core_1.Component({
-            selector: 'page-group',template:/*ion-inline-start:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/pages/group/group.html"*/'<ion-header>\n  <ion-navbar color="primary">\n    <ion-title>\n      {{curGroup.name}}\n    </ion-title>\n    <ion-buttons end>\n      <button ion-button (click)="showGroupOptions()" *ngIf="isUserAdmin()">\n        <ion-icon name="settings" class="ion-icon-large"></ion-icon>\n      </button>\n      <button ion-button (click)="showGroupInfo()">\n        <ion-icon name="people" class="ion-icon-large"></ion-icon>\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  <!--Display for non members-->\n  <div no-padding *ngIf="notAMember">\n    <ion-card no-padding class="card-strd-style">\n      <ion-card-content padding>\n        <h2>Name</h2>\n        <p>{{curGroup.name}}</p>\n      </ion-card-content>\n    </ion-card>\n    <ion-card no-padding class="card-strd-style">\n      <ion-card-content padding>\n        <h2>Description</h2>\n        <p>{{curGroup.description}}</p>\n      </ion-card-content>\n    </ion-card>\n    <ion-card no-padding class="card-strd-style">\n      <ion-card-content padding>\n        <h2>Goal</h2>\n        <p>{{curGroup.goal}}</p>\n      </ion-card-content>\n    </ion-card>\n    <button ion-button block class="bg-secondary-style" (click)="joinGroup()">Join Group</button>\n  </div>\n  <!-- Display for members-->\n  <ion-card>\n    <ion-textarea class="ion-textarea-style" maxlength="1000" rows="5" placeholder="What\'s on your mind?"\n      [(ngModel)]="postText" (ionInput)="updateCount($event)"></ion-textarea>\n    <ion-grid>\n      <ion-row style="height:40px">\n        <ion-col col-10>\n          <p style="margin-top: 15px; text-align: right;">{{ 1000 - postText.length }}</p>\n        </ion-col>\n        <ion-col col-2 align-right>\n          <button class="post_button_style" ion-button float-right (click)=addPost()>\n            <p class="post_button_text">Post</p>\n          </button>\n        </ion-col>\n      </ion-row>\n    </ion-grid>\n\n  </ion-card>\n  <h3 class="no-item" style="text-align: center;" *ngIf="posts.length === 0">No posts in group yet :(</h3>\n  <ion-card *ngFor="let post of posts">\n\n    <ion-item (click)=postSelected(post)>\n      <ion-avatar item-start>\n        <ion-icon name="person" class="ion-icon-large"></ion-icon>\n      </ion-avatar>\n      <strong>{{post.user}}</strong> @{{post.username}}\n    </ion-item>\n\n    <ion-card-content (click)=postSelected(post)>\n      <p readonly>{{post.post}}</p>\n    </ion-card-content>\n\n    <ion-row>\n      <ion-col>\n      </ion-col>\n      <ion-col>\n      </ion-col>\n      <ion-col>\n        <ion-note>\n          Posted {{this.shared.getDisplayDate(post.creationDate)}} ago\n        </ion-note>\n      </ion-col>\n    </ion-row>\n    \n\n  </ion-card>\n  <ion-infinite-scroll (ionInfinite)="continuePosts($event)">\n    <ion-infinite-scroll-content loadingspinner="bubbles">\n    </ion-infinite-scroll-content>\n  </ion-infinite-scroll>\n\n</ion-content>\n\n<!-- Side Menu to display user information-->\n<ion-menu side="right" [content]="groupMenu" type="overlay" color="primary">\n  <ion-content class="bg-primary-style">\n    <ion-card no-padding class="card-strd-style">\n      <ion-card-content padding>\n        <h2>Name</h2>\n        <p>{{curGroup.name}}</p>\n      </ion-card-content>\n    </ion-card>\n    <ion-card no-padding class="card-strd-style">\n      <ion-card-content padding>\n        <h2>Description</h2>\n        <p>{{curGroup.description}}</p>\n      </ion-card-content>\n    </ion-card>\n    <ion-card no-padding class="card-strd-style">\n      <ion-card-content padding>\n        <h2>Goal</h2>\n        <p>{{curGroup.goal}}</p>\n      </ion-card-content>\n    </ion-card>\n    <button ion-item details-push>\n      <h3>Members</h3>\n    </button>\n    <button ion-item details-push>\n      <h3>Milestones</h3>\n    </button>\n  </ion-content>\n</ion-menu>\n\n<ion-nav #groupMenu [root]="GroupPage"></ion-nav>'/*ion-inline-end:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/pages/group/group.html"*/
+            selector: 'page-group',template:/*ion-inline-start:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/pages/group/group.html"*/'<ion-header>\n  <ion-navbar color="primary">\n    <ion-title>\n      {{curGroup.name}}\n    </ion-title>\n    <ion-buttons end>\n      <button ion-button (click)="showGroupOptions()" *ngIf="isUserAdmin()">\n        <ion-icon name="more" class="ion-icon-large"></ion-icon>\n      </button>\n      <button ion-button (click)="showGroupInfo()">\n        <ion-icon name="people" class="ion-icon-large"></ion-icon>\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  <!--Display for non members-->\n  <div no-padding *ngIf="notAMember">\n    <ion-card no-padding class="card-strd-style">\n      <ion-card-content padding>\n        <h2>Name</h2>\n        <p>{{curGroup.name}}</p>\n      </ion-card-content>\n    </ion-card>\n    <ion-card no-padding class="card-strd-style">\n      <ion-card-content padding>\n        <h2>Description</h2>\n        <p>{{curGroup.description}}</p>\n      </ion-card-content>\n    </ion-card>\n    <ion-card no-padding class="card-strd-style">\n      <ion-card-content padding>\n        <h2>Goal</h2>\n        <p>{{curGroup.goal}}</p>\n      </ion-card-content>\n    </ion-card>\n    <button ion-button block class="bg-secondary-style" (click)="joinGroup()">Join Group</button>\n  </div>\n  <!-- Display for members-->\n  <ion-card>\n    <ion-textarea class="ion-textarea-style" maxlength="1000" rows="5" placeholder="What\'s on your mind?"\n      [(ngModel)]="postText" (ionInput)="updateCount($event)"></ion-textarea>\n    <ion-grid>\n      <ion-row style="height:40px">\n        <ion-col col-10>\n          <p style="margin-top: 15px; text-align: right;">{{ 1000 - postText.length }}</p>\n        </ion-col>\n        <ion-col col-2 align-right>\n          <button class="post_button_style" ion-button float-right (click)=addPost()>\n            <p class="post_button_text">Post</p>\n          </button>\n        </ion-col>\n      </ion-row>\n    </ion-grid>\n\n  </ion-card>\n  <h3 class="no-item" style="text-align: center;" *ngIf="posts.length === 0">No posts in group yet :(</h3>\n  <ion-card *ngFor="let post of posts">\n\n    <ion-item (click)=postSelected(post)>\n      <ion-avatar item-start>\n        <ion-icon name="person" class="ion-icon-large"></ion-icon>\n      </ion-avatar>\n      <strong>{{post.user}}</strong> @{{post.username}}\n    </ion-item>\n\n    <ion-card-content (click)=postSelected(post)>\n      <p readonly>{{post.post}}</p>\n    </ion-card-content>\n\n    <ion-row>\n      <ion-col>\n      </ion-col>\n      <ion-col>\n      </ion-col>\n      <ion-col>\n        <ion-note>\n          Posted {{this.shared.getDisplayDate(post.creationDate)}} ago\n        </ion-note>\n      </ion-col>\n    </ion-row>\n    \n\n  </ion-card>\n  <ion-infinite-scroll (ionInfinite)="continuePosts($event)">\n    <ion-infinite-scroll-content loadingspinner="bubbles">\n    </ion-infinite-scroll-content>\n  </ion-infinite-scroll>\n\n</ion-content>\n\n<!-- Side Menu to display user information-->\n<ion-menu side="right" [content]="groupMenu" type="overlay" color="primary">\n  <ion-content class="bg-primary-style">\n    <ion-card no-padding class="card-strd-style">\n      <ion-card-content padding>\n        <h2>Name</h2>\n        <p>{{curGroup.name}}</p>\n      </ion-card-content>\n    </ion-card>\n    <ion-card no-padding class="card-strd-style">\n      <ion-card-content padding>\n        <h2>Description</h2>\n        <p>{{curGroup.description}}</p>\n      </ion-card-content>\n    </ion-card>\n    <ion-card no-padding class="card-strd-style">\n      <ion-card-content padding>\n        <h2>Goal</h2>\n        <p>{{curGroup.goal}}</p>\n      </ion-card-content>\n    </ion-card>\n    <button ion-item details-push>\n      <h3>Members</h3>\n    </button>\n    <button ion-item details-push>\n      <h3>Milestones</h3>\n    </button>\n  </ion-content>\n</ion-menu>\n\n<ion-nav #groupMenu [root]="GroupPage"></ion-nav>'/*ion-inline-end:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/pages/group/group.html"*/
         }),
         __metadata("design:paramtypes", [ionic_angular_1.NavController, ionic_angular_1.NavParams, ionic_angular_1.MenuController, service_1.Group_DataProvider, share_1.Share, service_1.User_DataProvider])
     ], GroupPage);
