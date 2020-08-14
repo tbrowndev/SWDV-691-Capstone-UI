@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { map, catchError } from 'rxjs/operators'
 import { Subject } from 'rxjs/Subject';
-import { User, Group, Milestone } from '../objects/objectFactory'
+import { User, Group, Milestone, Post } from '../objects/objectFactory'
 
 //handles extracting only the body of the server response
 function extract_data(res: Response) {
@@ -226,6 +226,13 @@ export class Group_DataProvider {
 
     delete_like_from_post(like:number){
         return this.http.delete(this.baseURL+"/likes/"+like).pipe(
+            map(extract_data),
+            catchError(handle_error)
+        )
+    }
+
+    delete_post(post:Post){
+        return this.http.delete(this.baseURL+"/posts/"+post.id).pipe(
             map(extract_data),
             catchError(handle_error)
         )

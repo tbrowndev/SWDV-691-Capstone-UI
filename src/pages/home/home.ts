@@ -55,7 +55,10 @@ export class HomePage {
 
     //Goes to server again and gets the user information that has been stored
     this.userService.get_user_information(userId).subscribe(
-      user => this.user = user,
+      user => {
+        this.user = user;
+        this.shared.items["user"] = user;
+      },
       error => this.shared.presentAlert("Error", "unable to load profile")
     )
     

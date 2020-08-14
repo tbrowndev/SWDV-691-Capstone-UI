@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { ToastController, AlertController, ActionSheetController } from 'ionic-angular';
-import { Group } from "../objects/objectFactory";
+import { Group, Post } from "../objects/objectFactory";
 import { Group_DataProvider } from "./service";
 
 @Component({
@@ -67,7 +67,77 @@ export class Share{
                     text: "Delete",
                     role: "cancel",
                     handler:()=>{
-                        this.groupService.delete_group(group.id);
+                        this.groupService.delete_group(group.id).subscribe(res => {
+                            if(res.status == 200){
+                                this.presentToast(group.name + " has been deleted!")
+                            }
+                            else{
+                                this.presentToast("Group could not be deleted at this time. Please try again later.")
+                            }
+                        }
+                        )
+                    }
+                },
+                {
+                    text: "Cancel",
+                    handler:()=>{
+                        //left blacnk intentially
+                    }
+                }
+            ]
+        });
+
+        alert.present();
+    }
+
+    /**
+     * Displays the options for a post, edit or delete
+     * @param post the post object to perform the action on
+     */
+    presentPostOptions(post:Post){
+        let options = this.actionCtrl.create({
+            title: "Post Options",
+            buttons:[
+                // {
+                //     text: "Edit",
+                //     handler: () => {
+                //         //handles editing a group
+                //     }
+                // },
+                {
+                    text: "Delete",
+                    role:"destructive",
+                    handler:() => {
+                        this.confrmPostDeletion(post);
+                    }
+                }
+            ]
+        });
+
+        options.present();
+    }
+
+    /**
+     * internal method to confirms deleteion of the post
+     * @param post the group object
+     */
+    private confrmPostDeletion(post:Post){
+        let alert = this.alertCtrl.create({
+            title: "Are you Sure?",
+            subTitle: "Delete Post",
+            buttons: [
+                {
+                    text: "Delete",
+                    role: "cancel",
+                    handler:()=>{
+                        this.groupService.delete_post(post.id).subscribe( res => {
+                            if(res.status == 200){
+                                this.presentToast("Post has been deleted!");
+                            }
+                            else{
+                                this.presentToast("Group could not be deleted at this time. Please try again later.");
+                            }
+                        });
                     }
                 },
                 {

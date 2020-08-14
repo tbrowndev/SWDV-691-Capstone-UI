@@ -3,6 +3,11 @@
     <ion-title (click)="showGroup()">
       {{post.groupName}}
     </ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="showPostOptions()" *ngIf="userOwnsPost()">
+        <ion-icon name="more" class="ion-icon-large"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 

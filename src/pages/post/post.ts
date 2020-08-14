@@ -26,6 +26,19 @@ export class PostPage {
     this.getCommentCount();
   }
 
+  userOwnsPost(){
+    if(this.post.username = this.shared.items["user"].username){
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
+
+  showPostOptions(){
+    this.shared.presentPostOptions(this.post);
+  }
+
   getLikeCount() {
     this.groupService.count_post_likes(this.post.id, this.shared.items["userId"]).subscribe(
       res => {
