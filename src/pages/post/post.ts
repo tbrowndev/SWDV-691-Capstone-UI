@@ -27,7 +27,7 @@ export class PostPage {
   }
 
   userOwnsPost(){
-    if(this.post.username = this.shared.items["user"].username){
+    if(this.post.username === this.shared.items["user"].username){
       return true;
     }
     else{
