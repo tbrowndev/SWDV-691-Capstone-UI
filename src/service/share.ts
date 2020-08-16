@@ -4,19 +4,19 @@ import { Group, Post } from "../objects/objectFactory";
 import { Group_DataProvider } from "./service";
 
 @Component({
-    template:""
+    template: ""
 })
-export class Share{
+export class Share {
 
     items = {}
-    constructor(private toasCtrl: ToastController, private alertCtrl: AlertController, private actionCtrl:ActionSheetController, private groupService: Group_DataProvider){
+    constructor(public toasCtrl: ToastController, public alertCtrl: AlertController, public actionCtrl: ActionSheetController, public groupService: Group_DataProvider) {
     }
 
     /**
      * Displays a message to the user
      * @param toast_message the message to display to the user
      */
-    presentToast(toast_message:string){
+    presentToast(toast_message: string) {
         let toast = this.toasCtrl.create({
             message: toast_message,
             duration: 3000,
@@ -30,10 +30,10 @@ export class Share{
      * Displays the options for a group, edit or delete
      * @param group the group object to perform the action on
      */
-    presentGroupOptions(group:Group){
+    presentGroupOptions(group: Group) {
         let options = this.actionCtrl.create({
             title: "Group Options",
-            buttons:[
+            buttons: [
                 // {
                 //     text: "Edit",
                 //     handler: () => {
@@ -42,8 +42,8 @@ export class Share{
                 // },
                 {
                     text: "Delete",
-                    role:"destructive",
-                    handler:() => {
+                    role: "destructive",
+                    handler: () => {
                         this.confrmGroupDeletion(group);
                     }
                 }
@@ -57,21 +57,21 @@ export class Share{
      * internal method to confirms deleteion of the group
      * @param group the group object
      */
-    private confrmGroupDeletion(group:Group){
+    private confrmGroupDeletion(group: Group) {
         let alert = this.alertCtrl.create({
             title: "Are you Sure?",
-            subTitle: "Delete "+ group.name,
+            subTitle: "Delete " + group.name,
             message: "All members, milestones, and posts wil be removed. This action cant be undone",
             buttons: [
                 {
                     text: "Delete",
                     role: "cancel",
-                    handler:()=>{
+                    handler: () => {
                         this.groupService.delete_group(group.id).subscribe(res => {
-                            if(res.status == 200){
-                                this.presentToast(group.name + " has been deleted!")
+                            if (res.status == 200) {
+                                this.presentToast(group.name + " has been deleted!");
                             }
-                            else{
+                            else {
                                 this.presentToast("Group could not be deleted at this time. Please try again later.")
                             }
                         }
@@ -80,7 +80,7 @@ export class Share{
                 },
                 {
                     text: "Cancel",
-                    handler:()=>{
+                    handler: () => {
                         //left blacnk intentially
                     }
                 }
@@ -94,10 +94,10 @@ export class Share{
      * Displays the options for a post, edit or delete
      * @param post the post object to perform the action on
      */
-    presentPostOptions(post:Post){
+    presentPostOptions(post: Post) {
         let options = this.actionCtrl.create({
             title: "Post Options",
-            buttons:[
+            buttons: [
                 // {
                 //     text: "Edit",
                 //     handler: () => {
@@ -106,8 +106,8 @@ export class Share{
                 // },
                 {
                     text: "Delete",
-                    role:"destructive",
-                    handler:() => {
+                    role: "destructive",
+                    handler: () => {
                         this.confrmPostDeletion(post);
                     }
                 }
@@ -121,7 +121,7 @@ export class Share{
      * internal method to confirms deleteion of the post
      * @param post the group object
      */
-    private confrmPostDeletion(post:Post){
+    private confrmPostDeletion(post: Post) {
         let alert = this.alertCtrl.create({
             title: "Are you Sure?",
             subTitle: "Delete Post",
@@ -129,20 +129,20 @@ export class Share{
                 {
                     text: "Delete",
                     role: "cancel",
-                    handler:()=>{
-                        this.groupService.delete_post(post.id).subscribe( res => {
-                            if(res.status == 200){
+                    handler: () => {
+                        this.groupService.delete_post(post.id).subscribe(res => {
+                            if (res.status == 200) {
                                 this.presentToast("Post has been deleted!");
                             }
-                            else{
-                                this.presentToast("Group could not be deleted at this time. Please try again later.");
+                            else {
+                                this.presentToast("Post could not be deleted at this time. Please try again later.");
                             }
                         });
                     }
                 },
                 {
                     text: "Cancel",
-                    handler:()=>{
+                    handler: () => {
                         //left blacnk intentially
                     }
                 }
@@ -157,7 +157,7 @@ export class Share{
      * @param alert_title the title of the alert to show user ex. Error, Information
      * @param alert_message the message to display ot the user
      */
-    presentAlert(alert_title:string, alert_message:string){
+    presentAlert(alert_title: string, alert_message: string) {
         let alert = this.alertCtrl.create({
             title: alert_title,
             message: alert_message,
@@ -171,32 +171,32 @@ export class Share{
      * gives the time different between the inputted date and time and the urrent date and time
      * @param date a date less than the current date
      */
-    getDisplayDate(date){
+    getDisplayDate(date) {
         // Split timestamp into [ Y, M, D, h, m, s ]
 
         var actiondate = new Date(date);
         var today = new Date();
-;        if(today.getDate() === actiondate.getDate() && today.getMonth() === actiondate.getMonth() && today.getFullYear() === actiondate.getFullYear()){
-            var hourssince =   today.getHours() - actiondate.getHours();
-            var minutessince =   today.getMinutes() - actiondate.getMinutes();
-            var secondssince =   today.getSeconds() - actiondate.getSeconds();
-            if(hourssince > 0){
-                date = hourssince+'h';
-            }else if(minutessince > 0){
-                date = minutessince+'m';
-            }else{
-                date = secondssince+'s';
+        ; if (today.getDate() === actiondate.getDate() && today.getMonth() === actiondate.getMonth() && today.getFullYear() === actiondate.getFullYear()) {
+            var hourssince = today.getHours() - actiondate.getHours();
+            var minutessince = today.getMinutes() - actiondate.getMinutes();
+            var secondssince = today.getSeconds() - actiondate.getSeconds();
+            if (hourssince > 0) {
+                date = hourssince + 'h';
+            } else if (minutessince > 0) {
+                date = minutessince + 'm';
+            } else {
+                date = secondssince + 's';
             }
-        }else{
-            var oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
-            var diffDays = Math.round(Math.abs((today.getTime() - actiondate.getTime())/(oneDay)));
-            if(diffDays >= 7){
-                date = Math.round(diffDays / 7)+'w';
-            }else{
-                if(diffDays == 0){
+        } else {
+            var oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
+            var diffDays = Math.round(Math.abs((today.getTime() - actiondate.getTime()) / (oneDay)));
+            if (diffDays >= 7) {
+                date = Math.round(diffDays / 7) + 'w';
+            } else {
+                if (diffDays == 0) {
                     diffDays = 1;
                 }
-                date = diffDays+'d';
+                date = diffDays + 'd';
             }
         }
         return date;

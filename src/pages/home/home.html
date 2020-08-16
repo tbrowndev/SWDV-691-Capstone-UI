@@ -8,6 +8,12 @@
 </ion-header>
 
 <ion-content padding>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content
+      pullingText="Pull to refresh"
+      refreshingSpinner="circles">
+    </ion-refresher-content>
+  </ion-refresher>
   <ion-card *ngFor="let post of recentPosts">
 
     <ion-item (click)=postSelected(post)>
@@ -32,65 +38,51 @@
         </ion-note>
       </ion-col>
     </ion-row>
-    
+
 
   </ion-card>
-  <ion-infinite-scroll (ionInfinite)="continueRecentPosts($event)">
-    <ion-infinite-scroll-content>
-
-    </ion-infinite-scroll-content>
-  </ion-infinite-scroll>
 </ion-content>
 
 <ion-nav #userMenu [root]="rootPage"></ion-nav>
 
 <!--Side Menu to display user information-->
 <ion-menu side="left" [content]="userMenu" type="overlay" color="primary">
-    <ion-content class="bg-primary-style">
-      <ion-card no-padding class="card-strd-style">
-        <ion-card-content no-padding>
-          <ion-item padding-left>
-            <ion-avatar item-start>
-              <ion-icon name="person" class="ion-icon-large"></ion-icon>
-            </ion-avatar>
-            <h2>Name</h2>
-            <h3>{{user != undefined ? user.name: ''}}</h3>
-          </ion-item>
-        </ion-card-content>
-      </ion-card>
-      <ion-card no-padding class="card-strd-style">
-        <ion-card-content no-padding>
-          <ion-item padding-left>
-            <ion-avatar item-start>
-              <ion-icon name="mail" class="ion-icon-large"></ion-icon>
-            </ion-avatar>
-            <h2>Email Address</h2>
-            <h3>{{user != undefined ? user.email: ''}}</h3>
-          </ion-item>
-        </ion-card-content>
-      </ion-card>
-      <ion-card no-padding class="card-strd-style">
-        <ion-card-content no-padding>
-          <ion-item padding-left>
-            <ion-avatar item-start>
-              <ion-icon name="call" class="ion-icon-large"></ion-icon>
-            </ion-avatar>
-            <h2>Phone Number</h2>
-            <h3>{{user != undefined ? user.phone: ''}}</h3>
-          </ion-item>
-        </ion-card-content>
-      </ion-card>
-      <!-- <button ion-item details-push>
-        <h3>Chat</h3>
-      </button>
-      <button ion-item details-push>
-        <h3>Profile</h3>
-      </button>
-      <button ion-item details-push>
-        <h3>Settings</h3>
-      </button> -->
-      <button ion-item details-push (click)="logout()">
-        <h3 class="error-text">Logout</h3>
-      </button>
-    </ion-content>
-  </ion-menu>
+  <ion-content class="bg-primary-style">
+    <ion-card no-padding class="card-strd-style">
+      <ion-card-content no-padding>
+        <ion-item padding-left>
+          <ion-avatar item-start>
+            <ion-icon name="person" class="ion-icon-large"></ion-icon>
+          </ion-avatar>
+          <h2>Name</h2>
+          <h3>{{user != undefined ? user.name: ''}}</h3>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+    <ion-card no-padding class="card-strd-style">
+      <ion-card-content no-padding>
+        <ion-item padding-left>
+          <ion-avatar item-start>
+            <ion-icon name="mail" class="ion-icon-large"></ion-icon>
+          </ion-avatar>
+          <h2>Email Address</h2>
+          <h3>{{user != undefined ? user.email: ''}}</h3>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+    <ion-card no-padding class="card-strd-style">
+      <ion-card-content no-padding>
+        <ion-item padding-left>
+          <ion-avatar item-start>
+            <ion-icon name="call" class="ion-icon-large"></ion-icon>
+          </ion-avatar>
+          <h2>Phone Number</h2>
+          <h3>{{user != undefined ? user.phone: ''}}</h3>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+    <button ion-item details-push (click)="logout()">
+      <h3 class="error-text">Logout</h3>
+    </button>
+  </ion-content>
+</ion-menu>

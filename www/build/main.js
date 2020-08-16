@@ -250,7 +250,7 @@ var Group_DataProvider = /** @class */ (function () {
         return this.http.post(this.baseURL + "/groups", { group: group, milestones: milestones }).pipe(operators_1.map(extract_data), operators_1.catchError(handle_error));
     };
     Group_DataProvider.prototype.delete_group = function (group) {
-        return this.http.delete(this.baseURL + "/groups/" + group.id).pipe(operators_1.map(extract_data), operators_1.catchError(handle_error));
+        return this.http.delete(this.baseURL + "/groups/" + group).pipe(operators_1.map(extract_data), operators_1.catchError(handle_error));
     };
     Group_DataProvider.prototype.get_group_information = function (group) {
         return this.http.get(this.baseURL + "/groups/" + group).pipe(operators_1.map(extract_data), operators_1.catchError(handle_error));
@@ -296,7 +296,7 @@ var Group_DataProvider = /** @class */ (function () {
         return this.http.delete(this.baseURL + "/likes/" + like).pipe(operators_1.map(extract_data), operators_1.catchError(handle_error));
     };
     Group_DataProvider.prototype.delete_post = function (post) {
-        return this.http.delete(this.baseURL + "/posts/" + post.id).pipe(operators_1.map(extract_data), operators_1.catchError(handle_error));
+        return this.http.delete(this.baseURL + "/posts/" + post).pipe(operators_1.map(extract_data), operators_1.catchError(handle_error));
     };
     Group_DataProvider = __decorate([
         core_1.Injectable(),
@@ -337,7 +337,7 @@ var TabsPage = /** @class */ (function () {
         this.tab4Root = groups_1.GroupsPage;
     }
     TabsPage = __decorate([
-        core_1.Component({template:/*ion-inline-start:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/pages/tabs/tabs.html"*/'<ion-tabs>\n  <ion-tab [root]="tab1Root" tabIcon="home"></ion-tab>\n  <ion-tab [root]="tab2Root" tabIcon="search"></ion-tab>\n  <ion-tab [root]="tab4Root" tabIcon="people"></ion-tab>\n  <ion-tab [root]="tab3Root" tabIcon="notifications"></ion-tab>\n</ion-tabs>\n'/*ion-inline-end:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/pages/tabs/tabs.html"*/
+        core_1.Component({template:/*ion-inline-start:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/pages/tabs/tabs.html"*/'<ion-tabs>\n  <ion-tab [root]="tab1Root" tabIcon="home"></ion-tab>\n  <ion-tab [root]="tab2Root" tabIcon="search"></ion-tab>\n  <ion-tab [root]="tab4Root" tabIcon="people"></ion-tab>\n  <!-- <ion-tab [root]="tab3Root" tabIcon="notifications"></ion-tab> -->\n</ion-tabs>\n'/*ion-inline-end:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/pages/tabs/tabs.html"*/
         }),
         __metadata("design:paramtypes", [])
     ], TabsPage);
@@ -387,7 +387,7 @@ var SearchPage = /** @class */ (function () {
     };
     SearchPage = __decorate([
         core_1.Component({
-            selector: 'page-search',template:/*ion-inline-start:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/pages/search/search.html"*/'<ion-header>\n  <ion-toolbar color="primary">\n    <ion-title>\n      Group Search\n    </ion-title>\n  </ion-toolbar>\n  <ion-searchbar \n    class="searchbar" \n    placeholder="Search for groups"\n    [(ngModel)]="search_term"\n    (ionInput)="onInput($event)">\n  </ion-searchbar>\n</ion-header>\n\n<ion-content padding>\n  <button ion-item details-push *ngFor="let group of groups" (click)="groupSelected(group)">\n    <ion-avatar item-start>\n      <ion-icon name="people" class="ion-icon-large"></ion-icon>\n    </ion-avatar>\n    <h2>{{group.name}}</h2>\n    <p>{{group.description}}</p>\n  </button>\n</ion-content>'/*ion-inline-end:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/pages/search/search.html"*/
+            selector: 'page-search',template:/*ion-inline-start:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/pages/search/search.html"*/'<ion-header>\n  <ion-toolbar color="primary">\n    <ion-title>\n      Group Search\n    </ion-title>\n  </ion-toolbar>\n  <ion-searchbar \n    class="searchbar" \n    placeholder="Search for groups"\n    [(ngModel)]="search_term"\n    (ionInput)="onInput($event)">\n  </ion-searchbar>\n</ion-header>\n\n<ion-content padding>\n  <p *ngIf="groups.length === 0" class="no-item">No groups found :(</p>\n  <button ion-item details-push *ngFor="let group of groups" (click)="groupSelected(group)">\n    <ion-avatar item-start>\n      <ion-icon name="people" class="ion-icon-large"></ion-icon>\n    </ion-avatar>\n    <h2>{{group.name}}</h2>\n    <p>{{group.description}}</p>\n  </button>\n</ion-content>'/*ion-inline-end:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/pages/search/search.html"*/
         }),
         __metadata("design:paramtypes", [ionic_angular_1.NavController, service_1.Group_DataProvider])
     ], SearchPage);
@@ -428,7 +428,7 @@ var MembersModal = /** @class */ (function () {
     };
     MembersModal = __decorate([
         core_1.Component({
-            selector: 'page-members',template:/*ion-inline-start:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/modals/members/members.html"*/'<ion-content class="bg-primary-style">\n    <h1 padding text-center class="std-text-color">Members</h1>\n\n    <ion-item details-push *ngFor="let mem of members">\n        <ion-avatar item-start>\n          <ion-icon name="person" class="ion-icon-small"></ion-icon>\n        </ion-avatar>\n        <p><strong>{{mem.name}}</strong> @{{mem.username}}</p>\n    </ion-iem>\n\n    <button ion-button block class="bg-danger-style std-text-color" (click)="close()">Close</button>\n\n</ion-content>'/*ion-inline-end:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/modals/members/members.html"*/
+            selector: 'page-members',template:/*ion-inline-start:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/modals/members/members.html"*/'<ion-content class="bg-primary-style">\n    <h1 padding text-center class="std-text-color">Members</h1>\n\n    <ion-item *ngFor="let mem of members">\n        <ion-avatar item-start>\n          <ion-icon name="person" class="ion-icon-medium"></ion-icon>\n        </ion-avatar>\n        <p><strong>{{mem.name}}</strong> @{{mem.username}}</p>\n    </ion-item>\n\n    <button ion-button block class="bg-danger-style std-text-color" (click)="close()">Close</button>\n\n</ion-content>'/*ion-inline-end:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/modals/members/members.html"*/
         }),
         __metadata("design:paramtypes", [ionic_angular_1.ModalController, ionic_angular_1.ViewController, ionic_angular_1.NavParams])
     ], MembersModal);
@@ -469,7 +469,7 @@ var MilestonesModal = /** @class */ (function () {
     };
     MilestonesModal = __decorate([
         core_1.Component({
-            selector: 'page-milestones',template:/*ion-inline-start:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/modals/milestones/milestones.html"*/'<ion-content class="bg-primary-style">\n    <h1 padding text-center class="std-text-color">Milestones</h1>\n\n    <ion-item details-push *ngFor="let ms of milestones">\n        <ion-avatar item-start>\n          <ion-icon name="flag" class="ion-icon-small"></ion-icon>\n        </ion-avatar>\n        <p>{{ms.name}}</p>\n    </ion-iem>\n\n    <button ion-button block class="bg-danger-style std-text-color" (click)="close()">close</button>\n    \n</ion-content>'/*ion-inline-end:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/modals/milestones/milestones.html"*/
+            selector: 'page-milestones',template:/*ion-inline-start:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/modals/milestones/milestones.html"*/'<ion-content class="bg-primary-style">\n    <h1 padding text-center class="std-text-color">Milestones</h1>\n\n    <ion-item *ngFor="let ms of milestones">\n        <ion-avatar item-start>\n          <ion-icon name="flag" class="ion-icon-medium"></ion-icon>\n        </ion-avatar>\n        <p>{{ms.name}}</p>\n    </ion-item>\n\n    <button ion-button block class="bg-danger-style std-text-color" (click)="close()">close</button>\n    \n</ion-content>'/*ion-inline-end:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/modals/milestones/milestones.html"*/
         }),
         __metadata("design:paramtypes", [ionic_angular_1.ModalController, ionic_angular_1.ViewController, ionic_angular_1.NavParams])
     ], MilestonesModal);
@@ -548,15 +548,21 @@ var HomePage = /** @class */ (function () {
         this.shared = shared;
         this.user = new objectFactory_1.User(null, null, null, null, null);
         this.recentPosts = [];
-        //console.log(typeof(this.user));
         var login = this.mdlCtrl.create(login_1.LoginModal, null, { showBackdrop: false, enableBackdropDismiss: false });
         login.onDidDismiss(function (userId) {
             _this.setUserData(userId);
-            shared.items['userId'] = userId;
+            _this.shared.items['userId'] = userId;
             _this.getRecentPosts(userId);
         });
         login.present();
     }
+    HomePage.prototype.doRefresh = function (event) {
+        var _this = this;
+        setTimeout(function () {
+            _this.getRecentPosts(_this.shared.items['userId']);
+            event.complete();
+        }, 2000);
+    };
     HomePage.prototype.showUser = function () {
         this.menuCtrl.open();
     };
@@ -567,13 +573,7 @@ var HomePage = /** @class */ (function () {
             if (res.status == 200) {
                 _this.recentPosts = res.posts;
             }
-        }, function (error) { return _this.shared.presentAlert("Error", "unable to load timeline."); });
-    };
-    HomePage.prototype.continueRecentPosts = function (infiniteScroll) {
-        setTimeout(function () {
-            // continue getting the next 10 posts for a user. 
-            infiniteScroll.complete();
-        }, 500);
+        });
     };
     HomePage.prototype.setUserData = function (userId) {
         var _this = this;
@@ -582,8 +582,6 @@ var HomePage = /** @class */ (function () {
             _this.user = user;
             _this.shared.items["user"] = user;
         }, function (error) { return _this.shared.presentAlert("Error", "unable to load profile"); });
-        //calls the next function to get posts for user
-        //this.getRecentPosts(userId);
     };
     HomePage.prototype.postSelected = function (post) {
         this.navCtrl.push(post_1.PostPage, {
@@ -597,7 +595,7 @@ var HomePage = /** @class */ (function () {
     };
     HomePage = __decorate([
         core_1.Component({
-            selector: 'page-home',template:/*ion-inline-start:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/pages/home/home.html"*/'<ion-header>\n  <ion-toolbar color="primary">\n    <button ion-button (click)="showUser()">\n      <ion-icon name="person" class="ion-icon-large"></ion-icon>\n    </button>\n    <ion-title> {{user.username}}</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content padding>\n  <ion-card *ngFor="let post of recentPosts">\n\n    <ion-item (click)=postSelected(post)>\n      <ion-avatar item-start>\n        <ion-icon name="person" class="ion-icon-large"></ion-icon>\n      </ion-avatar>\n      <strong>{{post.user}}</strong> @{{post.username}} in <strong>{{post.groupName}}</strong>\n    </ion-item>\n\n    <ion-card-content (click)=postSelected(post)>\n      <p readonly>{{post.post}}</p>\n    </ion-card-content>\n\n    <ion-row>\n      <ion-col>\n      </ion-col>\n      <ion-col>\n      </ion-col>\n      <ion-col>\n        <ion-note>\n          Posted {{this.shared.getDisplayDate(post.creationDate)}} ago\n        </ion-note>\n      </ion-col>\n    </ion-row>\n    \n\n  </ion-card>\n  <ion-infinite-scroll (ionInfinite)="continueRecentPosts($event)">\n    <ion-infinite-scroll-content>\n\n    </ion-infinite-scroll-content>\n  </ion-infinite-scroll>\n</ion-content>\n\n<ion-nav #userMenu [root]="rootPage"></ion-nav>\n\n<!--Side Menu to display user information-->\n<ion-menu side="left" [content]="userMenu" type="overlay" color="primary">\n    <ion-content class="bg-primary-style">\n      <ion-card no-padding class="card-strd-style">\n        <ion-card-content no-padding>\n          <ion-item padding-left>\n            <ion-avatar item-start>\n              <ion-icon name="person" class="ion-icon-large"></ion-icon>\n            </ion-avatar>\n            <h2>Name</h2>\n            <h3>{{user != undefined ? user.name: \'\'}}</h3>\n          </ion-item>\n        </ion-card-content>\n      </ion-card>\n      <ion-card no-padding class="card-strd-style">\n        <ion-card-content no-padding>\n          <ion-item padding-left>\n            <ion-avatar item-start>\n              <ion-icon name="mail" class="ion-icon-large"></ion-icon>\n            </ion-avatar>\n            <h2>Email Address</h2>\n            <h3>{{user != undefined ? user.email: \'\'}}</h3>\n          </ion-item>\n        </ion-card-content>\n      </ion-card>\n      <ion-card no-padding class="card-strd-style">\n        <ion-card-content no-padding>\n          <ion-item padding-left>\n            <ion-avatar item-start>\n              <ion-icon name="call" class="ion-icon-large"></ion-icon>\n            </ion-avatar>\n            <h2>Phone Number</h2>\n            <h3>{{user != undefined ? user.phone: \'\'}}</h3>\n          </ion-item>\n        </ion-card-content>\n      </ion-card>\n      <!-- <button ion-item details-push>\n        <h3>Chat</h3>\n      </button>\n      <button ion-item details-push>\n        <h3>Profile</h3>\n      </button>\n      <button ion-item details-push>\n        <h3>Settings</h3>\n      </button> -->\n      <button ion-item details-push (click)="logout()">\n        <h3 class="error-text">Logout</h3>\n      </button>\n    </ion-content>\n  </ion-menu>\n'/*ion-inline-end:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/pages/home/home.html"*/
+            selector: 'page-home',template:/*ion-inline-start:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/pages/home/home.html"*/'<ion-header>\n  <ion-toolbar color="primary">\n    <button ion-button (click)="showUser()">\n      <ion-icon name="person" class="ion-icon-large"></ion-icon>\n    </button>\n    <ion-title> {{user.username}}</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content padding>\n  <ion-refresher (ionRefresh)="doRefresh($event)">\n    <ion-refresher-content\n      pullingText="Pull to refresh"\n      refreshingSpinner="circles">\n    </ion-refresher-content>\n  </ion-refresher>\n  <ion-card *ngFor="let post of recentPosts">\n\n    <ion-item (click)=postSelected(post)>\n      <ion-avatar item-start>\n        <ion-icon name="person" class="ion-icon-large"></ion-icon>\n      </ion-avatar>\n      <strong>{{post.user}}</strong> @{{post.username}} in <strong>{{post.groupName}}</strong>\n    </ion-item>\n\n    <ion-card-content (click)=postSelected(post)>\n      <p readonly>{{post.post}}</p>\n    </ion-card-content>\n\n    <ion-row>\n      <ion-col>\n      </ion-col>\n      <ion-col>\n      </ion-col>\n      <ion-col>\n        <ion-note>\n          Posted {{this.shared.getDisplayDate(post.creationDate)}} ago\n        </ion-note>\n      </ion-col>\n    </ion-row>\n\n\n  </ion-card>\n</ion-content>\n\n<ion-nav #userMenu [root]="rootPage"></ion-nav>\n\n<!--Side Menu to display user information-->\n<ion-menu side="left" [content]="userMenu" type="overlay" color="primary">\n  <ion-content class="bg-primary-style">\n    <ion-card no-padding class="card-strd-style">\n      <ion-card-content no-padding>\n        <ion-item padding-left>\n          <ion-avatar item-start>\n            <ion-icon name="person" class="ion-icon-large"></ion-icon>\n          </ion-avatar>\n          <h2>Name</h2>\n          <h3>{{user != undefined ? user.name: \'\'}}</h3>\n        </ion-item>\n      </ion-card-content>\n    </ion-card>\n    <ion-card no-padding class="card-strd-style">\n      <ion-card-content no-padding>\n        <ion-item padding-left>\n          <ion-avatar item-start>\n            <ion-icon name="mail" class="ion-icon-large"></ion-icon>\n          </ion-avatar>\n          <h2>Email Address</h2>\n          <h3>{{user != undefined ? user.email: \'\'}}</h3>\n        </ion-item>\n      </ion-card-content>\n    </ion-card>\n    <ion-card no-padding class="card-strd-style">\n      <ion-card-content no-padding>\n        <ion-item padding-left>\n          <ion-avatar item-start>\n            <ion-icon name="call" class="ion-icon-large"></ion-icon>\n          </ion-avatar>\n          <h2>Phone Number</h2>\n          <h3>{{user != undefined ? user.phone: \'\'}}</h3>\n        </ion-item>\n      </ion-card-content>\n    </ion-card>\n    <button ion-item details-push (click)="logout()">\n      <h3 class="error-text">Logout</h3>\n    </button>\n  </ion-content>\n</ion-menu>'/*ion-inline-end:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/pages/home/home.html"*/
         }),
         __metadata("design:paramtypes", [ionic_angular_1.NavController, ionic_angular_2.ModalController, ionic_angular_3.MenuController, service_1.User_DataProvider, share_1.Share])
     ], HomePage);
@@ -1226,7 +1224,7 @@ var Share = /** @class */ (function () {
                                 _this.presentToast("Post has been deleted!");
                             }
                             else {
-                                _this.presentToast("Group could not be deleted at this time. Please try again later.");
+                                _this.presentToast("Post could not be deleted at this time. Please try again later.");
                             }
                         });
                     }
@@ -1329,9 +1327,7 @@ var share_1 = __webpack_require__(45);
 var members_1 = __webpack_require__(247);
 var milestones_1 = __webpack_require__(248);
 var GroupPage = /** @class */ (function () {
-    function GroupPage(milestoneModal, memModal, mdlCtrl, navCtrl, navPar, menuCtrl, groupService, shared, userService) {
-        this.milestoneModal = milestoneModal;
-        this.memModal = memModal;
+    function GroupPage(mdlCtrl, navCtrl, navPar, menuCtrl, groupService, shared, userService) {
         this.mdlCtrl = mdlCtrl;
         this.navCtrl = navCtrl;
         this.navPar = navPar;
@@ -1347,8 +1343,8 @@ var GroupPage = /** @class */ (function () {
         this.postText = "";
         this.getGroupInfo(this.navPar.get("id"));
         this.isUserMember(this.shared.items["userId"], this.navPar.get("id"));
-        this.getGroupMilestones(this.shared.items["userId"]);
-        this.getGroupMembers(this.shared.items["userId"]);
+        this.getGroupMilestones(this.navPar.get("id"));
+        this.getGroupMembers(this.navPar.get("id"));
     }
     GroupPage.prototype.isUserAdmin = function () {
         if (this.curGroup.admin == this.shared.items["userId"]) {
@@ -1475,18 +1471,18 @@ var GroupPage = /** @class */ (function () {
         this.menuCtrl.open('right');
     };
     GroupPage.prototype.showMilestones = function () {
-        var milestoneModal = this.mdlCtrl.create(this.milestoneModal, { "milestones": this.milestones });
+        var milestoneModal = this.mdlCtrl.create(milestones_1.MilestonesModal, { "milestones": this.milestones });
         milestoneModal.present();
     };
     GroupPage.prototype.showMembers = function () {
-        var membersModal = this.mdlCtrl.create(this.memModal, { "members": this.members });
+        var membersModal = this.mdlCtrl.create(members_1.MembersModal, { "members": this.members });
         membersModal.present();
     };
     GroupPage = __decorate([
         core_1.Component({
-            selector: 'page-group',template:/*ion-inline-start:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/pages/group/group.html"*/'<ion-header>\n  <ion-navbar color="primary">\n    <ion-title>\n      {{curGroup.name}}\n    </ion-title>\n    <ion-buttons end>\n      <button ion-button (click)="showGroupOptions()" *ngIf="isUserAdmin()">\n        <ion-icon name="more" class="ion-icon-small"></ion-icon>\n      </button>\n      <button ion-button (click)="showGroupInfo()">\n        <ion-icon name="people" class="ion-icon-large"></ion-icon>\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  <!--Display for non members-->\n  <div no-padding *ngIf="notAMember">\n    <ion-card no-padding class="card-strd-style">\n      <ion-card-content padding>\n        <h2>Name</h2>\n        <p>{{curGroup.name}}</p>\n      </ion-card-content>\n    </ion-card>\n    <ion-card no-padding class="card-strd-style">\n      <ion-card-content padding>\n        <h2>Description</h2>\n        <p>{{curGroup.description}}</p>\n      </ion-card-content>\n    </ion-card>\n    <ion-card no-padding class="card-strd-style">\n      <ion-card-content padding>\n        <h2>Goal</h2>\n        <p>{{curGroup.goal}}</p>\n      </ion-card-content>\n    </ion-card>\n    <button ion-button block class="bg-secondary-style" (click)="joinGroup()">Join Group</button>\n  </div>\n  <!-- Display for members-->\n  <ion-card>\n    <ion-textarea class="ion-textarea-style" maxlength="1000" rows="5" placeholder="What\'s on your mind?"\n      [(ngModel)]="postText" (ionInput)="updateCount($event)"></ion-textarea>\n    <ion-grid>\n      <ion-row style="height:40px">\n        <ion-col col-10>\n          <p style="margin-top: 15px; text-align: right;">{{ 1000 - postText.length }}</p>\n        </ion-col>\n        <ion-col col-2 align-right>\n          <button class="post_button_style" ion-button float-right (click)=addPost()>\n            <p class="post_button_text">Post</p>\n          </button>\n        </ion-col>\n      </ion-row>\n    </ion-grid>\n\n  </ion-card>\n  <h3 class="no-item" style="text-align: center;" *ngIf="posts.length === 0">No posts in group yet :(</h3>\n  <ion-card *ngFor="let post of posts">\n\n    <ion-item (click)=postSelected(post)>\n      <ion-avatar item-start>\n        <ion-icon name="person" class="ion-icon-large"></ion-icon>\n      </ion-avatar>\n      <strong>{{post.user}}</strong> @{{post.username}}\n    </ion-item>\n\n    <ion-card-content (click)=postSelected(post)>\n      <p readonly>{{post.post}}</p>\n    </ion-card-content>\n\n    <ion-row>\n      <ion-col>\n      </ion-col>\n      <ion-col>\n      </ion-col>\n      <ion-col>\n        <ion-note>\n          Posted {{this.shared.getDisplayDate(post.creationDate)}} ago\n        </ion-note>\n      </ion-col>\n    </ion-row>\n    \n\n  </ion-card>\n  <ion-infinite-scroll (ionInfinite)="continuePosts($event)">\n    <ion-infinite-scroll-content loadingspinner="bubbles">\n    </ion-infinite-scroll-content>\n  </ion-infinite-scroll>\n\n</ion-content>\n\n<!-- Side Menu to display user information-->\n<ion-menu side="right" [content]="groupMenu" type="overlay" color="primary">\n  <ion-content class="bg-primary-style">\n    <ion-card no-padding class="card-strd-style">\n      <ion-card-content padding>\n        <h2>Name</h2>\n        <p>{{curGroup.name}}</p>\n      </ion-card-content>\n    </ion-card>\n    <ion-card no-padding class="card-strd-style">\n      <ion-card-content padding>\n        <h2>Description</h2>\n        <p>{{curGroup.description}}</p>\n      </ion-card-content>\n    </ion-card>\n    <ion-card no-padding class="card-strd-style">\n      <ion-card-content padding>\n        <h2>Goal</h2>\n        <p>{{curGroup.goal}}</p>\n      </ion-card-content>\n    </ion-card>\n    <button ion-item details-push (click)="showMembers()">\n      <h3>Members</h3>\n    </button>\n    <button ion-item details-push (click)="showMilestones()">\n      <h3>Milestones</h3>\n    </button>\n  </ion-content>\n</ion-menu>\n\n<ion-nav #groupMenu [root]="GroupPage"></ion-nav>'/*ion-inline-end:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/pages/group/group.html"*/
+            selector: 'page-group',template:/*ion-inline-start:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/pages/group/group.html"*/'<ion-header>\n  <ion-navbar color="primary">\n    <ion-title>\n      {{curGroup.name}}\n    </ion-title>\n    <ion-buttons end>\n      <button ion-button (click)="showGroupInfo()">\n        <ion-icon name="people" class="ion-icon-large"></ion-icon>\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  <!--Display for non members-->\n  <div no-padding *ngIf="notAMember">\n    <ion-card no-padding class="card-strd-style">\n      <ion-card-content padding>\n        <h2>Name</h2>\n        <p>{{curGroup.name}}</p>\n      </ion-card-content>\n    </ion-card>\n    <ion-card no-padding class="card-strd-style">\n      <ion-card-content padding>\n        <h2>Description</h2>\n        <p>{{curGroup.description}}</p>\n      </ion-card-content>\n    </ion-card>\n    <ion-card no-padding class="card-strd-style">\n      <ion-card-content padding>\n        <h2>Goal</h2>\n        <p>{{curGroup.goal}}</p>\n      </ion-card-content>\n    </ion-card>\n    <button ion-button block class="bg-secondary-style" (click)="joinGroup()">Join Group</button>\n  </div>\n  <!-- Display for members-->\n  <ion-card>\n    <ion-textarea class="ion-textarea-style" maxlength="1000" rows="5" placeholder="What\'s on your mind?"\n      [(ngModel)]="postText" (ionInput)="updateCount($event)"></ion-textarea>\n    <ion-grid>\n      <ion-row style="height:40px">\n        <ion-col col-10>\n          <p style="margin-top: 15px; text-align: right;">{{ 1000 - postText.length }}</p>\n        </ion-col>\n        <ion-col col-2 align-right>\n          <button class="post_button_style" ion-button float-right (click)=addPost()>\n            <p class="post_button_text">Post</p>\n          </button>\n        </ion-col>\n      </ion-row>\n    </ion-grid>\n\n  </ion-card>\n  <h3 class="no-item" style="text-align: center;" *ngIf="posts.length === 0">No posts in group yet :(</h3>\n  <ion-card *ngFor="let post of posts">\n\n    <ion-item (click)=postSelected(post)>\n      <ion-avatar item-start>\n        <ion-icon name="person" class="ion-icon-large"></ion-icon>\n      </ion-avatar>\n      <strong>{{post.user}}</strong> @{{post.username}}\n    </ion-item>\n\n    <ion-card-content (click)=postSelected(post)>\n      <p readonly>{{post.post}}</p>\n    </ion-card-content>\n\n    <ion-row>\n      <ion-col>\n      </ion-col>\n      <ion-col>\n      </ion-col>\n      <ion-col>\n        <ion-note>\n          Posted {{this.shared.getDisplayDate(post.creationDate)}} ago\n        </ion-note>\n      </ion-col>\n    </ion-row>\n    \n\n  </ion-card>\n  <ion-infinite-scroll (ionInfinite)="continuePosts($event)">\n    <ion-infinite-scroll-content loadingspinner="bubbles">\n    </ion-infinite-scroll-content>\n  </ion-infinite-scroll>\n\n</ion-content>\n\n<!-- Side Menu to display user information-->\n<ion-menu side="right" [content]="groupMenu" type="overlay" color="primary">\n  <ion-content class="bg-primary-style">\n    <ion-card no-padding class="card-strd-style">\n      <ion-card-content padding>\n        <h2>Name</h2>\n        <p>{{curGroup.name}}</p>\n      </ion-card-content>\n    </ion-card>\n    <ion-card no-padding class="card-strd-style">\n      <ion-card-content padding>\n        <h2>Description</h2>\n        <p>{{curGroup.description}}</p>\n      </ion-card-content>\n    </ion-card>\n    <ion-card no-padding class="card-strd-style">\n      <ion-card-content padding>\n        <h2>Goal</h2>\n        <p>{{curGroup.goal}}</p>\n      </ion-card-content>\n    </ion-card>\n    <button ion-item details-push (click)="showMembers()">\n      <h3>Members</h3>\n    </button>\n    <button ion-item details-push (click)="showMilestones()">\n      <h3>Milestones</h3>\n    </button>\n    <button ion-item details-push (click)="showGroupOptions()" *ngIf="isUserAdmin()">\n      <h3>Settings</h3>\n    </button>\n  </ion-content>\n</ion-menu>\n\n<ion-nav #groupMenu [root]="GroupPage"></ion-nav>'/*ion-inline-end:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/pages/group/group.html"*/
         }),
-        __metadata("design:paramtypes", [milestones_1.MilestonesModal, members_1.MembersModal, ionic_angular_1.ModalController, ionic_angular_1.NavController, ionic_angular_1.NavParams, ionic_angular_1.MenuController, service_1.Group_DataProvider, share_1.Share, service_1.User_DataProvider])
+        __metadata("design:paramtypes", [ionic_angular_1.ModalController, ionic_angular_1.NavController, ionic_angular_1.NavParams, ionic_angular_1.MenuController, service_1.Group_DataProvider, share_1.Share, service_1.User_DataProvider])
     ], GroupPage);
     return GroupPage;
 }());

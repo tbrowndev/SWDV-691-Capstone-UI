@@ -22,11 +22,11 @@ export class GroupPage {
   postText: string = "";
   lastPostId: number;
 
-  constructor(public milestoneModal: MilestonesModal, public memModal: MembersModal, public mdlCtrl:ModalController, public navCtrl: NavController, public navPar: NavParams, private menuCtrl: MenuController, public groupService: Group_DataProvider, public shared: Share, public userService: User_DataProvider) {
+  constructor(public mdlCtrl:ModalController, public navCtrl: NavController, public navPar: NavParams, private menuCtrl: MenuController, public groupService: Group_DataProvider, public shared: Share, public userService: User_DataProvider) {
     this.getGroupInfo(this.navPar.get("id"));
     this.isUserMember(this.shared.items["userId"], this.navPar.get("id"))
-    this.getGroupMilestones(this.shared.items["userId"]);
-    this.getGroupMembers(this.shared.items["userId"]);
+    this.getGroupMilestones(this.navPar.get("id"));
+    this.getGroupMembers(this.navPar.get("id"));
   }
 
   isUserAdmin(){
@@ -162,12 +162,12 @@ export class GroupPage {
   }
 
   showMilestones(){
-    let milestoneModal = this.mdlCtrl.create(this.milestoneModal,{"milestones": this.milestones});
+    let milestoneModal = this.mdlCtrl.create(MilestonesModal,{"milestones": this.milestones});
     milestoneModal.present();
   }
 
   showMembers(){
-    let membersModal = this.mdlCtrl.create(this.memModal,{"members": this.members});
+    let membersModal = this.mdlCtrl.create(MembersModal,{"members": this.members});
     membersModal.present();
   }
 

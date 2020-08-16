@@ -1,12 +1,12 @@
 <ion-content class="bg-primary-style">
     <h1 padding text-center class="std-text-color">Members</h1>
 
-    <ion-item details-push *ngFor="let mem of members">
+    <ion-item *ngFor="let mem of members">
         <ion-avatar item-start>
-          <ion-icon name="person" class="ion-icon-small"></ion-icon>
+          <ion-icon name="person" class="ion-icon-medium"></ion-icon>
         </ion-avatar>
         <p><strong>{{mem.name}}</strong> @{{mem.username}}</p>
-    </ion-iem>
+    </ion-item>
 
     <button ion-button block class="bg-danger-style std-text-color" (click)="close()">Close</button>
 

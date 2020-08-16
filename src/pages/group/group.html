@@ -4,9 +4,6 @@
       {{curGroup.name}}
     </ion-title>
     <ion-buttons end>
-      <button ion-button (click)="showGroupOptions()" *ngIf="isUserAdmin()">
-        <ion-icon name="more" class="ion-icon-small"></ion-icon>
-      </button>
       <button ion-button (click)="showGroupInfo()">
         <ion-icon name="people" class="ion-icon-large"></ion-icon>
       </button>
@@ -116,6 +113,9 @@
     </button>
     <button ion-item details-push (click)="showMilestones()">
       <h3>Milestones</h3>
+    </button>
+    <button ion-item details-push (click)="showGroupOptions()" *ngIf="isUserAdmin()">
+      <h3>Settings</h3>
     </button>
   </ion-content>
 </ion-menu>

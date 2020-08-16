@@ -13,6 +13,7 @@
 </ion-header>
 
 <ion-content padding>
+  <p *ngIf="groups.length === 0" class="no-item">No groups found :(</p>
   <button ion-item details-push *ngFor="let group of groups" (click)="groupSelected(group)">
     <ion-avatar item-start>
       <ion-icon name="people" class="ion-icon-large"></ion-icon>
