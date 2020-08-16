@@ -1438,6 +1438,7 @@ var GroupPage = /** @class */ (function () {
             if (res.status == 200) {
                 res.posts.forEach(function (post) {
                     _this.posts.push(post);
+                    _this.lastPostId = post.id;
                 });
             }
             else {
