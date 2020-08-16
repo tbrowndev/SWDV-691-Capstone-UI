@@ -126,6 +126,7 @@ export class GroupPage {
       if( res.status == 200){
         res.posts.forEach(post => {
           this.posts.push(post);
+          this.lastPostId = post.id;
         });
       }
       else{
