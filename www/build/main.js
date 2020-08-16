@@ -16,7 +16,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
-var ionic_angular_1 = __webpack_require__(16);
+var ionic_angular_1 = __webpack_require__(14);
 var group_1 = __webpack_require__(65);
 var service_1 = __webpack_require__(22);
 var share_1 = __webpack_require__(45);
@@ -104,17 +104,6 @@ var PostPage = /** @class */ (function () {
         //Go to server and retrieve comments associated with post
         this.groupService.get_post_comments(id).subscribe(function (res) { return _this.comments = res.comments; });
     };
-    // continueComments(infiniteScroll) {
-    //   setTimeout(() => {
-    //     //Go to server and retrieve comments associated with post
-    //     infiniteScroll.complete();
-    //   }, 500);
-    // }
-    // getSubComments(id: number) {
-    //   let subComments: Subcomment[] = [];
-    //   //Go to server and retrieve comments associated with post
-    //   return subComments;
-    // }
     PostPage.prototype.showGroup = function () {
         this.navCtrl.push(group_1.GroupPage, { "id": this.post.groupId });
     };
@@ -183,7 +172,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
 var http_1 = __webpack_require__(229);
 var Observable_1 = __webpack_require__(9);
-var operators_1 = __webpack_require__(310);
+var operators_1 = __webpack_require__(312);
 var Subject_1 = __webpack_require__(13);
 //handles extracting only the body of the server response
 function extract_data(res) {
@@ -337,9 +326,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
 var search_1 = __webpack_require__(228);
-var notifications_1 = __webpack_require__(247);
-var home_1 = __webpack_require__(248);
-var groups_1 = __webpack_require__(251);
+var notifications_1 = __webpack_require__(249);
+var home_1 = __webpack_require__(250);
+var groups_1 = __webpack_require__(253);
 var TabsPage = /** @class */ (function () {
     function TabsPage() {
         this.tab1Root = home_1.HomePage;
@@ -375,7 +364,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
-var ionic_angular_1 = __webpack_require__(16);
+var ionic_angular_1 = __webpack_require__(14);
 var group_1 = __webpack_require__(65);
 var service_1 = __webpack_require__(22);
 var SearchPage = /** @class */ (function () {
@@ -425,21 +414,28 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
-var ionic_angular_1 = __webpack_require__(16);
-var NotificationPage = /** @class */ (function () {
-    function NotificationPage(navCtrl) {
-        this.navCtrl = navCtrl;
+var ionic_angular_1 = __webpack_require__(14);
+var MembersModal = /** @class */ (function () {
+    function MembersModal(mdlCtrl, vwCtrl, navParams) {
+        this.mdlCtrl = mdlCtrl;
+        this.vwCtrl = vwCtrl;
+        this.navParams = navParams;
+        this.members = [];
+        this.members = navParams.get("members");
     }
-    NotificationPage = __decorate([
+    MembersModal.prototype.close = function () {
+        this.vwCtrl.dismiss();
+    };
+    MembersModal = __decorate([
         core_1.Component({
-            selector: 'page-notifications',template:/*ion-inline-start:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/pages/notifications/notifications.html"*/'<ion-header>\n  <ion-toolbar color="primary">\n    <ion-title>\n      Notifications\n    </ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n</ion-content>\n'/*ion-inline-end:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/pages/notifications/notifications.html"*/
+            selector: 'page-members',template:/*ion-inline-start:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/modals/members/members.html"*/'<ion-content class="bg-primary-style">\n    <h1 padding text-center class="std-text-color">Members</h1>\n\n    <ion-item details-push *ngFor="let mem of members">\n        <ion-avatar item-start>\n          <ion-icon name="person" class="ion-icon-small"></ion-icon>\n        </ion-avatar>\n        <p><strong>{{mem.name}}</strong> @{{mem.username}}</p>\n    </ion-iem>\n\n    <button ion-button block class="bg-danger-style std-text-color" (click)="close()">Close</button>\n\n</ion-content>'/*ion-inline-end:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/modals/members/members.html"*/
         }),
-        __metadata("design:paramtypes", [ionic_angular_1.NavController])
-    ], NotificationPage);
-    return NotificationPage;
+        __metadata("design:paramtypes", [ionic_angular_1.ModalController, ionic_angular_1.ViewController, ionic_angular_1.NavParams])
+    ], MembersModal);
+    return MembersModal;
 }());
-exports.NotificationPage = NotificationPage;
-//# sourceMappingURL=notifications.js.map
+exports.MembersModal = MembersModal;
+//# sourceMappingURL=members.js.map
 
 /***/ }),
 
@@ -459,10 +455,85 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
-var ionic_angular_1 = __webpack_require__(16);
-var ionic_angular_2 = __webpack_require__(16);
-var login_1 = __webpack_require__(249);
-var ionic_angular_3 = __webpack_require__(16);
+var ionic_angular_1 = __webpack_require__(14);
+var MilestonesModal = /** @class */ (function () {
+    function MilestonesModal(mdlCtrl, vwCtrl, navParams) {
+        this.mdlCtrl = mdlCtrl;
+        this.vwCtrl = vwCtrl;
+        this.navParams = navParams;
+        this.milestones = [];
+        this.milestones = navParams.get("milestones");
+    }
+    MilestonesModal.prototype.close = function () {
+        this.vwCtrl.dismiss();
+    };
+    MilestonesModal = __decorate([
+        core_1.Component({
+            selector: 'page-milestones',template:/*ion-inline-start:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/modals/milestones/milestones.html"*/'<ion-content class="bg-primary-style">\n    <h1 padding text-center class="std-text-color">Milestones</h1>\n\n    <ion-item details-push *ngFor="let ms of milestones">\n        <ion-avatar item-start>\n          <ion-icon name="flag" class="ion-icon-small"></ion-icon>\n        </ion-avatar>\n        <p>{{ms.name}}</p>\n    </ion-iem>\n\n    <button ion-button block class="bg-danger-style std-text-color" (click)="close()">close</button>\n    \n</ion-content>'/*ion-inline-end:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/modals/milestones/milestones.html"*/
+        }),
+        __metadata("design:paramtypes", [ionic_angular_1.ModalController, ionic_angular_1.ViewController, ionic_angular_1.NavParams])
+    ], MilestonesModal);
+    return MilestonesModal;
+}());
+exports.MilestonesModal = MilestonesModal;
+//# sourceMappingURL=milestones.js.map
+
+/***/ }),
+
+/***/ 249:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__(0);
+var ionic_angular_1 = __webpack_require__(14);
+var NotificationPage = /** @class */ (function () {
+    function NotificationPage(navCtrl) {
+        this.navCtrl = navCtrl;
+    }
+    NotificationPage = __decorate([
+        core_1.Component({
+            selector: 'page-notifications',template:/*ion-inline-start:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/pages/notifications/notifications.html"*/'<ion-header>\n  <ion-toolbar color="primary">\n    <ion-title>\n      Notifications\n    </ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n</ion-content>\n'/*ion-inline-end:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/pages/notifications/notifications.html"*/
+        }),
+        __metadata("design:paramtypes", [ionic_angular_1.NavController])
+    ], NotificationPage);
+    return NotificationPage;
+}());
+exports.NotificationPage = NotificationPage;
+//# sourceMappingURL=notifications.js.map
+
+/***/ }),
+
+/***/ 250:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__(0);
+var ionic_angular_1 = __webpack_require__(14);
+var ionic_angular_2 = __webpack_require__(14);
+var login_1 = __webpack_require__(251);
+var ionic_angular_3 = __webpack_require__(14);
 var objectFactory_1 = __webpack_require__(66);
 var post_1 = __webpack_require__(122);
 var service_1 = __webpack_require__(22);
@@ -537,7 +608,7 @@ exports.HomePage = HomePage;
 
 /***/ }),
 
-/***/ 249:
+/***/ 251:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -553,8 +624,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
-var ionic_angular_1 = __webpack_require__(16);
-var signup_1 = __webpack_require__(250);
+var ionic_angular_1 = __webpack_require__(14);
+var signup_1 = __webpack_require__(252);
 var service_1 = __webpack_require__(22);
 var LoginModal = /** @class */ (function () {
     function LoginModal(mdlCtrl, vwCtrl, service) {
@@ -564,7 +635,6 @@ var LoginModal = /** @class */ (function () {
     }
     LoginModal.prototype.startSignup = function () {
         var _this = this;
-        //console.log("starting Signup")
         var signup = this.mdlCtrl.create(signup_1.SignupModal, null, { showBackdrop: false, enableBackdropDismiss: false });
         signup.onDidDismiss(function (registeredUser) {
             if (registeredUser !== undefined) {
@@ -609,7 +679,7 @@ exports.LoginModal = LoginModal;
 
 /***/ }),
 
-/***/ 250:
+/***/ 252:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -625,9 +695,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
-var ionic_angular_1 = __webpack_require__(16);
+var ionic_angular_1 = __webpack_require__(14);
 var forms_1 = __webpack_require__(20);
-var username_1 = __webpack_require__(408);
+var username_1 = __webpack_require__(410);
 var service_1 = __webpack_require__(22);
 var objectFactory_1 = __webpack_require__(66);
 var SignupModal = /** @class */ (function () {
@@ -686,7 +756,7 @@ exports.SignupModal = SignupModal;
 
 /***/ }),
 
-/***/ 251:
+/***/ 253:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -702,8 +772,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
-var ionic_angular_1 = __webpack_require__(16);
-var creategroup_1 = __webpack_require__(252);
+var ionic_angular_1 = __webpack_require__(14);
+var creategroup_1 = __webpack_require__(254);
 var service_1 = __webpack_require__(22);
 var share_1 = __webpack_require__(45);
 var group_1 = __webpack_require__(65);
@@ -748,7 +818,7 @@ exports.GroupsPage = GroupsPage;
 
 /***/ }),
 
-/***/ 252:
+/***/ 254:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -764,7 +834,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
-var ionic_angular_1 = __webpack_require__(16);
+var ionic_angular_1 = __webpack_require__(14);
 var forms_1 = __webpack_require__(20);
 var objectFactory_1 = __webpack_require__(66);
 var share_1 = __webpack_require__(45);
@@ -835,14 +905,14 @@ exports.CreateGroupModal = CreateGroupModal;
 
 /***/ }),
 
-/***/ 253:
+/***/ 255:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var platform_browser_dynamic_1 = __webpack_require__(254);
-var app_module_1 = __webpack_require__(261);
+var platform_browser_dynamic_1 = __webpack_require__(256);
+var app_module_1 = __webpack_require__(263);
 var core_1 = __webpack_require__(0);
 core_1.enableProdMode();
 platform_browser_dynamic_1.platformBrowserDynamic().bootstrapModule(app_module_1.AppModule);
@@ -850,7 +920,7 @@ platform_browser_dynamic_1.platformBrowserDynamic().bootstrapModule(app_module_1
 
 /***/ }),
 
-/***/ 261:
+/***/ 263:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -864,24 +934,26 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
 var platform_browser_1 = __webpack_require__(43);
-var ionic_angular_1 = __webpack_require__(16);
-var app_component_1 = __webpack_require__(300);
+var ionic_angular_1 = __webpack_require__(14);
+var app_component_1 = __webpack_require__(302);
 var search_1 = __webpack_require__(228);
-var groups_1 = __webpack_require__(251);
+var groups_1 = __webpack_require__(253);
 var group_1 = __webpack_require__(65);
-var notifications_1 = __webpack_require__(247);
-var home_1 = __webpack_require__(248);
+var notifications_1 = __webpack_require__(249);
+var home_1 = __webpack_require__(250);
 var tabs_1 = __webpack_require__(227);
 var post_1 = __webpack_require__(122);
-var login_1 = __webpack_require__(249);
-var signup_1 = __webpack_require__(250);
+var login_1 = __webpack_require__(251);
+var signup_1 = __webpack_require__(252);
+var members_1 = __webpack_require__(247);
+var milestones_1 = __webpack_require__(248);
 var status_bar_1 = __webpack_require__(223);
 var splash_screen_1 = __webpack_require__(226);
 var service_1 = __webpack_require__(22);
 var service_2 = __webpack_require__(22);
 var service_3 = __webpack_require__(22);
 var http_1 = __webpack_require__(229);
-var creategroup_1 = __webpack_require__(252);
+var creategroup_1 = __webpack_require__(254);
 var share_1 = __webpack_require__(45);
 var AppModule = /** @class */ (function () {
     function AppModule() {
@@ -899,7 +971,9 @@ var AppModule = /** @class */ (function () {
                 post_1.PostPage,
                 tabs_1.TabsPage,
                 login_1.LoginModal,
-                signup_1.SignupModal
+                signup_1.SignupModal,
+                members_1.MembersModal,
+                milestones_1.MilestonesModal
             ],
             imports: [
                 platform_browser_1.BrowserModule,
@@ -920,7 +994,9 @@ var AppModule = /** @class */ (function () {
                 post_1.PostPage,
                 tabs_1.TabsPage,
                 login_1.LoginModal,
-                signup_1.SignupModal
+                signup_1.SignupModal,
+                members_1.MembersModal,
+                milestones_1.MilestonesModal
             ],
             providers: [
                 status_bar_1.StatusBar,
@@ -940,7 +1016,7 @@ exports.AppModule = AppModule;
 
 /***/ }),
 
-/***/ 300:
+/***/ 302:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -956,7 +1032,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
-var ionic_angular_1 = __webpack_require__(16);
+var ionic_angular_1 = __webpack_require__(14);
 var status_bar_1 = __webpack_require__(223);
 var splash_screen_1 = __webpack_require__(226);
 var tabs_1 = __webpack_require__(227);
@@ -982,7 +1058,7 @@ exports.MyApp = MyApp;
 
 /***/ }),
 
-/***/ 408:
+/***/ 410:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1022,7 +1098,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
-var ionic_angular_1 = __webpack_require__(16);
+var ionic_angular_1 = __webpack_require__(14);
 var service_1 = __webpack_require__(22);
 var Share = /** @class */ (function () {
     function Share(toasCtrl, alertCtrl, actionCtrl, groupService) {
@@ -1245,13 +1321,18 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(0);
-var ionic_angular_1 = __webpack_require__(16);
+var ionic_angular_1 = __webpack_require__(14);
 var objectFactory_1 = __webpack_require__(66);
 var post_1 = __webpack_require__(122);
 var service_1 = __webpack_require__(22);
 var share_1 = __webpack_require__(45);
+var members_1 = __webpack_require__(247);
+var milestones_1 = __webpack_require__(248);
 var GroupPage = /** @class */ (function () {
-    function GroupPage(navCtrl, navPar, menuCtrl, groupService, shared, userService) {
+    function GroupPage(milestoneModal, memModal, mdlCtrl, navCtrl, navPar, menuCtrl, groupService, shared, userService) {
+        this.milestoneModal = milestoneModal;
+        this.memModal = memModal;
+        this.mdlCtrl = mdlCtrl;
         this.navCtrl = navCtrl;
         this.navPar = navPar;
         this.menuCtrl = menuCtrl;
@@ -1297,12 +1378,22 @@ var GroupPage = /** @class */ (function () {
                 _this.shared.presentToast(res.message);
                 _this.isUserMember(_this.shared.items["userId"], _this.curGroup.id);
             }
+            else {
+                _this.shared.presentAlert("Error", "Unable to join " + _this.curGroup.name + " at this time. please try again later. ");
+            }
         });
     };
     GroupPage.prototype.getGroupInfo = function (id) {
         var _this = this;
         //got to server and get group informaiton
-        this.groupService.get_group_information(id).subscribe(function (res) { return _this.curGroup = res.group; }, function (error) { return _this.errorMessage = error; });
+        this.groupService.get_group_information(id).subscribe(function (res) {
+            if (res.status == 200) {
+                _this.curGroup = res.group;
+            }
+            else {
+                _this.shared.presentAlert("Error", "Unable to get group information. Try again later.");
+            }
+        });
     };
     GroupPage.prototype.getGroupMembers = function (id) {
         var _this = this;
@@ -1336,6 +1427,9 @@ var GroupPage = /** @class */ (function () {
                     _this.shared.presentToast(res.message);
                     _this.getGroupPosts(_this.curGroup.id);
                 }
+                else {
+                    _this.shared.presentAlert("Error", "Post coud not be created at this time");
+                }
             });
             this.postText = "";
         }
@@ -1345,10 +1439,14 @@ var GroupPage = /** @class */ (function () {
         //pull the most recent 10 posts from database for group
         this.posts = [];
         this.groupService.get_group_top_posts(id).subscribe(function (res) {
-            res.posts.forEach(function (post) {
-                _this.posts.push(post);
-                _this.lastPostId = post.id;
-            });
+            if (res.status == 200) {
+                res.posts.forEach(function (post) {
+                    _this.posts.push(post);
+                });
+            }
+            else {
+                _this.shared.presentAlert("Error", "Unable to retrieve posts at this time. Try again later.");
+            }
         });
     };
     GroupPage.prototype.continuePosts = function (infiniteScroll) {
@@ -1356,9 +1454,14 @@ var GroupPage = /** @class */ (function () {
         setTimeout(function () {
             // pull next 10 posts from daatbase for group
             _this.groupService.get_group_next_posts(_this.curGroup.id, _this.lastPostId).subscribe(function (res) {
-                res.posts.forEach(function (post) {
-                    _this.posts.push(post);
-                });
+                if (res.status == 200) {
+                    res.posts.forEach(function (post) {
+                        _this.posts.push(post);
+                    });
+                }
+                else {
+                    _this.shared.presentAlert("Error", "Unable to retrieve posts at this time. Try again later.");
+                }
             });
             infiniteScroll.complete();
         }, 500);
@@ -1371,11 +1474,19 @@ var GroupPage = /** @class */ (function () {
     GroupPage.prototype.showGroupInfo = function () {
         this.menuCtrl.open('right');
     };
+    GroupPage.prototype.showMilestones = function () {
+        var milestoneModal = this.mdlCtrl.create(this.milestoneModal, { "milestones": this.milestones });
+        milestoneModal.present();
+    };
+    GroupPage.prototype.showMembers = function () {
+        var membersModal = this.mdlCtrl.create(this.memModal, { "members": this.members });
+        membersModal.present();
+    };
     GroupPage = __decorate([
         core_1.Component({
-            selector: 'page-group',template:/*ion-inline-start:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/pages/group/group.html"*/'<ion-header>\n  <ion-navbar color="primary">\n    <ion-title>\n      {{curGroup.name}}\n    </ion-title>\n    <ion-buttons end>\n      <button ion-button (click)="showGroupOptions()" *ngIf="isUserAdmin()">\n        <ion-icon name="more" class="ion-icon-large"></ion-icon>\n      </button>\n      <button ion-button (click)="showGroupInfo()">\n        <ion-icon name="people" class="ion-icon-large"></ion-icon>\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  <!--Display for non members-->\n  <div no-padding *ngIf="notAMember">\n    <ion-card no-padding class="card-strd-style">\n      <ion-card-content padding>\n        <h2>Name</h2>\n        <p>{{curGroup.name}}</p>\n      </ion-card-content>\n    </ion-card>\n    <ion-card no-padding class="card-strd-style">\n      <ion-card-content padding>\n        <h2>Description</h2>\n        <p>{{curGroup.description}}</p>\n      </ion-card-content>\n    </ion-card>\n    <ion-card no-padding class="card-strd-style">\n      <ion-card-content padding>\n        <h2>Goal</h2>\n        <p>{{curGroup.goal}}</p>\n      </ion-card-content>\n    </ion-card>\n    <button ion-button block class="bg-secondary-style" (click)="joinGroup()">Join Group</button>\n  </div>\n  <!-- Display for members-->\n  <ion-card>\n    <ion-textarea class="ion-textarea-style" maxlength="1000" rows="5" placeholder="What\'s on your mind?"\n      [(ngModel)]="postText" (ionInput)="updateCount($event)"></ion-textarea>\n    <ion-grid>\n      <ion-row style="height:40px">\n        <ion-col col-10>\n          <p style="margin-top: 15px; text-align: right;">{{ 1000 - postText.length }}</p>\n        </ion-col>\n        <ion-col col-2 align-right>\n          <button class="post_button_style" ion-button float-right (click)=addPost()>\n            <p class="post_button_text">Post</p>\n          </button>\n        </ion-col>\n      </ion-row>\n    </ion-grid>\n\n  </ion-card>\n  <h3 class="no-item" style="text-align: center;" *ngIf="posts.length === 0">No posts in group yet :(</h3>\n  <ion-card *ngFor="let post of posts">\n\n    <ion-item (click)=postSelected(post)>\n      <ion-avatar item-start>\n        <ion-icon name="person" class="ion-icon-large"></ion-icon>\n      </ion-avatar>\n      <strong>{{post.user}}</strong> @{{post.username}}\n    </ion-item>\n\n    <ion-card-content (click)=postSelected(post)>\n      <p readonly>{{post.post}}</p>\n    </ion-card-content>\n\n    <ion-row>\n      <ion-col>\n      </ion-col>\n      <ion-col>\n      </ion-col>\n      <ion-col>\n        <ion-note>\n          Posted {{this.shared.getDisplayDate(post.creationDate)}} ago\n        </ion-note>\n      </ion-col>\n    </ion-row>\n    \n\n  </ion-card>\n  <ion-infinite-scroll (ionInfinite)="continuePosts($event)">\n    <ion-infinite-scroll-content loadingspinner="bubbles">\n    </ion-infinite-scroll-content>\n  </ion-infinite-scroll>\n\n</ion-content>\n\n<!-- Side Menu to display user information-->\n<ion-menu side="right" [content]="groupMenu" type="overlay" color="primary">\n  <ion-content class="bg-primary-style">\n    <ion-card no-padding class="card-strd-style">\n      <ion-card-content padding>\n        <h2>Name</h2>\n        <p>{{curGroup.name}}</p>\n      </ion-card-content>\n    </ion-card>\n    <ion-card no-padding class="card-strd-style">\n      <ion-card-content padding>\n        <h2>Description</h2>\n        <p>{{curGroup.description}}</p>\n      </ion-card-content>\n    </ion-card>\n    <ion-card no-padding class="card-strd-style">\n      <ion-card-content padding>\n        <h2>Goal</h2>\n        <p>{{curGroup.goal}}</p>\n      </ion-card-content>\n    </ion-card>\n    <button ion-item details-push>\n      <h3>Members</h3>\n    </button>\n    <button ion-item details-push>\n      <h3>Milestones</h3>\n    </button>\n  </ion-content>\n</ion-menu>\n\n<ion-nav #groupMenu [root]="GroupPage"></ion-nav>'/*ion-inline-end:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/pages/group/group.html"*/
+            selector: 'page-group',template:/*ion-inline-start:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/pages/group/group.html"*/'<ion-header>\n  <ion-navbar color="primary">\n    <ion-title>\n      {{curGroup.name}}\n    </ion-title>\n    <ion-buttons end>\n      <button ion-button (click)="showGroupOptions()" *ngIf="isUserAdmin()">\n        <ion-icon name="more" class="ion-icon-small"></ion-icon>\n      </button>\n      <button ion-button (click)="showGroupInfo()">\n        <ion-icon name="people" class="ion-icon-large"></ion-icon>\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  <!--Display for non members-->\n  <div no-padding *ngIf="notAMember">\n    <ion-card no-padding class="card-strd-style">\n      <ion-card-content padding>\n        <h2>Name</h2>\n        <p>{{curGroup.name}}</p>\n      </ion-card-content>\n    </ion-card>\n    <ion-card no-padding class="card-strd-style">\n      <ion-card-content padding>\n        <h2>Description</h2>\n        <p>{{curGroup.description}}</p>\n      </ion-card-content>\n    </ion-card>\n    <ion-card no-padding class="card-strd-style">\n      <ion-card-content padding>\n        <h2>Goal</h2>\n        <p>{{curGroup.goal}}</p>\n      </ion-card-content>\n    </ion-card>\n    <button ion-button block class="bg-secondary-style" (click)="joinGroup()">Join Group</button>\n  </div>\n  <!-- Display for members-->\n  <ion-card>\n    <ion-textarea class="ion-textarea-style" maxlength="1000" rows="5" placeholder="What\'s on your mind?"\n      [(ngModel)]="postText" (ionInput)="updateCount($event)"></ion-textarea>\n    <ion-grid>\n      <ion-row style="height:40px">\n        <ion-col col-10>\n          <p style="margin-top: 15px; text-align: right;">{{ 1000 - postText.length }}</p>\n        </ion-col>\n        <ion-col col-2 align-right>\n          <button class="post_button_style" ion-button float-right (click)=addPost()>\n            <p class="post_button_text">Post</p>\n          </button>\n        </ion-col>\n      </ion-row>\n    </ion-grid>\n\n  </ion-card>\n  <h3 class="no-item" style="text-align: center;" *ngIf="posts.length === 0">No posts in group yet :(</h3>\n  <ion-card *ngFor="let post of posts">\n\n    <ion-item (click)=postSelected(post)>\n      <ion-avatar item-start>\n        <ion-icon name="person" class="ion-icon-large"></ion-icon>\n      </ion-avatar>\n      <strong>{{post.user}}</strong> @{{post.username}}\n    </ion-item>\n\n    <ion-card-content (click)=postSelected(post)>\n      <p readonly>{{post.post}}</p>\n    </ion-card-content>\n\n    <ion-row>\n      <ion-col>\n      </ion-col>\n      <ion-col>\n      </ion-col>\n      <ion-col>\n        <ion-note>\n          Posted {{this.shared.getDisplayDate(post.creationDate)}} ago\n        </ion-note>\n      </ion-col>\n    </ion-row>\n    \n\n  </ion-card>\n  <ion-infinite-scroll (ionInfinite)="continuePosts($event)">\n    <ion-infinite-scroll-content loadingspinner="bubbles">\n    </ion-infinite-scroll-content>\n  </ion-infinite-scroll>\n\n</ion-content>\n\n<!-- Side Menu to display user information-->\n<ion-menu side="right" [content]="groupMenu" type="overlay" color="primary">\n  <ion-content class="bg-primary-style">\n    <ion-card no-padding class="card-strd-style">\n      <ion-card-content padding>\n        <h2>Name</h2>\n        <p>{{curGroup.name}}</p>\n      </ion-card-content>\n    </ion-card>\n    <ion-card no-padding class="card-strd-style">\n      <ion-card-content padding>\n        <h2>Description</h2>\n        <p>{{curGroup.description}}</p>\n      </ion-card-content>\n    </ion-card>\n    <ion-card no-padding class="card-strd-style">\n      <ion-card-content padding>\n        <h2>Goal</h2>\n        <p>{{curGroup.goal}}</p>\n      </ion-card-content>\n    </ion-card>\n    <button ion-item details-push (click)="showMembers()">\n      <h3>Members</h3>\n    </button>\n    <button ion-item details-push (click)="showMilestones()">\n      <h3>Milestones</h3>\n    </button>\n  </ion-content>\n</ion-menu>\n\n<ion-nav #groupMenu [root]="GroupPage"></ion-nav>'/*ion-inline-end:"/Users/tbrown/Documents/Capstone Project/Source/SWDV-691-Capstone-UI/src/pages/group/group.html"*/
         }),
-        __metadata("design:paramtypes", [ionic_angular_1.NavController, ionic_angular_1.NavParams, ionic_angular_1.MenuController, service_1.Group_DataProvider, share_1.Share, service_1.User_DataProvider])
+        __metadata("design:paramtypes", [milestones_1.MilestonesModal, members_1.MembersModal, ionic_angular_1.ModalController, ionic_angular_1.NavController, ionic_angular_1.NavParams, ionic_angular_1.MenuController, service_1.Group_DataProvider, share_1.Share, service_1.User_DataProvider])
     ], GroupPage);
     return GroupPage;
 }());
@@ -1466,5 +1577,5 @@ exports.Milestone = Milestone;
 
 /***/ })
 
-},[253]);
+},[255]);
 //# sourceMappingURL=main.js.map
