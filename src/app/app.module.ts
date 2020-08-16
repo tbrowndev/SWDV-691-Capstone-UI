@@ -13,6 +13,8 @@ import { PostPage } from '../pages/post/post';
 
 import { LoginModal } from '../modals/login/login';
 import { SignupModal } from '../modals/signup/signup';
+import { MembersModal } from '../modals/members/members';
+import {MilestonesModal } from '../modals/milestones/milestones'
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -35,7 +37,9 @@ import { Share } from '../service/share';
     PostPage,
     TabsPage,
     LoginModal,
-    SignupModal
+    SignupModal,
+    MembersModal,
+    MilestonesModal
   ],
   imports: [
     BrowserModule,
@@ -54,7 +58,9 @@ import { Share } from '../service/share';
     PostPage,
     TabsPage,
     LoginModal,
-    SignupModal
+    SignupModal,
+    MembersModal,
+    MilestonesModal
   ],
   providers: [
     StatusBar,

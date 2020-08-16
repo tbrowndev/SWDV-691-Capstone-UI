@@ -17,8 +17,6 @@ export class LoginModal {
     }
 
     startSignup() {
-
-        //console.log("starting Signup")
         let signup = this.mdlCtrl.create(SignupModal, null, { showBackdrop: false, enableBackdropDismiss: false });
 
         signup.onDidDismiss(registeredUser => {

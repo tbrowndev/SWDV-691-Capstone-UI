@@ -106,21 +106,6 @@ export class PostPage {
     )
   }
 
-  // continueComments(infiniteScroll) {
-  //   setTimeout(() => {
-  //     //Go to server and retrieve comments associated with post
-
-  //     infiniteScroll.complete();
-  //   }, 500);
-  // }
-
-  // getSubComments(id: number) {
-  //   let subComments: Subcomment[] = [];
-  //   //Go to server and retrieve comments associated with post
-
-  //   return subComments;
-  // }
-
   showGroup() {
     this.navCtrl.push(GroupPage, { "id": this.post.groupId })
   }

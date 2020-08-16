@@ -1,0 +1,13 @@
+<ion-content class="bg-primary-style">
+    <h1 padding text-center class="std-text-color">Milestones</h1>
+
+    <ion-item details-push *ngFor="let ms of milestones">
+        <ion-avatar item-start>
+          <ion-icon name="flag" class="ion-icon-small"></ion-icon>
+        </ion-avatar>
+        <p>{{ms.name}}</p>
+    </ion-iem>
+
+    <button ion-button block class="bg-danger-style std-text-color" (click)="close()">close</button>
+    
+</ion-content>
