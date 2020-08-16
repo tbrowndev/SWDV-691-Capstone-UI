@@ -37,7 +37,7 @@ var PostPage = /** @class */ (function () {
         this.getCommentCount();
     }
     PostPage.prototype.userOwnsPost = function () {
-        if (this.post.username = this.shared.items["user"].username) {
+        if (this.post.username === this.shared.items["user"].username) {
             return true;
         }
         else {
