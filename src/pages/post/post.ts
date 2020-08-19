@@ -36,7 +36,7 @@ export class PostPage {
   }
 
   showPostOptions(){
-    this.shared.presentPostOptions(this.post);
+    this.shared.presentPostOptions(this.post, this.navCtrl);
   }
 
   getLikeCount() {

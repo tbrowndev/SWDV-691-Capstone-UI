@@ -3,17 +3,11 @@
     <button ion-button (click)="showUser()">
       <ion-icon name="person" class="ion-icon-large"></ion-icon>
     </button>
-    <ion-title> {{user.username}}</ion-title>
+    <ion-title (click)="refreshFeed()"> {{user.username}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
-  <ion-refresher (ionRefresh)="doRefresh($event)">
-    <ion-refresher-content
-      pullingText="Pull to refresh"
-      refreshingSpinner="circles">
-    </ion-refresher-content>
-  </ion-refresher>
   <ion-card *ngFor="let post of recentPosts">
 
     <ion-item (click)=postSelected(post)>

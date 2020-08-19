@@ -29,6 +29,10 @@ export class GroupPage {
     this.getGroupMembers(this.navPar.get("id"));
   }
 
+  refreshFeed(){
+    this.getGroupPosts(this.curGroup.id);
+  }
+
   isUserAdmin(){
     if(this.curGroup.admin == this.shared.items["userId"]){
       return true;
@@ -38,7 +42,7 @@ export class GroupPage {
   }
 
   showGroupOptions(){
-    this.shared.presentGroupOptions(this.curGroup);
+    this.shared.presentGroupOptions(this.curGroup, this.navCtrl);
   }
 
   isUserMember(user: number, group: number) {

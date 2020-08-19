@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { ToastController, AlertController, ActionSheetController } from 'ionic-angular';
+import { ToastController, AlertController, ActionSheetController, NavController } from 'ionic-angular';
 import { Group, Post } from "../objects/objectFactory";
 import { Group_DataProvider } from "./service";
 
@@ -9,7 +9,7 @@ import { Group_DataProvider } from "./service";
 export class Share {
 
     items = {}
-    constructor(public toasCtrl: ToastController, public alertCtrl: AlertController, public actionCtrl: ActionSheetController, public groupService: Group_DataProvider) {
+    constructor( public toasCtrl: ToastController, public alertCtrl: AlertController, public actionCtrl: ActionSheetController, public groupService: Group_DataProvider) {
     }
 
     /**
@@ -27,24 +27,33 @@ export class Share {
     }
 
     /**
+     * Displays alert to the user
+     * @param alert_title the title of the alert to show user ex. Error, Information
+     * @param alert_message the message to display ot the user
+     */
+    presentAlert(alert_title: string, alert_message: string) {
+        let alert = this.alertCtrl.create({
+            title: alert_title,
+            message: alert_message,
+            buttons: ["Dismiss"]
+        });
+
+        alert.present();
+    }
+
+    /**
      * Displays the options for a group, edit or delete
      * @param group the group object to perform the action on
      */
-    presentGroupOptions(group: Group) {
+    presentGroupOptions(group: Group, nav: NavController) {
         let options = this.actionCtrl.create({
             title: "Group Options",
             buttons: [
-                // {
-                //     text: "Edit",
-                //     handler: () => {
-                //         //handles editing a group
-                //     }
-                // },
                 {
                     text: "Delete",
                     role: "destructive",
                     handler: () => {
-                        this.confrmGroupDeletion(group);
+                        this.confrmGroupDeletion(group, nav);
                     }
                 }
             ]
@@ -57,7 +66,7 @@ export class Share {
      * internal method to confirms deleteion of the group
      * @param group the group object
      */
-    private confrmGroupDeletion(group: Group) {
+    private confrmGroupDeletion(group: Group, nav:NavController) {
         let alert = this.alertCtrl.create({
             title: "Are you Sure?",
             subTitle: "Delete " + group.name,
@@ -70,6 +79,7 @@ export class Share {
                         this.groupService.delete_group(group.id).subscribe(res => {
                             if (res.status == 200) {
                                 this.presentToast(group.name + " has been deleted!");
+                                nav.pop();
                             }
                             else {
                                 this.presentToast("Group could not be deleted at this time. Please try again later.")
@@ -81,7 +91,7 @@ export class Share {
                 {
                     text: "Cancel",
                     handler: () => {
-                        //left blacnk intentially
+                        //left blank on purpose
                     }
                 }
             ]
@@ -94,21 +104,15 @@ export class Share {
      * Displays the options for a post, edit or delete
      * @param post the post object to perform the action on
      */
-    presentPostOptions(post: Post) {
+    presentPostOptions(post: Post, nav: NavController) {
         let options = this.actionCtrl.create({
             title: "Post Options",
             buttons: [
-                // {
-                //     text: "Edit",
-                //     handler: () => {
-                //         //handles editing a group
-                //     }
-                // },
                 {
                     text: "Delete",
                     role: "destructive",
                     handler: () => {
-                        this.confrmPostDeletion(post);
+                        this.confrmPostDeletion(post, nav);
                     }
                 }
             ]
@@ -121,7 +125,7 @@ export class Share {
      * internal method to confirms deleteion of the post
      * @param post the group object
      */
-    private confrmPostDeletion(post: Post) {
+    private confrmPostDeletion(post: Post, nav:NavController) {
         let alert = this.alertCtrl.create({
             title: "Are you Sure?",
             subTitle: "Delete Post",
@@ -133,6 +137,7 @@ export class Share {
                         this.groupService.delete_post(post.id).subscribe(res => {
                             if (res.status == 200) {
                                 this.presentToast("Post has been deleted!");
+                                nav.pop();
                             }
                             else {
                                 this.presentToast("Post could not be deleted at this time. Please try again later.");
@@ -152,27 +157,13 @@ export class Share {
         alert.present();
     }
 
-    /**
-     * Displays alert to the user
-     * @param alert_title the title of the alert to show user ex. Error, Information
-     * @param alert_message the message to display ot the user
-     */
-    presentAlert(alert_title: string, alert_message: string) {
-        let alert = this.alertCtrl.create({
-            title: alert_title,
-            message: alert_message,
-            buttons: ["Dismiss"]
-        });
-
-        alert.present();
-    }
+    
 
     /**
      * gives the time different between the inputted date and time and the urrent date and time
      * @param date a date less than the current date
      */
     getDisplayDate(date) {
-        // Split timestamp into [ Y, M, D, h, m, s ]
 
         var actiondate = new Date(date);
         var today = new Date();

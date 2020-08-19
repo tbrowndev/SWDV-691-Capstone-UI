@@ -29,11 +29,8 @@ export class HomePage {
     login.present();
   }
 
-  doRefresh(event) {
-    setTimeout(() => {
-      this.getRecentPosts(this.shared.items['userId']);
-      event.complete();
-    }, 2000);
+  refreshFeed(){
+    this.getRecentPosts(this.user.id);
   }
 
   showUser() {
